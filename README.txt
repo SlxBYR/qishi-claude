@@ -1,9 +1,9 @@
-栖时·Claude 2.2.1（build 26，原生 Liquid Glass 界面、Claude 工作台与 WebRTC 检测）
+栖时·Claude 2.2.1（build 27，原生 Liquid Glass 界面、Claude 工作台、WebRTC 检测与 Claude Desktop 额度）
 
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
-工作台中央是 Claude 标志动画：12 道光芒依次伸缩，Claude 工作时节奏加快。
+工作台左侧是独立的 Claude 标志动画：12 道光芒各自沿自身方向伸缩、节奏互不相同，Claude 工作时加快；右侧玻璃卡片显示状态。
 侧栏底部是 Clawd 小螃蟹，在原版动画与栖时新绘的 6 段动画（蹦跳、挥手、张望、横着走、比心、哼歌）之间随机播放，点一下换一段。
-侧栏同时显示 WebRTC 泄漏检测：用离屏 WebKit 打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与 WebRTC 公网 IP；启动时检测，之后每 30 分钟一次，点击状态可重新检测。结果不是 No Leak 时，Clawd 持续播放错误动画。
+侧栏同时显示 WebRTC 泄漏检测：用离屏 WebKit 打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与 WebRTC 公网 IP；启动时检测，之后每 5 分钟一次，点击状态可重新检测。结果不是 No Leak 时，Clawd 持续播放错误动画。
 原生 macOS Claude 工作台与独立 Windows 桌面端，基于用户提供的栖时源码整合。
 macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Node 或 Electron。Windows 版为独立的 Windows 10/11 x64 便携程序，见 Windows/README.txt。
 
@@ -16,6 +16,7 @@ macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Nod
 • Claude 娘以 CrossPet 动作逻辑、effects.js 特效和全部 60 张原图为基础，保留呼吸摆动、眨眼、摸头、甩晕、生气、节日动作与多任务表演。
 • 多会话列表、并行工具和子任务跟踪、打开项目文件夹。
 • Claude Code 官方状态栏上报的 5 小时、每周和可选支出额度；上下文用量、更新时间与过期标记。
+• Claude Desktop 额度：Claude 运行时，通过 macOS“辅助功能”读取其界面上显示的用量（设置 → 用量），每 30 秒一次；只保留额度百分比与重置文字，其余界面文字不保存、不记录。Claude 未运行时显示上次读取的数据。需在系统设置中为栖时授予辅助功能权限；本地重新构建（临时签名）后可能需要重新授予。
 • 可选完成/出错/等待通知，可选单次工具授权浮窗，允许一次、拒绝或交回 Claude。
 • Claude 娘与 Clawd 可分别显示或隐藏（菜单栏、“桌宠与接入”或右键角色），也可分别拖动、记忆位置、调整大小、置顶；移除桌面标签、额度条与常驻按钮；点击 Claude 娘显示 CrossPet 风格的账号存活天数气泡。
 • 保留栖时的注册计时、Gmail 只读邮件检测、提醒与菜单栏常驻。

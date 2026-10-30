@@ -106,8 +106,10 @@ struct ClawdStage: View {
         return image
     }
 }
-/// The workbench mark: each ray of the Claude starburst stretches and settles
-/// in turn, a wave travelling around the hub; it quickens while Claude works.
+/// The workbench mark. Every ray of the Claude starburst stretches and
+/// settles along its own axis on its own rhythm, so the star breathes in many
+/// directions at once; widths never change and the centre stays put. It
+/// quickens while Claude works and holds still with Reduce Motion.
 struct ClaudeLogoView: View {
     var busy: Bool
     var size: CGFloat = 200
@@ -117,14 +119,17 @@ struct ClaudeLogoView: View {
             if let layout = ClaudeLogoArt.layout {
                 let anchor = UnitPoint(x: layout.center[0] / layout.size[0], y: layout.center[1] / layout.size[1])
                 TimelineView(.animation(paused: reduceMotion)) { context in
-                    let phase = context.date.timeIntervalSinceReferenceDate / (busy ? 1.6 : 3.4) * 2 * .pi
+                    let time = context.date.timeIntervalSinceReferenceDate * (busy ? 1.9 : 1)
                     ZStack {
+                        layer("hub.png")
                         ForEach(layout.spokes.indices, id: \.self) { index in
-                            let spoke = layout.spokes[index]
-                            layer(spoke.file)
-                                .scaleEffect(reduceMotion ? 1 : 1 + 0.09 * sin(phase - spoke.angle * .pi / 180), anchor: anchor)
+                            let angle = Angle.degrees(layout.spokes[index].angle)
+                            // Rotate the ray onto the x axis, stretch only its length, rotate back.
+                            layer(layout.spokes[index].file)
+                                .rotationEffect(-angle, anchor: anchor)
+                                .scaleEffect(x: reduceMotion ? 1 : stretch(index, time), y: 1, anchor: anchor)
+                                .rotationEffect(angle, anchor: anchor)
                         }
-                        layer("hub.png").scaleEffect(reduceMotion ? 1 : 1 + 0.025 * sin(phase * 2), anchor: anchor)
                     }
                 }
             } else {
@@ -132,6 +137,15 @@ struct ClaudeLogoView: View {
             }
         }.frame(width: size, height: size)
             .accessibilityElement().accessibilityLabel("Claude")
+    }
+    /// Two incommensurate waves per ray with golden-ratio phases: neighbours
+    /// never move in step, so no rotating wave appears.
+    private func stretch(_ index: Int, _ time: Double) -> CGFloat {
+        let seed = Double(index) * 0.618_033_988_75
+        let speed = 0.75 + (seed.truncatingRemainder(dividingBy: 1)) * 0.6
+        let phase = seed * 2 * .pi
+        let wave = 0.62 * sin(time * speed * 1.7 + phase) + 0.38 * sin(time * speed * 3.9 + phase * 2.3)
+        return CGFloat(1 + 0.13 * wave)
     }
     private func layer(_ file: String) -> some View {
         Group { if let image = ClaudeLogoArt.image(file) { Image(nsImage: image).resizable().scaledToFit() } }
@@ -147,34 +161,36 @@ struct ClaudeWorkView: View {
                     Label(L("界面预览 · 示例数据", "Interface preview · sample data"), systemImage: "photo")
                         .font(.system(size: 11)).foregroundStyle(.secondary).frame(maxWidth: .infinity)
                 }
-                NativeCard {
-                    HStack(spacing: 18) {
-                        ClaudeLogoView(busy: claude.pose.busy || claude.busyCount > 0).padding(30)
-                        VStack(alignment: .leading, spacing: 12) {
-                            Label(claude.connected ? L("Claude Code 已接入", "Claude Code connected") : L("Claude Code 未接入", "Claude Code not connected"),
-                                  systemImage: claude.connected ? "link" : "sparkle")
-                                .font(.system(size: 12, weight: .medium)).foregroundStyle(claude.connected ? Color.qishiAccent : Color.secondary)
-                            Text(LT(claude.pose.title)).font(.system(size: 28, weight: .semibold))
-                            Text(claude.busyCount > 1 ? L("\(claude.busyCount) 个会话正在工作", "\(claude.busyCount) sessions working") : (claude.focus.map { LT($0.project) } ?? L("暂无活动会话", "No active session")))
-                                .font(.system(size: 13)).foregroundStyle(.secondary).lineLimit(2)
-                            if claude.connected {
-                                HStack(spacing: 14) {
-                                    Label(L("\(claude.live.count) 个会话", "\(claude.live.count) sessions"), systemImage: "bubble.left.and.bubble.right")
-                                    Label(L("\(claude.requests.count) 待确认", "\(claude.requests.count) pending"), systemImage: "hand.raised")
-                                }.font(.system(size: 11)).foregroundStyle(.secondary)
-                            }
-                            HStack(spacing: 10) {
-                                Spacer()
-                                if !claude.connected {
-                                    Button(L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.glassProminent)
+                // The mark stands on the page itself; only the status sits on glass.
+                HStack(alignment: .center, spacing: 22) {
+                    ClaudeLogoView(busy: claude.pose.busy || claude.busyCount > 0, size: 196)
+                        .padding(.horizontal, 6)
+                    NativeCard {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Label(claude.connected ? L("Claude Code 已接入", "Claude Code connected") : L("Claude Code 未接入", "Claude Code not connected"),
+                                      systemImage: claude.connected ? "link" : "sparkle")
+                                    .font(.system(size: 12, weight: .medium)).foregroundStyle(claude.connected ? Color.qishiAccent : Color.secondary)
+                                Text(LT(claude.pose.title)).font(.system(size: 28, weight: .semibold))
+                                Text(claude.busyCount > 1 ? L("\(claude.busyCount) 个会话正在工作", "\(claude.busyCount) sessions working") : (claude.focus.map { LT($0.project) } ?? L("暂无活动会话", "No active session")))
+                                    .font(.system(size: 13)).foregroundStyle(.secondary).lineLimit(2)
+                                if claude.connected {
+                                    HStack(spacing: 14) {
+                                        Label(L("\(claude.live.count) 个会话", "\(claude.live.count) sessions"), systemImage: "bubble.left.and.bubble.right")
+                                        Label(L("\(claude.requests.count) 待确认", "\(claude.requests.count) pending"), systemImage: "hand.raised")
+                                    }.font(.system(size: 11)).foregroundStyle(.secondary)
                                 }
-                                Button(claude.preferences.anyPetShown ? L("收起桌面伙伴", "Hide companions") : L("显示桌面伙伴", "Show companions")) {
-                                    let show = !claude.preferences.anyPetShown
-                                    claude.preferences.showClaude = show; claude.preferences.showClawd = show; claude.save()
-                                }.buttonStyle(.glass)
-                            }
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                    }.frame(maxWidth: .infinity)
+                                HStack(spacing: 10) {
+                                    Spacer()
+                                    if !claude.connected {
+                                        Button(L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.glassProminent)
+                                    }
+                                    Button(claude.preferences.anyPetShown ? L("收起桌面伙伴", "Hide companions") : L("显示桌面伙伴", "Show companions")) {
+                                        let show = !claude.preferences.anyPetShown
+                                        claude.preferences.showClaude = show; claude.preferences.showClawd = show; claude.save()
+                                    }.buttonStyle(.glass)
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 ForEach(claude.requests) { request in ClaudeApprovalCard(claude: claude, request: request) }
                 NativeCard {
@@ -192,6 +208,8 @@ struct ClaudeWorkView: View {
                         } else {
                             Text(L("等待 Claude Code 上报额度", "Waiting for Claude Code to report usage")).font(.system(size: 13)).foregroundStyle(.secondary)
                         }
+                        Divider()
+                        ClaudeDesktopUsageSection(reader: claude.desktop)
                     }
                 }
                 NativeCard {
@@ -269,6 +287,59 @@ struct ClaudeWorkView: View {
                 }
             }.font(.system(size: 10)).foregroundStyle(.secondary)
         }.opacity(stale || resetPassed ? 0.65 : 1)
+    }
+}
+/// Limits read from Claude Desktop: live while it runs, the last reading otherwise.
+struct ClaudeDesktopUsageSection: View {
+    @ObservedObject var reader: ClaudeDesktopReader
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Label("Claude Desktop", systemImage: "macwindow").font(.system(size: 13, weight: .semibold))
+                Spacer()
+                Text(status).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(1)
+            }
+            if !reader.trusted {
+                HStack(alignment: .top, spacing: 12) {
+                    Text(L("需要“辅助功能”权限才能读取 Claude 界面上显示的额度。", "Accessibility permission is needed to read the limits Claude shows."))
+                        .font(.system(size: 12)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    Button(L("授予权限", "Grant access")) { reader.requestAccess() }.buttonStyle(.glass)
+                }
+            }
+            if let snapshot = reader.snapshot {
+                ForEach(snapshot.quotas) { quota in row(quota) }
+                    .opacity(reader.running ? 1 : 0.7)
+            } else if reader.trusted {
+                Text(L("在 Claude 中打开 设置 → 用量，即会自动读取并保存。", "Open Settings → Usage in Claude; the limits are read and kept automatically."))
+                    .font(.system(size: 12)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+    private var status: String {
+        let time = reader.snapshot.map { $0.capturedAt.qishiFormatted(date: .abbreviated, time: .shortened) }
+        if reader.running { return L("运行中", "Running") + (time.map { L(" · 读取于 ", " · read ") + $0 } ?? "") }
+        return L("未运行", "Not running") + (time.map { L(" · 上次数据 ", " · last data ") + $0 } ?? "")
+    }
+    private func title(_ id: String) -> String {
+        switch id {
+        case "five_hour": return L("当前会话", "Current session")
+        case "seven_day": return L("每周 · 所有模型", "Weekly · all models")
+        case "seven_day_opus": return L("每周 · Opus", "Weekly · Opus")
+        case "seven_day_sonnet": return L("每周 · Sonnet", "Weekly · Sonnet")
+        default: return id
+        }
+    }
+    private func row(_ quota: DesktopQuota) -> some View {
+        VStack(alignment: .leading, spacing: 7) {
+            HStack {
+                Text(title(quota.id)).font(.system(size: 13, weight: .medium))
+                Spacer()
+                Text(L("已用 \(Int(quota.used))% · 剩余 \(Int(100 - quota.used))%", "\(Int(quota.used))% used · \(Int(100 - quota.used))% left")).font(.system(size: 12)).monospacedDigit()
+            }
+            ProgressView(value: quota.used, total: 100).tint(quota.used >= 90 ? .red : quota.used >= 70 ? .orange : .qishiAccent)
+            if let reset = quota.reset { Text(reset).font(.system(size: 10)).foregroundStyle(.secondary) }
+        }
     }
 }
 struct ClaudeApprovalCard: View {

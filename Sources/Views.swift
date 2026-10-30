@@ -198,6 +198,8 @@ struct QishiSidebar: View {
             row(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
             row(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
         }.listStyle(.sidebar)
+            // Breathing room below the window controls.
+            .contentMargins(.top, 14, for: .scrollContent)
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 4) {
                     // A WebRTC leak overrides the random loop with the error animation.

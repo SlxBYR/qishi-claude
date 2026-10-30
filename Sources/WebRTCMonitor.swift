@@ -9,7 +9,7 @@ import WebKit
         var isLeak: Bool { if case .leak = self { return true }; return false }
     }
     static let page = URL(string: "https://browserleaks.com/webrtc")!
-    static let interval: TimeInterval = 30 * 60
+    static let interval: TimeInterval = 5 * 60
     @Published private(set) var status: Status = .idle
     @Published private(set) var publicIP: String?
     @Published private(set) var checkedAt: Date?

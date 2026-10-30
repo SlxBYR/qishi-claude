@@ -88,7 +88,6 @@ import SwiftUI
     @objc func showSettings() { store.selectedPage = 1; showMain() }
     @objc func refresh() { Task { await store.check() } }
     @objc func toggleDockIcon() { store.setHideDockIcon(!store.settings.hideDockIcon) }
-    @objc func toggleMonitoring() { store.setMonitoring(!store.settings.monitoring) }
     @objc func openMail() { store.openGmail() }
     @objc func quit() { NSApp.terminate(nil) }
     private func item(_ title: String, _ action: Selector?, key: String = "") -> NSMenuItem {
@@ -123,13 +122,10 @@ import SwiftUI
         menu.addItem(item(L("打开 Claude 工作台", "Open Claude Workbench"), #selector(showWork)))
         let claudeItem = item(L("显示 Claude 娘", "Show Claude-chan"), #selector(toggleClaudePet)); claudeItem.state = claude.preferences.showClaude ? .on : .off; menu.addItem(claudeItem)
         let clawdItem = item(L("显示 Clawd", "Show Clawd"), #selector(toggleClawdPet)); clawdItem.state = claude.preferences.showClawd ? .on : .off; menu.addItem(clawdItem)
-        menu.addItem(item(L("打开栖时", "Open Qishi"), #selector(showMain)))
         let check = item(store.isChecking ? L("正在检查…", "Checking…") : L("立即检查 Gmail", "Check Gmail Now"), #selector(refresh))
         check.isEnabled = store.settings.isConfigured && store.settings.monitoring && !store.isChecking
         menu.addItem(check)
         let dock = item(L("隐藏 Dock 图标", "Hide Dock Icon"), #selector(toggleDockIcon)); dock.state = store.settings.hideDockIcon ? .on : .off; menu.addItem(dock)
-        if store.settings.isConfigured { menu.addItem(item(store.settings.monitoring ? L("暂停检测", "Pause Monitoring") : L("继续检测", "Resume Monitoring"), #selector(toggleMonitoring))) }
-        menu.addItem(item(L("连接与计时…", "Connection & Timer…"), #selector(showSettings)))
         menu.addItem(.separator()); menu.addItem(item(L("退出栖时", "Quit Qishi"), #selector(quit), key: "q"))
         menu.autoenablesItems = false
         menu.items.filter { $0.action == nil }.forEach { $0.isEnabled = false }
