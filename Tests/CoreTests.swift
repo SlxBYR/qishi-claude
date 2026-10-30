@@ -57,6 +57,23 @@ actor FixtureSession: IMAPCommanding {
         migrated.hideDockIcon = true
         let reloaded = try JSONDecoder().decode(MonitorSettings.self, from: JSONEncoder().encode(migrated))
         expect(reloaded == migrated, "Dock preference survives save and reload")
+        // Daily token usage from Claude Code transcripts.
+        var utc = Calendar(identifier: .gregorian); utc.timeZone = TimeZone(identifier: "UTC")!
+        let transcript = Data(("""
+        {"type":"user","timestamp":"2026-10-29T09:00:00.000Z","message":{"role":"user","content":"hi"}}
+        {"type":"assistant","timestamp":"2026-10-29T09:00:01.000Z","requestId":"r1","message":{"id":"m1","usage":{"input_tokens":10,"output_tokens":5,"cache_creation_input_tokens":100,"cache_read_input_tokens":1000}}}
+        {"type":"assistant","timestamp":"2026-10-29T09:00:02.000Z","requestId":"r1","message":{"id":"m1","usage":{"input_tokens":10,"output_tokens":40,"cache_creation_input_tokens":100,"cache_read_input_tokens":1000}}}
+        not json but "output_tokens" appears
+        {"type":"assistant","timestamp":"2026-10-30T23:59:59Z","requestId":"r2","message":{"id":"m2","usage":{"input_tokens":1,"output_tokens":2}}}
+        """).utf8)
+        let usageEntries = TokenUsageParser.entries(fromJSONL: transcript)
+        expect(usageEntries.count == 3, "only reply lines with a usage block are read")
+        // The same reply copied into a resumed session counts once.
+        let copied = TokenUsageParser.entries(fromJSONL: Data(#"{"timestamp":"2026-10-29T10:00:00.5Z","requestId":"r1","message":{"id":"m1","usage":{"input_tokens":10,"output_tokens":40}}}"#.utf8))
+        let days = TokenUsageParser.daily(usageEntries + copied, days: 3, now: TokenUsageParser.date("2026-10-31T12:00:00Z")!, calendar: utc)
+        expect(days.count == 3 && days.map(\.counts.total) == [1150, 3, 0], "replies are deduplicated, bucketed by day and zero-filled")
+        expect(days[0].counts == TokenCounts(input: 10, output: 40, cacheWrite: 100, cacheRead: 1000), "a streamed reply keeps its largest counts")
+        expect(TokenUsageParser.date("2026-10-30T23:59:59Z") != nil && TokenUsageParser.date("2026-10-30T23:59:59.123Z") != nil, "both timestamp forms parse")
         let start = Date(timeIntervalSince1970: 1_000_000)
         expect(Elapsed(since: start, now: start).days == 0, "zero age")
         expect(Elapsed(since: start, now: start.addingTimeInterval(90061)).clock == "01 : 01 : 01", "zero-padded clock formatting")

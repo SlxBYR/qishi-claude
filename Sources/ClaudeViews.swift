@@ -213,13 +213,14 @@ struct ClaudeWorkView: View {
                         }
                     }
                 }
+                TokenActivityCard(store: claude.tokens)
                 NativeCard {
                     VStack(alignment: .leading, spacing: 12) {
                         CardTitle(title: L("会话", "Sessions"), symbol: "square.stack.3d.up")
-                        if claude.sessions.isEmpty {
+                        if shownSessions.isEmpty {
                             Text(L("暂无会话", "No sessions yet")).font(.system(size: 13)).foregroundStyle(.secondary).padding(.vertical, 6)
                         }
-                        ForEach(claude.sessions) { session in sessionRow(session) }
+                        ForEach(shownSessions) { session in sessionRow(session) }
                     }
                 }
                 NativeCard {
@@ -242,6 +243,8 @@ struct ClaudeWorkView: View {
                 }
             }
     }
+    /// The five most recent sessions that actually used a tool; idle shells are hidden.
+    private var shownSessions: [ClaudeSession] { Array(claude.sessions.filter { $0.toolCount > 0 }.prefix(5)) }
     private func sessionRow(_ session: ClaudeSession) -> some View {
         let selected = claude.focus?.id == session.id
         return HStack(spacing: 12) {
@@ -288,6 +291,218 @@ struct ClaudeWorkView: View {
                 }
             }.font(.system(size: 10)).foregroundStyle(.secondary)
         }.opacity(stale || resetPassed ? 0.65 : 1)
+    }
+}
+/// A year of token use as a calendar grid: columns are weeks, rows weekdays.
+/// Cells take four validated steps of the accent hue by quartile of the active
+/// values; daily, weekly and cumulative views share the grid. Hovering a cell
+/// reads out its date and value, and the details table lists the last 14 days.
+struct TokenActivityCard: View {
+    enum Mode: CaseIterable { case daily, weekly, total }
+    @ObservedObject var store: TokenUsageStore
+    @ViewState private var mode: Mode
+    @ViewState private var hovered: Date?
+    @Environment(\.colorScheme) private var scheme
+    private let gap: CGFloat = 3
+    init(store: TokenUsageStore, mode: Mode = .daily) {
+        self.store = store
+        _mode = ViewState(initialValue: mode)
+    }
+
+    private struct Week: Identifiable { let id: Date; let days: [Date?] }   // nil: after today
+
+    var body: some View {
+        let calendar = Calendar.current
+        let byDay = Dictionary(store.daily.map { ($0.day, $0.counts) }, uniquingKeysWith: { a, _ in a })
+        let weeks = Self.weeks(calendar: calendar)
+        let values = self.values(weeks, byDay)
+        let levels = self.levels(weeks, values)
+        let yearTotal = store.daily.reduce(0) { $0 + $1.counts.total }
+        let thisWeek = weeks.last?.days.compactMap { $0 }.reduce(0) { $0 + (byDay[$1]?.total ?? 0) } ?? 0
+        NativeCard {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    CardTitle(title: L("Token 活动", "Token activity"), symbol: "square.grid.3x3.fill")
+                    Spacer()
+                    HStack(spacing: 14) {
+                        ForEach(Mode.allCases, id: \.self) { option in
+                            Button(title(option)) { mode = option }.buttonStyle(.plain)
+                                .font(.system(size: 13, weight: mode == option ? .semibold : .regular))
+                                .foregroundStyle(mode == option ? Color.primary : Color.secondary)
+                                .accessibilityAddTraits(mode == option ? [.isSelected] : [])
+                        }
+                    }
+                }
+                HStack(alignment: .firstTextBaseline, spacing: 32) {
+                    tile(L("今天", "Today"), byDay[calendar.startOfDay(for: Date())]?.total ?? 0)
+                    tile(L("本周", "This week"), thisWeek)
+                    tile(L("近一年合计", "Past year"), yearTotal)
+                    Spacer()
+                }
+                if yearTotal == 0 {
+                    Text(L("近一年没有 Claude Code 用量记录。", "No Claude Code usage in the past year."))
+                        .font(.system(size: 12)).foregroundStyle(.secondary).frame(maxWidth: .infinity, minHeight: 100)
+                } else {
+                    grid(weeks, levels: levels, values: values)
+                }
+                HStack(spacing: 8) {
+                    Text(readout(values, byDay)).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(1)
+                    Spacer()
+                    legend
+                }
+                DisclosureGroup(L("明细（近 14 天）", "Details (last 14 days)")) { table(Array(store.daily.suffix(14))) }
+                    .font(.system(size: 12))
+            }
+        }
+    }
+
+    /// 53 week columns ending with the current week, in the locale's week order.
+    private static func weeks(calendar: Calendar) -> [Week] {
+        let today = calendar.startOfDay(for: Date())
+        guard let current = calendar.dateInterval(of: .weekOfYear, for: today)?.start else { return [] }
+        return (0..<53).reversed().compactMap { back in
+            guard let start = calendar.date(byAdding: .weekOfYear, value: -back, to: current) else { return nil }
+            let days = (0..<7).map { offset -> Date? in
+                guard let day = calendar.date(byAdding: .day, value: offset, to: start) else { return nil }
+                return day > today ? nil : day
+            }
+            return Week(id: start, days: days)
+        }
+    }
+    /// The value each cell shows in the current view.
+    private func values(_ weeks: [Week], _ byDay: [Date: TokenCounts]) -> [Date: Int] {
+        var result: [Date: Int] = [:], running = 0
+        for week in weeks {
+            let days = week.days.compactMap { $0 }
+            let weekTotal = days.reduce(0) { $0 + (byDay[$1]?.total ?? 0) }
+            for day in days {
+                let own = byDay[day]?.total ?? 0
+                running += own
+                switch mode {
+                case .daily: result[day] = own
+                case .weekly: result[day] = weekTotal
+                case .total: result[day] = running
+                }
+            }
+        }
+        return result
+    }
+    /// Level 0 for no use, then 1...4 by quartile of the active values (per week in the weekly view).
+    private func levels(_ weeks: [Week], _ values: [Date: Int]) -> [Date: Int] {
+        let samples = mode == .weekly ? weeks.compactMap { $0.days.compactMap { $0 }.first.flatMap { values[$0] } }.filter { $0 > 0 }
+                                      : values.values.filter { $0 > 0 }
+        let sorted = samples.sorted()
+        guard !sorted.isEmpty else { return values.mapValues { _ in 0 } }
+        let cuts = [0.25, 0.5, 0.75].map { sorted[min(sorted.count - 1, Int(Double(sorted.count) * $0))] }
+        return values.mapValues { value in value <= 0 ? 0 : 1 + cuts.filter { value > $0 }.count }
+    }
+    /// Validated ordinal steps: light mode darkens with use, dark mode brightens.
+    private var steps: [Color] {
+        let hex: [UInt32] = scheme == .dark ? [0x8C4A35, 0xAF5D42, 0xD27050, 0xE09D88] : [0xE39C85, 0xD97757, 0xB16147, 0x8B4C38]
+        return hex.map { Color(red: Double($0 >> 16 & 0xFF) / 255, green: Double($0 >> 8 & 0xFF) / 255, blue: Double($0 & 0xFF) / 255) }
+    }
+    private func fill(_ level: Int) -> Color { level == 0 ? Color.primary.opacity(0.07) : steps[min(level, 4) - 1] }
+
+    private static let cell: CGFloat = 11
+    /// Fixed-size cells, as many recent weeks as the card's width holds (all 53 at
+    /// the default window width); month labels share the same column positions.
+    private func grid(_ allWeeks: [Week], levels: [Date: Int], values: [Date: Int]) -> some View {
+        let cell = Self.cell, pitch = Self.cell + gap
+        return GeometryReader { geometry in
+            let fit = max(1, min(allWeeks.count, Int((geometry.size.width + gap) / pitch)))
+            let weeks = Array(allWeeks.suffix(fit))
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .top, spacing: gap) {
+                    ForEach(weeks) { week in
+                        VStack(spacing: gap) {
+                            ForEach(0..<7, id: \.self) { row in
+                                if let day = week.days[row] {
+                                    RoundedRectangle(cornerRadius: 2.5)
+                                        .fill(fill(levels[day] ?? 0))
+                                        .overlay { if hovered == day { RoundedRectangle(cornerRadius: 2.5).stroke(Color.primary.opacity(0.55), lineWidth: 1) } }
+                                        .frame(width: cell, height: cell)
+                                        .contentShape(Rectangle())
+                                        .onHover { inside in if inside { hovered = day } else if hovered == day { hovered = nil } }
+                                        .accessibilityElement()
+                                        .accessibilityLabel(day.qishiFormatted(date: .abbreviated, time: .omitted))
+                                        .accessibilityValue(L("\(values[day] ?? 0) 个 token", "\(values[day] ?? 0) tokens"))
+                                } else {
+                                    Color.clear.frame(width: cell, height: cell)
+                                }
+                            }
+                        }
+                    }
+                }
+                ZStack(alignment: .topLeading) {
+                    ForEach(Array(weeks.enumerated()), id: \.element.id) { index, _ in
+                        if let label = monthLabel(weeks, index) {
+                            Text(label).font(.system(size: 10)).foregroundStyle(.secondary).fixedSize()
+                                .offset(x: CGFloat(index) * pitch)
+                        }
+                    }
+                }.frame(height: 14, alignment: .topLeading)
+            }
+        }
+        .frame(height: 7 * cell + 6 * gap + 6 + 14)
+        .onHover { inside in if !inside { hovered = nil } }
+    }
+    /// A month's name under the first week that starts in it (skipped if the next is too close).
+    private func monthLabel(_ weeks: [Week], _ index: Int) -> String? {
+        let calendar = Calendar.current
+        func month(_ i: Int) -> Int? { weeks[i].days.compactMap { $0 }.first.map { calendar.component(.month, from: $0) } }
+        guard let current = month(index) else { return nil }
+        if index > 0, month(index - 1) == current { return nil }
+        if index == 0, weeks.count > 2, month(1) != current || month(2) != current { return nil }
+        return weeks[index].days.compactMap { $0 }.first?.formatted(Date.FormatStyle(locale: Loc.locale).month(.abbreviated))
+    }
+    private var legend: some View {
+        HStack(spacing: 4) {
+            Text(L("少", "Less")).font(.system(size: 10)).foregroundStyle(.secondary)
+            ForEach(0..<5, id: \.self) { level in RoundedRectangle(cornerRadius: 2).fill(fill(level)).frame(width: 10, height: 10) }
+            Text(L("多", "More")).font(.system(size: 10)).foregroundStyle(.secondary)
+        }.accessibilityElement(children: .ignore).accessibilityLabel(L("颜色越深用量越多", "Darker means more tokens"))
+    }
+    private func readout(_ values: [Date: Int], _ byDay: [Date: TokenCounts]) -> String {
+        guard let day = hovered else {
+            return L("来自本机 Claude Code 会话记录", "From local Claude Code transcripts")
+                + (store.updatedAt.map { L(" · 更新于 ", " · updated ") + $0.qishiFormatted(date: .omitted) } ?? "")
+        }
+        let date = day.qishiFormatted(date: .abbreviated, time: .omitted), value = compact(values[day] ?? 0)
+        switch mode {
+        case .daily: return "\(date) · \(value) tokens"
+        case .weekly:
+            let start = Calendar.current.dateInterval(of: .weekOfYear, for: day)?.start ?? day
+            return L("\(start.qishiFormatted(date: .abbreviated, time: .omitted)) 起一周 · \(value) tokens", "Week of \(start.qishiFormatted(date: .abbreviated, time: .omitted)) · \(value) tokens")
+        case .total: return L("截至 \(date) · 累计 \(value) tokens", "Through \(date) · \(value) tokens in total")
+        }
+    }
+    private func title(_ mode: Mode) -> String {
+        switch mode { case .daily: return L("每天", "Daily"); case .weekly: return L("每周", "Weekly"); case .total: return L("累计总量", "Cumulative") }
+    }
+    private func table(_ days: [DailyTokens]) -> some View {
+        Grid(alignment: .trailing, horizontalSpacing: 18, verticalSpacing: 6) {
+            GridRow {
+                Text(L("日期", "Date")).gridColumnAlignment(.leading)
+                Text(L("合计", "Total")); Text(L("输入", "Input")); Text(L("输出", "Output")); Text(L("缓存写入", "Cache write")); Text(L("缓存读取", "Cache read"))
+            }.font(.system(size: 11, weight: .medium)).foregroundStyle(.secondary)
+            ForEach(days.reversed()) { day in
+                GridRow {
+                    Text(day.day.qishiFormatted(date: .abbreviated, time: .omitted))
+                    Text(compact(day.counts.total)).fontWeight(.medium)
+                    Text(compact(day.counts.input)); Text(compact(day.counts.output))
+                    Text(compact(day.counts.cacheWrite)); Text(compact(day.counts.cacheRead))
+                }.font(.system(size: 11)).monospacedDigit()
+            }
+        }.padding(.top, 8).frame(maxWidth: .infinity, alignment: .leading)
+    }
+    private func tile(_ label: String, _ value: Int) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label).font(.system(size: 11)).foregroundStyle(.secondary)
+            Text(compact(value)).font(.system(size: 22, weight: .semibold))
+        }
+    }
+    private func compact(_ value: Int) -> String {
+        value.formatted(.number.notation(.compactName).precision(.significantDigits(1...3)).locale(Loc.locale))
     }
 }
 struct ClaudeApprovalCard: View {
