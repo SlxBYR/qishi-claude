@@ -94,7 +94,7 @@ struct ClawdStage: View {
 @MainActor enum ClaudeLogoArt {
     struct Layout: Decodable {
         struct Spoke: Decodable { let file: String; let angle: Double }
-        let size: [Double]; let center: [Double]; let spokes: [Spoke]
+        let size: [Double]; let center: [Double]; let core: String; let coreRadius: Double; let spokes: [Spoke]
     }
     static let folder = Bundle.main.resourceURL?.appendingPathComponent("ClaudeLogo")
     static let layout: Layout? = folder.flatMap { try? JSONDecoder().decode(Layout.self, from: Data(contentsOf: $0.appendingPathComponent("layout.json"))) }
@@ -106,10 +106,11 @@ struct ClawdStage: View {
         return image
     }
 }
-/// The workbench mark. Every ray of the Claude starburst stretches and
-/// settles along its own axis on its own rhythm, so the star breathes in many
-/// directions at once; widths never change and the centre stays put. It
-/// quickens while Claude works and holds still with Reduce Motion.
+/// The workbench mark. The core (hub and the roots of all rays, where they
+/// join) never moves; each ray's outer part slowly lengthens and shortens from
+/// the point where it leaves the core, so the star stays one piece and its
+/// widths never change. Rays move on their own slow rhythms, a little quicker
+/// while Claude works, and hold still with Reduce Motion.
 struct ClaudeLogoView: View {
     var busy: Bool
     var size: CGFloat = 200
@@ -117,19 +118,21 @@ struct ClaudeLogoView: View {
     var body: some View {
         Group {
             if let layout = ClaudeLogoArt.layout {
-                let anchor = UnitPoint(x: layout.center[0] / layout.size[0], y: layout.center[1] / layout.size[1])
+                let width = layout.size[0], height = layout.size[1]
+                let center = UnitPoint(x: layout.center[0] / width, y: layout.center[1] / height)
+                // After rotating a ray onto the +x axis, it leaves the core here.
+                let root = UnitPoint(x: (layout.center[0] + layout.coreRadius) / width, y: layout.center[1] / height)
                 TimelineView(.animation(paused: reduceMotion)) { context in
-                    let time = context.date.timeIntervalSinceReferenceDate * (busy ? 1.9 : 1)
+                    let time = context.date.timeIntervalSinceReferenceDate * (busy ? 1.5 : 1)
                     ZStack {
-                        layer("hub.png")
                         ForEach(layout.spokes.indices, id: \.self) { index in
                             let angle = Angle.degrees(layout.spokes[index].angle)
-                            // Rotate the ray onto the x axis, stretch only its length, rotate back.
                             layer(layout.spokes[index].file)
-                                .rotationEffect(-angle, anchor: anchor)
-                                .scaleEffect(x: reduceMotion ? 1 : stretch(index, time), y: 1, anchor: anchor)
-                                .rotationEffect(angle, anchor: anchor)
+                                .rotationEffect(-angle, anchor: center)
+                                .scaleEffect(x: reduceMotion ? 1 : stretch(index, time), y: 1, anchor: root)
+                                .rotationEffect(angle, anchor: center)
                         }
+                        layer(layout.core)
                     }
                 }
             } else {
@@ -138,14 +141,14 @@ struct ClaudeLogoView: View {
         }.frame(width: size, height: size)
             .accessibilityElement().accessibilityLabel("Claude")
     }
-    /// Two incommensurate waves per ray with golden-ratio phases: neighbours
-    /// never move in step, so no rotating wave appears.
+    /// A slow main wave (7–11 s) plus a slower one; golden-ratio phases keep
+    /// neighbouring rays out of step, so no rotating pattern appears.
     private func stretch(_ index: Int, _ time: Double) -> CGFloat {
-        let seed = Double(index) * 0.618_033_988_75
-        let speed = 0.75 + (seed.truncatingRemainder(dividingBy: 1)) * 0.6
+        let seed = (Double(index) * 0.618_033_988_75).truncatingRemainder(dividingBy: 1)
+        let period = 9 / (0.8 + seed * 0.45)
         let phase = seed * 2 * .pi
-        let wave = 0.62 * sin(time * speed * 1.7 + phase) + 0.38 * sin(time * speed * 3.9 + phase * 2.3)
-        return CGFloat(1 + 0.13 * wave)
+        let wave = 0.7 * sin(time * 2 * .pi / period + phase) + 0.3 * sin(time * 2 * .pi / (period * 1.9) + phase * 2.3)
+        return CGFloat(1 + 0.11 * wave)
     }
     private func layer(_ file: String) -> some View {
         Group { if let image = ClaudeLogoArt.image(file) { Image(nsImage: image).resizable().scaledToFit() } }

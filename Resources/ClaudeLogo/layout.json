@@ -8,54 +8,57 @@
     290.79
   ],
   "hubRadius": 66,
+  "core": "core.png",
+  "coreRadius": 145.2,
+  "overlap": 30,
   "spokes": [
     {
       "file": "spoke-00.png",
-      "angle": 21.0
+      "angle": 17.43
     },
     {
       "file": "spoke-01.png",
-      "angle": 46.0
+      "angle": 44.56
     },
     {
       "file": "spoke-02.png",
-      "angle": 60.0
+      "angle": 63.01
     },
     {
       "file": "spoke-03.png",
-      "angle": 93.5
+      "angle": 93.24
     },
     {
       "file": "spoke-04.png",
-      "angle": 119.5
+      "angle": 119.78
     },
     {
       "file": "spoke-05.png",
-      "angle": 145.5
+      "angle": 143.92
     },
     {
       "file": "spoke-06.png",
-      "angle": 174.0
+      "angle": 176.45
     },
     {
       "file": "spoke-07.png",
-      "angle": 214.0
+      "angle": 210.56
     },
     {
       "file": "spoke-08.png",
-      "angle": 241.0
+      "angle": 241.14
     },
     {
       "file": "spoke-09.png",
-      "angle": 276.5
+      "angle": 279.35
     },
     {
       "file": "spoke-10.png",
-      "angle": 311.5
+      "angle": 314.19
     },
     {
       "file": "spoke-11.png",
-      "angle": 351.5
+      "angle": 354.44
     }
   ]
 }

@@ -1,7 +1,7 @@
-栖时·Claude 2.2.1（build 27，原生 Liquid Glass 界面、Claude 工作台、WebRTC 检测与 Claude Desktop 额度）
+栖时·Claude 2.2.1（build 28，原生 Liquid Glass 界面、Claude 工作台、WebRTC 检测与 Claude Desktop 额度）
 
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
-工作台左侧是独立的 Claude 标志动画：12 道光芒各自沿自身方向伸缩、节奏互不相同，Claude 工作时加快；右侧玻璃卡片显示状态。
+工作台左侧是独立的 Claude 标志动画：中心与各道光芒的根部固定不动，光芒外段从根部缓慢伸缩（周期约 7–11 秒、节奏互不相同），标志始终连成一体；Claude 工作时稍快。右侧玻璃卡片显示状态。
 侧栏底部是 Clawd 小螃蟹，在原版动画与栖时新绘的 6 段动画（蹦跳、挥手、张望、横着走、比心、哼歌）之间随机播放，点一下换一段。
 侧栏同时显示 WebRTC 泄漏检测：用离屏 WebKit 打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与 WebRTC 公网 IP；启动时检测，之后每 5 分钟一次，点击状态可重新检测。结果不是 No Leak 时，Clawd 持续播放错误动画。
 原生 macOS Claude 工作台与独立 Windows 桌面端，基于用户提供的栖时源码整合。
@@ -66,7 +66,7 @@ Windows：在 Windows/ 运行 npm ci、npm test、npm run build；也可运行 S
 可通过 QISHI_BUILD_DIR 与 QISHI_OUTPUT_DIR 指定缓存和输出目录。
 测试脚本需要 Node.js，并在已登录的 macOS 桌面会话运行真实 WebKit 与窗口检查。贴边截图默认写入 .build/MotionVerification，可通过 QISHI_MOTION_TEST_OUTPUT 修改路径。
 桌宠测试覆盖静态贴边、悬停不探出、拖动与隐藏；脚本另外编译独立测试程序验证原生贴边移动中断及过期回调。
-Claude 标志图层由 python3 Scripts/make-claude-logo.py 从原图拆分（中心与每道光芒各一层），输出到 Resources/ClaudeLogo。
+Claude 标志图层由 python3 Scripts/make-claude-logo.py 从原图拆分（固定核心一层、每道光芒外段各一层并与核心重叠），输出到 Resources/ClaudeLogo。
 Clawd 新动画由 python3 Scripts/make-clawd-animations.py 在 Clawd 原始 15×16 像素网格上逐帧绘制（需要 Pillow），输出到 Resources/Clawd/qishi-*.gif。
 使用完整 Xcode 可打开 Qishi.xcodeproj。主应用使用非沙盒签名以访问用户主动接入的 Claude 设置；WidgetKit 扩展仍需自己的开发团队及 App Group。
 命令行交付版不嵌入系统 WidgetKit 扩展；双角色浮窗可以直接使用。
