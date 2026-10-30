@@ -2,6 +2,7 @@
 
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
 工作台左侧是独立的 Claude 标志动画：中心与各道光芒的根部固定不动，光芒外段从根部缓慢伸缩（周期约 7–11 秒、节奏互不相同），标志始终连成一体；Claude 工作时稍快。右侧玻璃卡片显示状态。
+侧栏导航下方显示一张海报（Resources/Sidebar/poster.png），只作展示，点按不切换页面。
 侧栏底部是 Clawd 小螃蟹，在原版动画与栖时新绘的 6 段动画（蹦跳、挥手、张望、横着走、比心、哼歌）之间随机播放，点一下换一段。
 侧栏同时显示 WebRTC 泄漏检测：用离屏 WebKit 打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与 WebRTC 公网 IP；启动时检测，之后每 5 分钟一次，点击状态可重新检测。结果不是 No Leak 时，Clawd 持续播放错误动画。
 原生 macOS Claude 工作台与独立 Windows 桌面端，基于用户提供的栖时源码整合。
@@ -96,3 +97,12 @@ Claude 娘素材：CrossPet / lokicorvus；社区 Claude 娘设定。保留 CC B
 本整合包按用户要求供个人本机使用；公开分发包含原版 Clawd 美术的整合应用前，须向权利人取得相应授权。
 完整素材许可位于 Resources/Claude/LICENSE.md 与 Resources/Clawd/LICENSE，文件指纹见同目录 manifest.json。新增 Claude 娘拖动差分沿用原角色设定与素材授权。
 非 Anthropic 官方应用。
+
+许可
+本项目源码以 GNU Affero General Public License v3.0（AGPL-3.0）发布，全文见 LICENSE。
+项目内含并改编了 Clawd on Desk 的 AGPL-3.0 代码（Resources/ClawdWeb、Upstream/clawd-on-desk），整体分发只能沿用 AGPL-3.0，这也是上游授权允许范围内最开放的选择；CrossPet 的 MIT 代码与之兼容，原版权声明保留在 Resources/CrossPet/LICENSE。
+AGPL-3.0 不覆盖美术素材：Claude 娘立绘为 CC BY-NC-SA 4.0，Clawd 美术保留全部权利，侧栏海报由用户提供、权利归原作者，均以各自许可为准（见上文“素材与来源”）。
+
+致谢
+感谢 CrossPet（https://github.com/lokicorvus/crosspet，lokicorvus 与 CrossPet 贡献者）：桌面 Claude 娘的动作逻辑、effects.js 特效与全部角色立绘都来自这个项目。
+感谢 Clawd on Desk（https://github.com/rullerzhou-afk/clawd-on-desk，鹿鹿 rullerzhou-afk 与贡献者）：Clawd 小螃蟹的原始 SVG、renderer.js、样式与交互逻辑来自这个项目，栖时新绘的小螃蟹动画也画在它的原始像素网格上。

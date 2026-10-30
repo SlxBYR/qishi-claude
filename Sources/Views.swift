@@ -197,6 +197,13 @@ struct QishiSidebar: View {
             row(L("桌宠与接入", "Companions"), symbol: "person.2", page: 3)
             row(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
             row(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
+            // Untagged, so it never takes the selection.
+            if let poster = SidebarPoster.image {
+                Image(nsImage: poster).resizable().interpolation(.high).aspectRatio(contentMode: .fit)
+                    .frame(height: 220).frame(maxWidth: .infinity)
+                    .padding(.top, 12).listRowSeparator(.hidden)
+                    .accessibilityHidden(true)
+            }
         }.listStyle(.sidebar)
             // Breathing room below the window controls.
             .contentMargins(.top, 14, for: .scrollContent)
@@ -211,6 +218,11 @@ struct QishiSidebar: View {
     private func row(_ title: String, symbol: String, page: Int) -> some View {
         Label(title, systemImage: symbol).listItemTint(.qishiAccent).tag(page).accessibilityIdentifier("sidebar-\(page)")
     }
+}
+
+/// Poster shown under the sidebar's navigation rows.
+enum SidebarPoster {
+    static let image = Bundle.main.resourceURL.flatMap { NSImage(contentsOf: $0.appendingPathComponent("Sidebar/poster.png")) }
 }
 
 /// Sidebar footer: the browserleaks.com WebRTC verdict; a click re-checks.
