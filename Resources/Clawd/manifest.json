@@ -1,0 +1,67 @@
+{
+  "repository": "https://github.com/rullerzhou-afk/clawd-on-desk",
+  "commit": "834f2b83eb6c9725956c5c541b59f825b48b4b9a",
+  "modified": false,
+  "files": [
+    {
+      "file": "building.gif",
+      "upstream": "assets/gif/clawd-building.gif",
+      "gitBlobSHA": "6703f528d2533d4b0287678aa2931c4b6b7e298e"
+    },
+    {
+      "file": "error.gif",
+      "upstream": "assets/gif/clawd-error.gif",
+      "gitBlobSHA": "14e94384132deb261b0e9923f3296db68c653220"
+    },
+    {
+      "file": "happy.gif",
+      "upstream": "assets/gif/clawd-happy.gif",
+      "gitBlobSHA": "7aa719949f2e419abeea1e09c7054795440a50e6"
+    },
+    {
+      "file": "headphones-groove.gif",
+      "upstream": "assets/gif/clawd-headphones-groove.gif",
+      "gitBlobSHA": "9fc7b6bdb6282d87f964955b1eefba240f9787c7"
+    },
+    {
+      "file": "idle-reading.gif",
+      "upstream": "assets/gif/clawd-idle-reading.gif",
+      "gitBlobSHA": "a0969c8c94f288ee85fa71337f43cf81747afd5c"
+    },
+    {
+      "file": "idle.gif",
+      "upstream": "assets/gif/clawd-idle.gif",
+      "gitBlobSHA": "af0f0792cb9bc5a692a7803687356c5ccffd2702"
+    },
+    {
+      "file": "juggling.gif",
+      "upstream": "assets/gif/clawd-juggling.gif",
+      "gitBlobSHA": "919fad7be2fc9bb71fba536373409c4ea165ff3c"
+    },
+    {
+      "file": "notification.gif",
+      "upstream": "assets/gif/clawd-notification.gif",
+      "gitBlobSHA": "f0bbf1108bf6b93394d0a17259e1b35e521fcb45"
+    },
+    {
+      "file": "sleeping.gif",
+      "upstream": "assets/gif/clawd-sleeping.gif",
+      "gitBlobSHA": "3552c73488bc48aab8c7e5df9fdebfe9a970bb80"
+    },
+    {
+      "file": "sweeping.gif",
+      "upstream": "assets/gif/clawd-sweeping.gif",
+      "gitBlobSHA": "b46e3b61df38e9548cf777c373a983cf1913cb79"
+    },
+    {
+      "file": "thinking.gif",
+      "upstream": "assets/gif/clawd-thinking.gif",
+      "gitBlobSHA": "8936988e5ab31366bb71c426c465332bab9f6395"
+    },
+    {
+      "file": "typing.gif",
+      "upstream": "assets/gif/clawd-typing.gif",
+      "gitBlobSHA": "eb2a64489fecaf5745efa45412f4d824a8dcad6d"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+Claude 娘 · 屏幕边缘悬停差分
+日期：2026-10-30
+制作方式：内置 imagegen，参考现有 idle.webp、edge_left_peek.webp、edge_right_peek.webp 绘制左右各16帧连续图集。机械拆帧、统一画布与脚底锚点，未以程序重绘角色。左右分别绘制，花饰保持原有侧别。
+原角色来源：CrossPet / lokicorvus；沿用 CC BY-NC-SA 4.0，详见 ../LICENSE.md。
+图集原始分辨率：1254 × 1254；每格约313 × 313。输出640 × 640透明PNG便于统一播放画布，不代表新增原生细节。
+
+左侧图集提示词：
+Use case: identity-preserve.
+Asset type: ONE production-ready transparent sprite atlas, a coherent hand-drawn animation sequence for an existing desktop companion.
+Reference 1 (idle.webp) is the EXACT character design and drawing style. Reference 2 (edge_left_peek.webp) defines the LEFT SCREEN EDGE peeking direction and shy expression. Preserve her identity exactly: large chibi head, very short small body, long copper-orange hair, amber eyes, orange daisy hair ornament always on VIEWER RIGHT, black hair ribbons and ivory tassels, cream scholarly lolita dress with brown and orange skirt panels, fine gold botanical embroidery, orange flower brooches, lace cuffs and hem, brown Mary Jane shoes, decorated brown book. Same clean detailed thin brown anime linework, warm flat cel shading. Do not make her a different mascot, do not simplify the costume.
+Output a single 2048 x 2048 RGBA sprite sheet with EXACTLY 16 equal 512 x 512 square cells, arranged in a perfectly regular 4 COLUMN by 4 ROW grid. Transparent background everywhere. No cell outlines, no labels or numbers, no text, no watermark, no fake checkerboard. One complete sprite inside each cell, all art inside its own cell with at least 24 pixels transparent margin. Full body including complete hair and shoes in every cell. NO CROPPING at frame edges; app will mask the left edge itself. All 16 drawings must have identical head size, body proportions, camera distance, ground level, and mostly fixed central anchor; character about 450 pixels tall per cell. Frame progression goes left to right, then next row. Each cell is a genuinely redrawn consecutive animation pose, not a duplicate or unrelated illustration.
+ACTION: she is tucked against the LEFT edge of the screen and gradually leans toward the VIEWER RIGHT to peek out when the mouse hovers, then gives a tiny delighted wave. Her free hand is on VIEWER LEFT at shoulder height as though lightly holding the invisible left screen edge; her other hand holds the existing book to her chest. Do NOT draw wall, edge, furniture, mouse cursor, motion lines, icons, sparkles or any other prop.
+Frame 1: calm almost upright tucked pose, closed tiny smile, eyes forward, long hair resting.
+Frame 2: attentive, eyes slightly widen, chin lifts 1 degree, body dips 2 pixels, free fingers begin loosening.
+Frame 3: small anticipation, head gently dips and tilts 2 degrees toward viewer right; hair still resting.
+Frame 4: starts peeking inward, head/body lean 3 degrees right, eyes curious, tiny o mouth.
+Frame 5: lean 5 degrees right, shoulders follow, hair begins trailing to viewer left.
+Frame 6: lean 7 degrees right, book hugs chest, trailing tips arc softly left.
+Frame 7: lean 9 degrees right, curious wide eyes, tassel and skirt slightly lag.
+Frame 8: maximum peek at 11 degrees right, slightly raised chin, expressive tiny o mouth, most hair follow-through.
+Frame 9: soft recoil to 9 degrees, mouth turns into small happy smile, hair tips keep drifting.
+Frame 10: settles at 8 degrees, free hand opens from edge into tiny greeting, hair rebounds softly.
+Frame 11: same pose, free hand raised a little, palm open, fingers together, friendly smile.
+Frame 12: small wrist wave outward, body at 8 degrees, skirt and tassels settle.
+Frame 13: wrist wave inward, friendly open eyes; no large displacement.
+Frame 14: another tiny wrist wave outward with happy closed-eye smile.
+Frame 15: eyes half reopen, waving hand lowers slightly back toward invisible edge, body at 8 degrees.
+Frame 16: eyes open, calm friendly peek at 8 degrees, free hand rests near edge, book secure, hair nearly settled.
+The movement must read as one smooth lively animated gesture with strong drawing consistency, SMALL incremental pose differences, anticipation and overlapping hair/skirt motion. Keep her flower on viewer RIGHT in EVERY frame. Do not mirror. Make each of the 16 cells polished and equally detailed.
+
+右侧图集提示词：
+Use case: identity-preserve.
+Asset type: ONE production-ready transparent sprite atlas, a coherent hand-drawn animation sequence for an existing desktop companion.
+Reference 1 (idle.webp) is the EXACT character design and drawing style. Reference 2 (edge_right_peek.webp) defines the RIGHT SCREEN EDGE peeking direction and shy expression. Preserve her identity exactly: large chibi head, very short small body, long copper-orange hair, amber eyes, orange daisy hair ornament always on VIEWER RIGHT, black hair ribbons and ivory tassels, cream scholarly lolita dress with brown and orange skirt panels, fine gold botanical embroidery, orange flower brooches, lace cuffs and hem, brown Mary Jane shoes, decorated brown book. Same clean detailed thin brown anime linework, warm flat cel shading. Do not make her a different mascot, do not simplify the costume.
+Output a single 2048 x 2048 RGBA sprite sheet with EXACTLY 16 equal 512 x 512 square cells, arranged in a perfectly regular 4 COLUMN by 4 ROW grid. Transparent background everywhere. No cell outlines, no labels or numbers, no text, no watermark, no fake checkerboard. One complete sprite inside each cell, all art inside its own cell with at least 24 pixels transparent margin. Full body including complete hair and shoes in every cell. NO CROPPING at frame edges; app will mask the right edge itself. All 16 drawings must have identical head size, body proportions, camera distance, ground level, and mostly fixed central anchor; character about 450 pixels tall per cell. Frame progression goes left to right, then next row. Each cell is a genuinely redrawn consecutive animation pose, not a duplicate or unrelated illustration.
+ACTION: she is tucked against the RIGHT edge of the screen and gradually leans toward the VIEWER LEFT to peek out when the mouse hovers, then gives a tiny delighted wave. Her free hand is on VIEWER RIGHT at shoulder height as though lightly holding the invisible right screen edge; her other hand holds the existing book to her chest. Do NOT draw wall, edge, furniture, mouse cursor, motion lines, icons, sparkles or any other prop.
+Frame 1: calm almost upright tucked pose, closed tiny smile, eyes forward, long hair resting.
+Frame 2: attentive, eyes slightly widen, chin lifts 1 degree, body dips 2 pixels, free fingers begin loosening.
+Frame 3: small anticipation, head gently dips and tilts 2 degrees toward viewer left; hair still resting.
+Frame 4: starts peeking inward, head/body lean 3 degrees left, eyes curious, tiny o mouth.
+Frame 5: lean 5 degrees left, shoulders follow, hair begins trailing to viewer right.
+Frame 6: lean 7 degrees left, book hugs chest, trailing tips arc softly right.
+Frame 7: lean 9 degrees left, curious wide eyes, tassel and skirt slightly lag.
+Frame 8: maximum peek at 11 degrees left, slightly raised chin, expressive tiny o mouth, most hair follow-through.
+Frame 9: soft recoil to 9 degrees, mouth turns into small happy smile, hair tips keep drifting.
+Frame 10: settles at 8 degrees, free hand opens from edge into tiny greeting, hair rebounds softly.
+Frame 11: same pose, free hand raised a little, palm open, fingers together, friendly smile.
+Frame 12: small wrist wave outward, body at 8 degrees, skirt and tassels settle.
+Frame 13: wrist wave inward, friendly open eyes; no large displacement.
+Frame 14: another tiny wrist wave outward with happy closed-eye smile.
+Frame 15: eyes half reopen, waving hand lowers slightly back toward invisible edge, body at 8 degrees.
+Frame 16: eyes open, calm friendly peek at 8 degrees, free hand rests near edge, book secure, hair nearly settled.
+The movement must read as one smooth lively animated gesture with strong drawing consistency, SMALL incremental pose differences, anticipation and overlapping hair/skirt motion. Keep her flower on viewer RIGHT in EVERY frame. Do not mirror. Make each of the 16 cells polished and equally detailed.
+

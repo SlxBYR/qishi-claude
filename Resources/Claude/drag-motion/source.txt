@@ -1,0 +1,42 @@
+Claude 娘 · 连续拖动差分原画
+
+制作方式：内置 imagegen；以现有 Claude 娘立绘和拖动图为参考，绘制抓起、悬空摆动、放下三段各16幅，共48幅连续差分。
+原画：grab-atlas.png、sway-atlas.png、drop-atlas.png。
+原角色素材：CrossPet / lokicorvus，社区 Claude 娘设定。此衍生素材沿用 CC BY-NC-SA 4.0；完整许可见 LICENSE.md。
+资源处理：按每个角色主体及透明边缘拆分画面，等比统一组间尺寸、对齐脸部位置，保持透明背景；播放时直接显示各幅差分，并配合连续微运动。
+
+【sway】
+Use case: identity-preserve. Create a PRODUCTION ANIMATION SPRITE SHEET for the exact Claude-girl desktop pet in reference 1. Reference 2 is the same character's original costume detail. This is ONE image containing exactly 16 closely spaced in-between drawings in an EXACT UNIFORM 4-column by 4-row grid, reading left to right then next row. Square 2048x2048 canvas if possible. Every cell is exactly one quarter of image width/height. No visible grid, no borders, no labels, no text. TRUE TRANSPARENT RGBA background. Full body comfortably inside EACH cell, equal scale in all cells, same camera, head top at same local y, hair and shoes never touch adjacent cells. Every character occupies about 84% of cell height. Maintain pixel-registered center/head position across all 16 drawings. Draw one coherent seamless SWAY ANIMATION LOOP of her being held in the air by an invisible grip at crown: legs bent with both shoes dangling, both hands clutching the same book at chest. All 16 frames are DISTINCT incremental drawings, NOT 4 repeated poses. FRAME HEAD/BODY TILT degrees about fixed crown anchor in reading order: 0,-2,-4,-6,-7,-6,-4,-2,0,+2,+4,+6,+7,+6,+4,+2. Feet gently swing on the opposite side of the crown; long hair tips and skirt hem trail by about two frames, adding believable soft follow-through. Tiny knees and hands adjust incrementally. Consistent surprised little O mouth and same amber eyes throughout, no expression flipping. Lock identical facial features, eye size, copper-orange long hair, orange flower and black ribbon/tassels on VIEWER RIGHT at all times, cream scholarly embroidered dress with asymmetric orange panel on viewer RIGHT and black panel viewer LEFT, lace, brooches, dark book and brown shoes. Never mirror her outfit. Match original chibi line art, flat soft cel shading and warm palette exactly. No props added, no cursor, hands, hooks, strings, shadows, ground, particles or motion lines. The point is genuine frame-by-frame fluid small movement: adjacent drawings should nearly overlap. The last frame must transition naturally to first frame. Prioritize pose consistency and equal cell registration over varied illustrations.
+
+【grab】
+Use case: identity-preserve. Draw ONE production sprite sheet containing exactly 16 small-increment consecutive hand-drawn animation frames, on a true transparent background. EXACT 4 columns by 4 rows, read left to right, top to bottom. CRITICAL: leave generous CLEAR TRANSPARENT GUTTERS between all characters and around outer canvas; NO character may touch another cell or canvas edge. All cells same width and height, fixed camera, equal character proportions, head anchor precisely registered. Each full character should fill only 78 percent of its cell height and 78 percent of its width, centered. No labels/grid/text/numbers. Reference 1 defines the consistent animation drawing style and same Claude-girl across sixteen frames. Reference 2 defines original standing pose and costume; reference 3 is the suspended endpoint. Copper orange long hair, amber eyes, orange daisy hair clip on viewer RIGHT with black ribbon and ivory tassels, cream embroidered scholarly dress with black panel viewer LEFT, orange panel viewer RIGHT, lace, orange flower brooches, dark brown book, brown Mary Jane shoes. Never mirror ornaments, never change her face identity/head size. No cursor, extra hand, string, props, floor, shadows, effects, motion lines. Every cell must show a distinct small incremental pose, adjacent frames nearly overlapping; avoid restarts or large jumps at row boundaries. Square 2048x2048 if possible. Action: a SINGLE PICK-UP TRANSITION from standing to suspended. Frames1-3: same upright standing idle as reference2, hands holding book at abdomen, feet level, calm closed mouth; she anticipates lifting with a tiny squish of knees and eyes opening. Frames4-6: shoulders lift, book moves smoothly higher, mouth gradually becomes little O, heels rise, hair starts lagging down. Frames7-10: feet gradually leave ground and knees bend, skirt lifts a little, head rises gently without changing size, hands bring book against chest, hair tips follow with delay. Frames11-13: small overshoot in lift, shoes begin a tiny leftward pendulum, soft skirt flutters. Frames14-16: gently settle into centered suspended pose matching reference3 and frame1 of the sway sheet, both feet dangling and bent knees, surprised little O face, book snug at chest. Registration: crown sits in almost the same place across cells, any vertical change at most3 percent cellheight. The motion should read as a smooth accelerating lift followed by soft settle, no flying leap, no posed illustrations.
+
+【drop】
+Use case: identity-preserve. Draw ONE production sprite sheet containing exactly 16 small-increment consecutive hand-drawn animation frames, on a true transparent background. EXACT 4 columns by 4 rows, read left to right, top to bottom. CRITICAL: leave generous CLEAR TRANSPARENT GUTTERS between all characters and around outer canvas; NO character may touch another cell or canvas edge. All cells same width and height, fixed camera, equal character proportions, head anchor precisely registered. Each full character should fill only 78 percent of its cell height and 78 percent of its width, centered. No labels/grid/text/numbers. Reference 1 defines the consistent animation drawing style and same Claude-girl across sixteen frames. Reference 2 defines original standing pose and costume; reference 3 is the suspended endpoint. Copper orange long hair, amber eyes, orange daisy hair clip on viewer RIGHT with black ribbon and ivory tassels, cream embroidered scholarly dress with black panel viewer LEFT, orange panel viewer RIGHT, lace, orange flower brooches, dark brown book, brown Mary Jane shoes. Never mirror ornaments, never change her face identity/head size. No cursor, extra hand, string, props, floor, shadows, effects, motion lines. Every cell must show a distinct small incremental pose, adjacent frames nearly overlapping; avoid restarts or large jumps at row boundaries. Square 2048x2048 if possible. Action: a SINGLE LANDING TRANSITION from centered suspension back to standing, with gentle compression and rebound. Frames1-3: start exactly like the centered suspended character in reference3 (also frame1 of reference1 sheet), hands clutching book at chest, knees bent, shoes dangling, surprised small O mouth. Frames4-7: legs extend smoothly downward and straighten, book lowers a little, hair and skirt still float, eyebrows begin relaxing. Frames8-10: both shoe soles gently reach the invisible baseline, knees softly compress 2-3 percent bodyheight, hair and skirt continue settling down with delay. Frames11-13: a subtle upright rebound, hands lower book toward abdomen, mouth turns into tiny relieved closed smile. Frames14-16: all motion decays into the original calm upright idle of reference2, feet level close together, natural hanging hair and dress. Keep crown in nearly the same registered location, no more than3 percent cellheight variation. Do not make a second lift at end. Every intermediate frame must advance this one movement smoothly, including across row boundaries.
+
+
+Claude 娘拖动动画原画与拆帧说明
+
+原画
+• grab-atlas.png：抓起，4×4，共 16 幅。
+• sway-atlas.png：悬空轻摆，4×4，共 16 幅。
+• drop-atlas.png：放下，4×4，共 16 幅。
+三张原画均由图像生成工具绘制，保留原始透明 PNG；原图尺寸均为 1254×1254。
+各组顺序均为从左到右、从上到下。
+
+运行时素材
+位置：../Qishi/Resources/Claude/drag-motion/
+文件：dragging-grab-00.png 至 dragging-grab-15.png；sway、drop 同样各 16 帧，共 48 帧。
+每帧统一为 364×364 RGBA 透明 PNG，脸部参考中心对齐在 (176,136)。
+同目录 alignment.json 保存原图裁框、脸部参考坐标、归一化倍率与输出文件对应关系。
+
+拆帧方式
+原画透明外边距与格间距不规则，未按四等分直接切图。
+使用 alpha 连通主体确定 16 个角色，并将低透明边缘按最近主体分配；分割时不阈值删除像素、不去边、不重绘。
+sway 保持 1:1 原生像素，仅作整数平移；逐像素核对通过，全部 1,088,567 个非零 alpha 像素保留。
+grab 与 drop 各使用全组固定 1.08 倍等比规范化，以接近 sway 的脸部尺寸；使用预乘 alpha 双线性采样，保留原生透明轮廓，未逐帧改变缩放倍率。
+统一画布比最初建议的 344 多留 20 像素保护边距，避免裁去原画中极浅的透明散点；所有输出帧四边均为透明。
+原图中已触及画布右边或底边的部分仅按原图保留，不补画、不猜测缺失像素。
+
+授权
+新增画面参考项目已有 Claude 娘设定与画风，沿用 CC BY-NC-SA 4.0；来源与角色授权参见 ../Qishi/Resources/Claude/LICENSE.md。

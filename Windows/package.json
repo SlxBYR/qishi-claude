@@ -1,0 +1,22 @@
+{
+  "name": "qishi-claude-windows",
+  "productName": "Qishi Claude",
+  "version": "2.2.1",
+  "private": true,
+  "description": "栖时 · Claude Windows 桌面伙伴",
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "demo": "electron . --demo",
+    "test": "node --test test/*.test.cjs",
+    "build": "node scripts/package.cjs",
+    "verify-ui": "electron . --verify-ui"
+  },
+  "dependencies": {
+    "imapflow": "2.10.0"
+  },
+  "devDependencies": {
+    "electron": "45.1.0",
+    "@electron/packager": "20.3.0"
+  }
+}

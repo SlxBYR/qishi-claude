@@ -1,0 +1,844 @@
+{
+  "repository": "https://github.com/lokicorvus/crosspet",
+  "commit": "5c64326b6e7fc175eda0360c0bb5c4732541d138",
+  "modified": true,
+  "upstreamBlobs": [
+    {
+      "file": "annoyed.webp",
+      "sha": "3b912b8850f59111db1d1ae85dd652e013cafe9e"
+    },
+    {
+      "file": "asking.webp",
+      "sha": "dc422559c72f942bcff1d25f02ba8a5a2f76aa64"
+    },
+    {
+      "file": "avatar.webp",
+      "sha": "16b776f7ec3d935a6668bec137934b0b669d9cf4"
+    },
+    {
+      "file": "busy_left.webp",
+      "sha": "6c3655088081a03136ebe18ddce8b00dd1800225"
+    },
+    {
+      "file": "busy_right.webp",
+      "sha": "9900bbe2d9f366a2132661b8cf8730c47839178d"
+    },
+    {
+      "file": "bye.webp",
+      "sha": "f190db16a44728feb5f757e2bebdabf2c2ea7c81"
+    },
+    {
+      "file": "clawd.webp",
+      "sha": "bdaab6ddc03e761345b34e306c0215c8e2b1b82d"
+    },
+    {
+      "file": "coaxed.webp",
+      "sha": "897d389390be8396832adc60d40364d555e37478"
+    },
+    {
+      "file": "compact.webp",
+      "sha": "4123322dc3946c0214173270ffef6f17b0f82be6"
+    },
+    {
+      "file": "delegating.webp",
+      "sha": "d74cbd665cc8bba8105bfb8f6757b108eb173926"
+    },
+    {
+      "file": "dizzy.webp",
+      "sha": "077d102c333f477095464263bf0af8ab70bb84f2"
+    },
+    {
+      "file": "edge_left.webp",
+      "sha": "3846be7f0c485f64e38e4e10532f5d8d75baea8d"
+    },
+    {
+      "file": "edge_left_peek.webp",
+      "sha": "681c630c0a8d034fdbbdb04d6ece78c6befa1132"
+    },
+    {
+      "file": "edge_right.webp",
+      "sha": "9b8a10736ca2c1390af3e2c53144b0b1ae8be593"
+    },
+    {
+      "file": "edge_right_peek.webp",
+      "sha": "5ef220ce932777f4387eb45e80e7be65cb5a6f90"
+    },
+    {
+      "file": "fest_christmas.webp",
+      "sha": "a0acb1ba4c6f2e4ce954f3e94f3f9bcaf485378e"
+    },
+    {
+      "file": "fest_dragonboat.webp",
+      "sha": "5144a9b210ee5934c735b737bcc8f6aff5a3a38d"
+    },
+    {
+      "file": "fest_halloween.webp",
+      "sha": "b47a915480924153d1aeef91f5ca4cb5aa79de90"
+    },
+    {
+      "file": "fest_lantern.webp",
+      "sha": "ef4de2c06b58efb14fff7cd34b71b60a0006a2d3"
+    },
+    {
+      "file": "fest_midautumn.webp",
+      "sha": "eae1b968897088915d26a15218b2a8cd374a72d2"
+    },
+    {
+      "file": "fest_national.webp",
+      "sha": "aad826a7398fddef0f6b937a55f8e6ee62c01453"
+    },
+    {
+      "file": "fest_newyear.webp",
+      "sha": "4dbfb89b2bee796f01daf88de530d269af860820"
+    },
+    {
+      "file": "fest_spring.webp",
+      "sha": "19021fd97444fb186f7061664c96ffa379f800e8"
+    },
+    {
+      "file": "forgiven.webp",
+      "sha": "2363a19781b8037128018f40fa0b98b321720cc8"
+    },
+    {
+      "file": "greet_afternoon.webp",
+      "sha": "3f1de0e54b55981fd0789ea53e23f1f1fb09a832"
+    },
+    {
+      "file": "greet_dawn.webp",
+      "sha": "46e06c01b7b22917cdfbcb144f0777721e7cf7dd"
+    },
+    {
+      "file": "greet_evening.webp",
+      "sha": "cd8d98baecb6d177f3cb17515bd87a2782f67fd0"
+    },
+    {
+      "file": "greet_morning.webp",
+      "sha": "d7a56f16490b88f1d46c50e61854d3363ee3d5a2"
+    },
+    {
+      "file": "greet_night.webp",
+      "sha": "c73e59894ed6bcc26670dd2e66d1ddd5cb5f947f"
+    },
+    {
+      "file": "greet_noon.webp",
+      "sha": "324761ec057b945ed216cbdf478896ace5695338"
+    },
+    {
+      "file": "happy-2.webp",
+      "sha": "b55cb8a1d07752f3994830cce1d8a238b99b3350"
+    },
+    {
+      "file": "hum.webp",
+      "sha": "4ed12fb869f7e36fcf88ec026961676be33f9567"
+    },
+    {
+      "file": "idle-2.webp",
+      "sha": "7e7889fffa081771b0cdc43818c7bfec1cd208df"
+    },
+    {
+      "file": "idle-3.webp",
+      "sha": "ced81c8dfabedbdfdbd25837af933f441ba79cb7"
+    },
+    {
+      "file": "idle-blink.webp",
+      "sha": "9d3e948281833b6daa369786169b7961c2844d00"
+    },
+    {
+      "file": "idle.webp",
+      "sha": "923813c01cc6f64245cdc855ed7739e60eeb463b"
+    },
+    {
+      "file": "listening.webp",
+      "sha": "860a0cba791467b6d65a0d7a9593ba48bbfdde95"
+    },
+    {
+      "file": "oops.webp",
+      "sha": "b61268ca1e8f79b2163e2d75621fa05e4ebeabae"
+    },
+    {
+      "file": "pat-2.webp",
+      "sha": "28261e7e98402fd3a26737db9736a8a911d1f08c"
+    },
+    {
+      "file": "portrait-card.webp",
+      "sha": "0d0ca6dd7826cb615af13005b381b54a977544c5"
+    },
+    {
+      "file": "portrait.webp",
+      "sha": "72853671ddbe8c4a74a0a769134ea59e0c0d1e77"
+    },
+    {
+      "file": "proud.webp",
+      "sha": "d4e46ed38c58798682c077b62bbe6422c92e79ec"
+    },
+    {
+      "file": "puffed.webp",
+      "sha": "dd92c5873ab10fadac708fe01f963a8a5cfd69c0"
+    },
+    {
+      "file": "reading-2.webp",
+      "sha": "c5b1e9a97063adf60ad0122e9135989517214846"
+    },
+    {
+      "file": "redhot.webp",
+      "sha": "3c5c70296a99cb19a0cfd0d3a2288fb7a68cbaf5"
+    },
+    {
+      "file": "running.webp",
+      "sha": "320cf1e3c27e96504548a324eaffaa3bac0cd3a0"
+    },
+    {
+      "file": "searching.webp",
+      "sha": "60a38b3fde335794feac04dafb6056df7d927125"
+    },
+    {
+      "file": "sleeping-2.webp",
+      "sha": "81c4189e25dc37f091f0f1d3a8e445f5010242f3"
+    },
+    {
+      "file": "sorry.webp",
+      "sha": "b02f94c76676cb2e3da3fb0b0900fbfd5ccae74c"
+    },
+    {
+      "file": "stretch.webp",
+      "sha": "64a3c0b5ee29b28324d8fb4dcfd8e962bcf01e92"
+    },
+    {
+      "file": "sulk.webp",
+      "sha": "3e3f269c5daada0a332e0495e076059a43f8e663"
+    },
+    {
+      "file": "surprised.webp",
+      "sha": "da0ad0d54cb22bf9d1758ef224c3a969fafdc1f0"
+    },
+    {
+      "file": "swamped_left.webp",
+      "sha": "28070fc8876704b89b13f67ea450590a925e7093"
+    },
+    {
+      "file": "swamped_right.webp",
+      "sha": "a5839c0b1f8807bdac79c8b45f1bd3db1bc870db"
+    },
+    {
+      "file": "thinking-2.webp",
+      "sha": "a75a5c4102c20f8aa33e3bb4b2a8b0c4167f1387"
+    },
+    {
+      "file": "thinking.webp",
+      "sha": "1df515f42dfb1b26575df556998f46dc92586655"
+    },
+    {
+      "file": "tired.webp",
+      "sha": "0aea3f56e7d840ee3464592c685697a71a58ac7b"
+    },
+    {
+      "file": "update.webp",
+      "sha": "4af4abe3c001adfdd68a167fe7616853dd14089a"
+    },
+    {
+      "file": "writing.webp",
+      "sha": "f76a0c6e26154c00a1f186dc4e7228eafc089327"
+    },
+    {
+      "file": "yawn.webp",
+      "sha": "427c1a2eda8eb31637158492c96fd58487534b9b"
+    }
+  ],
+  "localAdditions": [
+    {
+      "file": "dragging-lift.png",
+      "sha256": "b9e2897c7a3b5dfa4720080bd5c4f1bad37ed7ef338d04dd01994134d17292e6",
+      "description": "Claude 娘拖动序列关键帧",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "dragging-source.txt"
+    },
+    {
+      "file": "dragging-center.png",
+      "sha256": "089e260c53815517d98020a1d694b9bb519c13cd8f2decaec033651ce19a0091",
+      "description": "Claude 娘拖动序列关键帧",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "dragging-source.txt"
+    },
+    {
+      "file": "dragging.png",
+      "sha256": "08fafefa3e0e8955089762fa5d9dd417dc1b81a940528da3bd7a02ff6eccacd9",
+      "description": "Claude 娘拖动序列关键帧",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "dragging-source.txt"
+    },
+    {
+      "file": "dragging-right.png",
+      "sha256": "ce59f62262471770ae55549740a859084681910214a5db02a28981a4ef6c369d",
+      "description": "Claude 娘拖动序列关键帧",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "dragging-source.txt"
+    },
+    {
+      "file": "dragging-drop.png",
+      "sha256": "b6117e1837702970cb996681b357b9d4c545799030a10e5dcc202d2eac52a4f9",
+      "description": "Claude 娘拖动序列关键帧",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "dragging-source.txt"
+    },
+    {
+      "file": "edge-hover/left-00.png",
+      "sha256": "685b0007536bdc13a2872e4f2b0ea3ca35f13bb6e9a96faedf808d25468ad140",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-01.png",
+      "sha256": "284dd6799f9301f0ecfcb5f795379b39d2778fec2b7da67375ff1e8f575d9ed7",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-02.png",
+      "sha256": "b56fa3eb7236f8f6e43045e2f13d9147c9b83a7ab903853db576caf662d99667",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-03.png",
+      "sha256": "d5bc48454e41a54fbeb645b69a5f0faa7bfbe017dee0da6ff93fa6a8d112d6f0",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-04.png",
+      "sha256": "357bb9e880fc3dd1390dfd6e8e3151de74e841f7de6a03f50a124486e816c879",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-05.png",
+      "sha256": "41db51d8e9fa038d567c00beeebbaba619ecf08af7a6a7d551487ed1d4dadac1",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-06.png",
+      "sha256": "d2f59e5f9a26cca77972c01e12baabf0c057fd20e27d77b3a9662c0cb01bbc48",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-07.png",
+      "sha256": "f3771c9f46e68f72624a9263acac597327ea785d97aafba6e2930107001b3a93",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-08.png",
+      "sha256": "5105d48960da0325756181db48df0629ee8a4683fe8d35a23eea5b21185f0b3e",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-09.png",
+      "sha256": "16e504e7afb66033b4f31cc5f2ace665c58372ee78f5c3dd80a2ea2a192fb9ed",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-10.png",
+      "sha256": "2150d54c99d98e074f68528339e66e8fbbf28df86f978c29563d1c022ef98e2f",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-11.png",
+      "sha256": "eeaf4dd076df2cc4d32fa863dc1db6c8b8ca51949da4116acd67f8853294a776",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-12.png",
+      "sha256": "f8ff57511250ae2dbad53a62e60000f3893c1e0aff862942c83a60c86c26a439",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-13.png",
+      "sha256": "119ab5b79187f3b66865b4c60b72269559b55e606a8064b44310297a166a7120",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-14.png",
+      "sha256": "19b82545550cd466db94666e65e22c396de9d2e100ddb584ccb749f53d25d3ad",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/left-15.png",
+      "sha256": "946affd402c664f59786f6608bb48d5ab5d591e4d7583f90285f8b618dda3cc8",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-00.png",
+      "sha256": "418e96a5f281c7ef86919663af9cfae9850e9b4adb4ff3af843aa3142a2c7e31",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-01.png",
+      "sha256": "42ffdb255808094231e720f35b4cb6cb2784045955f1dee1b8283668fe22fdc7",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-02.png",
+      "sha256": "711887b6b13cb15b8924f70b87fcd67a5d854038975fc062a8bf98cccb5d409c",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-03.png",
+      "sha256": "7e25deccc394ac63c183e544e768141cb82bfe52e3fe15fe853eb87ee905bc52",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-04.png",
+      "sha256": "2afe10e5b9fd983b437653830335528273efd55230875fc7500045eb01460995",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-05.png",
+      "sha256": "4ff4b8345f9ba70a38d72384df1e40fcbc6b6f2508d10fe93f5eb3dae154b825",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-06.png",
+      "sha256": "bfceea165c543bb84234554c54dbdf3022a02922b64fe077ede301cba7635990",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-07.png",
+      "sha256": "57a84b4d9e703571dde1196c4c2eec54c9bfe6dc0fff9a90610396d75155e475",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-08.png",
+      "sha256": "e64aabccb6cb22551e175fed18720b85fc6d8c57f5ac8ad664d7795ea6fb4498",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-09.png",
+      "sha256": "28298ea903128b7b9f93230c9a9c6d90fce271073ce0e920ccc728c5900c4034",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-10.png",
+      "sha256": "4330aaf42d64e916e720d508e613701a7ff0a0c320eff8f6bb406125769682cf",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-11.png",
+      "sha256": "c6d5b8ee2b48235bd92768de2a8c678ede44cab6c980895505cca35c3b07e8ab",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-12.png",
+      "sha256": "f229def3d6d55473da5130af26f33f1a10382d27f741395908928567a8214c71",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-13.png",
+      "sha256": "57919846a7914af2a9e8e473b471f35969bbde4bb9e73f15ddf823cfffbec2ed",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-14.png",
+      "sha256": "b6f5cea593bcd2d262caa9f530f4a41158e21b3184bfc57c73903d24475bb97e",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "edge-hover/right-15.png",
+      "sha256": "344faf4aa010e03a60df5bd5fc7ba07f28ed069197c1b84fd76d0a32048bf568",
+      "description": "Claude 娘屏幕边缘悬停连续差分（左右分别绘制）",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "edge-hover/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-00.png",
+      "sha256": "5e46e1e2009ddb8352bc056870f59e092811dbda037951343dbb55523ec7951d",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-01.png",
+      "sha256": "903b15d664cbba6b6a5977d16592a6f895c7684bf6f7aa4099e76247968c0271",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-02.png",
+      "sha256": "4e98184924e7c9fe8cab8d9ae54175f5489c9c1ba1551c19132ec3155c686e14",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-03.png",
+      "sha256": "b2dbe4a482aa03625bbdc02697c1665bd926b283096a60dd5c9b49b031f56130",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-04.png",
+      "sha256": "5ecf01ad8c93d04ac3f45f127765972d161f7809a1a1810f4bb0fb7517375611",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-05.png",
+      "sha256": "63dc9425d891848e154581c475256c76e780e7be1d67b05cbfc690e9a7d30762",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-06.png",
+      "sha256": "753a116268c80735450f0ae2badd3a98f3f3971b38650bed5f25197fd40ea9ba",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-07.png",
+      "sha256": "a137ae53cb60c2f0a080687743e1ea8f786084c8d78265bfca8f04857892a385",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-08.png",
+      "sha256": "822c1d05133029725fb39ed35596852a66e6a95e25cf342478d7b4a55a074826",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-09.png",
+      "sha256": "1e26b560a21da43358e0e8cc2301e4d4da60bd6e0056e72a49acdd51ec346d9d",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-10.png",
+      "sha256": "04315ef04bd69a29e4461c8299106aacbc491fe0c1e71b07c3b24d7b9a3dec1a",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-11.png",
+      "sha256": "fd588486363aa9e79a2fdc181797b85687a6b4dd412a370db79627cb702dbae8",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-12.png",
+      "sha256": "7d7f2e93312f01a3598cfdb1389f74042a8a317c88740a17526afe511233f425",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-13.png",
+      "sha256": "cb6fd6de2b3a23936eb606b928330710a02c00a51022e7cc425596924810b341",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-14.png",
+      "sha256": "6e7adf5847af81b6ecb765b56ec01a79aad8e5a41b6bf0c1de80702e4294dddf",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-drop-15.png",
+      "sha256": "b167fe3113148ddbcc0e25402d5193d8dc33290024aa6ff5a1228fdeef35a00a",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-00.png",
+      "sha256": "742795633ec7142a889dc9e2584f5162f845516ffaeb7b4de32d9af2544531af",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-01.png",
+      "sha256": "3d2e392bf54ed8a90c08d3f4bde1b6597c4c61e563c8df80e916f00d00379a2a",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-02.png",
+      "sha256": "95f1d966bb8824acbbfbc4864ac4878e0431799bc4692179c734d7e3fa0b3ce7",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-03.png",
+      "sha256": "f06a32bc87f56dc66498a6f4f5caf89a71321a5ea9ae82809084cd995b547f21",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-04.png",
+      "sha256": "894ec62fe610146a7f3972f6536e2ba1c463e6ac801019ab2871f7eea38316ce",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-05.png",
+      "sha256": "75dc75af500c31722530c4de72f885988cfdad3d8e2ae1a99374a9337e3368a7",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-06.png",
+      "sha256": "5a53c63f7c022ea424aad41a2df8da39906bda6e7a4fb16186b230b9c4f37e34",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-07.png",
+      "sha256": "3ac0125f5101f6f4770a3ff7b0ed2ea5d62a98a63e47ad8f7ab276f93ae73d86",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-08.png",
+      "sha256": "1d9a18e6f7ab8e93304071687f082d9ec9505c0144c14ec2216ca036a52cd24c",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-09.png",
+      "sha256": "7682c993301cf05271abdf9945c8b6632656f38f215b528bd8c3738a1cc90778",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-10.png",
+      "sha256": "5e33659920655e081ecc7e3330cf612782399e4c55a9e364d993adeaf8b05652",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-11.png",
+      "sha256": "260f3afc19e6f8fcae609a9a93e567616f17cf69e1def2a9b69108f54a80d16d",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-12.png",
+      "sha256": "325c4dfff6e94e22d974c1bbb4b03cdf97c33f9161b25b3abab3af5285980bc4",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-13.png",
+      "sha256": "9ea0be283fb87d015e85c563e501fd9be67f3ca0836ae62ebfa9a4af3d729ba0",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-14.png",
+      "sha256": "e25b38f6e42b5fe071339952cd731698ebf1d0d161a2ad916b21359f142bcdb4",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-grab-15.png",
+      "sha256": "84649fd6fccbd66fbca72f7dda4535355e1bc0da88eedd2e29776e8f32a1cb2f",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-00.png",
+      "sha256": "2b54f4fc129cdb84ae3ce4fe7befbf1b1c107627ac80634116d7027e0fe3e3d1",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-01.png",
+      "sha256": "3a8ac567e4074ac882228f87606688bc7d5144336fbe8cfa82580ca55d7907f0",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-02.png",
+      "sha256": "a0cefd82ed5be5b943b62aa5ecfbad2ef258ab212769f94e9f86568acf6f961d",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-03.png",
+      "sha256": "25b4a595c7671212bf4a62833c5faff6faf8d702b3f680928d2bce6a9c25c1ea",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-04.png",
+      "sha256": "558d87410289caa5a0a57e6796e46a0ae3e418a6865e985cfbeabdf14d2269ea",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-05.png",
+      "sha256": "22325880784824f057bea8dc9f8c8e8eb1d7aac177c07b124f8a44fa03d11688",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-06.png",
+      "sha256": "519b1dc5355a0949aafbae9d66f6758571452d4922eea96c0698b81a715614d9",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-07.png",
+      "sha256": "df966dd2d2ec067a423aa071a5d32bf41efad7ce0ab97ed3634426f9a1e7386e",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-08.png",
+      "sha256": "8a94d5754d92ac07240e82cec9f426f5b58a028010785e718fbd297c52761740",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-09.png",
+      "sha256": "de48eb44c9553d41376386555b3b2b3be77f90fde2bade322677d923c3e7e102",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-10.png",
+      "sha256": "a5fa0d6fca7cf88cfd6f303b0ec3207619a1f1774bee981987eae82fa92ecdb9",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-11.png",
+      "sha256": "5520dd8ed6e135ee2e6d9f8461e655b94e3cdddbeea3f4ab4762f0a2f73451df",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-12.png",
+      "sha256": "92143d6dd1547eb33167e21c9ad230857ee238ffa18f9afc7822fdb9ba99abdd",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-13.png",
+      "sha256": "1417629b2716df1abf2e49861a193f4b7c0c70f557c89cf37aebbefd4caca314",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-14.png",
+      "sha256": "f89cc011b11f2a1f8718ae0c2de3f5109d0f7509d8acf82ca9a0c009dd9c4c3c",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    },
+    {
+      "file": "drag-motion/dragging-sway-15.png",
+      "sha256": "ed04fdc6eb2ab31b6529d77ef349b34ef17f7439c8f26a662da023f48803e701",
+      "description": "Claude 娘48幅连续拖动差分：抓起、左右摆动、放下",
+      "license": "CC BY-NC-SA-4.0",
+      "source": "drag-motion/source.txt"
+    }
+  ]
+}

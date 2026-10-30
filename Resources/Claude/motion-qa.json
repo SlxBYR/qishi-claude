@@ -1,0 +1,16 @@
+{
+  "mode": "single-source-rig",
+  "imageCount": 2,
+  "pairCount": 0,
+  "originalImagesUnchanged": true,
+  "sourceSHA256": {
+    "Claude/edge-hover/left-11.png": "eeaf4dd076df2cc4d32fa863dc1db6c8b8ca51949da4116acd67f8853294a776",
+    "Claude/edge-hover/right-11.png": "c6d5b8ee2b48235bd92768de2a8c678ede44cab6c980895505cca35c3b07e8ab"
+  },
+  "gesture": {
+    "periodSeconds": 10,
+    "quietSeconds": 6,
+    "durationSeconds": 2.4
+  },
+  "continuity": "Position and velocity persist between presentation frames; the source artwork never switches."
+}

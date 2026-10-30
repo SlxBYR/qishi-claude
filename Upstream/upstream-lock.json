@@ -1,0 +1,900 @@
+{
+  "clawd": {
+    "commit": "834f2b83eb6c9725956c5c541b59f825b48b4b9a",
+    "files": [
+      {
+        "path": "assets/svg/clawd-about-hero.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "baeb92aeca00811aac4ce55e7c023e24a115caed",
+        "size": 7521,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/baeb92aeca00811aac4ce55e7c023e24a115caed"
+      },
+      {
+        "path": "assets/svg/clawd-aegyo-shy.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5b189016c684b1a04c498ecbc5dc97efec81ab11",
+        "size": 9881,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/5b189016c684b1a04c498ecbc5dc97efec81ab11"
+      },
+      {
+        "path": "assets/svg/clawd-coffee-hand.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f39692b6b0dfd036aa4b6be0d8c6d441187fac86",
+        "size": 12938,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/f39692b6b0dfd036aa4b6be0d8c6d441187fac86"
+      },
+      {
+        "path": "assets/svg/clawd-coffee-head-flip.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "66604f78a92df7e94b3f03a9edab1c43604c8ac4",
+        "size": 25099,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/66604f78a92df7e94b3f03a9edab1c43604c8ac4"
+      },
+      {
+        "path": "assets/svg/clawd-collapse-sleep.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2f9eeb878002e8f0c0fb450f97aa95e988e079d3",
+        "size": 9858,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/2f9eeb878002e8f0c0fb450f97aa95e988e079d3"
+      },
+      {
+        "path": "assets/svg/clawd-designing.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b8718da09fb92a61de54490a82396886e3e75652",
+        "size": 25200,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/b8718da09fb92a61de54490a82396886e3e75652"
+      },
+      {
+        "path": "assets/svg/clawd-dizzy.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "016ee20ab46cc6fc85f0743bef48aac916373551",
+        "size": 11950,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/016ee20ab46cc6fc85f0743bef48aac916373551"
+      },
+      {
+        "path": "assets/svg/clawd-error.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "efe62622b21af310b9cab4c84741bdfa16b77bca",
+        "size": 3140,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/efe62622b21af310b9cab4c84741bdfa16b77bca"
+      },
+      {
+        "path": "assets/svg/clawd-happy.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df3c8b939477b1130f0e7164debbab0a63a2246e",
+        "size": 5697,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/df3c8b939477b1130f0e7164debbab0a63a2246e"
+      },
+      {
+        "path": "assets/svg/clawd-headphones-groove.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ae7ba808e3595932bcfefe899e917a387346cd09",
+        "size": 7847,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/ae7ba808e3595932bcfefe899e917a387346cd09"
+      },
+      {
+        "path": "assets/svg/clawd-heart-eyes.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cf4dadc4f9b4abdf43a243961fafdcc37345df74",
+        "size": 1527,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/cf4dadc4f9b4abdf43a243961fafdcc37345df74"
+      },
+      {
+        "path": "assets/svg/clawd-idle-bubble.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26fd8a51601a3cac8626aa2ac6f57aab01ba5b15",
+        "size": 8242,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/26fd8a51601a3cac8626aa2ac6f57aab01ba5b15"
+      },
+      {
+        "path": "assets/svg/clawd-idle-collapse.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a277dc348c3ad3610aef779d5cac89dfe34ee126",
+        "size": 3367,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/a277dc348c3ad3610aef779d5cac89dfe34ee126"
+      },
+      {
+        "path": "assets/svg/clawd-idle-doze.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "30a6e1a87758a45fdb406792f26aa1b229f3ab59",
+        "size": 2254,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/30a6e1a87758a45fdb406792f26aa1b229f3ab59"
+      },
+      {
+        "path": "assets/svg/clawd-idle-follow.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d194712a06dad143fc7934ff52757159c430999",
+        "size": 1914,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/4d194712a06dad143fc7934ff52757159c430999"
+      },
+      {
+        "path": "assets/svg/clawd-idle-living.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1241b1e966182f68036c2d7d1f41f5923f5bba25",
+        "size": 7832,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/1241b1e966182f68036c2d7d1f41f5923f5bba25"
+      },
+      {
+        "path": "assets/svg/clawd-idle-look.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b2dce6b93b834834285182cbeea76da33d5ecc2",
+        "size": 3969,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/9b2dce6b93b834834285182cbeea76da33d5ecc2"
+      },
+      {
+        "path": "assets/svg/clawd-idle-low-battery.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9a6d693a3954d144c32669f7551f6981092cbdc3",
+        "size": 2825,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/9a6d693a3954d144c32669f7551f6981092cbdc3"
+      },
+      {
+        "path": "assets/svg/clawd-idle-reading.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "51224ce91770f275130542c9344c70b256a3ae72",
+        "size": 9743,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/51224ce91770f275130542c9344c70b256a3ae72"
+      },
+      {
+        "path": "assets/svg/clawd-idle-yawn.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba76637a8caec7841523db0777c67092bb369efb",
+        "size": 5300,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/ba76637a8caec7841523db0777c67092bb369efb"
+      },
+      {
+        "path": "assets/svg/clawd-mini-alert.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2234a0f8f1455bbcc384df6eb4284b659ac7d89b",
+        "size": 4395,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/2234a0f8f1455bbcc384df6eb4284b659ac7d89b"
+      },
+      {
+        "path": "assets/svg/clawd-mini-crabwalk.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2bb4f58b25c5fcda8785ee712802701599ff79a",
+        "size": 3080,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/d2bb4f58b25c5fcda8785ee712802701599ff79a"
+      },
+      {
+        "path": "assets/svg/clawd-mini-enter-sleep.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c206b3095b542ef18d34d79c372e443a29b100be",
+        "size": 1766,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/c206b3095b542ef18d34d79c372e443a29b100be"
+      },
+      {
+        "path": "assets/svg/clawd-mini-enter.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5b0281a73adc4d09f924815dd0c1702690c9900c",
+        "size": 2865,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/5b0281a73adc4d09f924815dd0c1702690c9900c"
+      },
+      {
+        "path": "assets/svg/clawd-mini-happy.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e6338ed7d4109d3e02b852c06c086da00d5729fb",
+        "size": 4365,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/e6338ed7d4109d3e02b852c06c086da00d5729fb"
+      },
+      {
+        "path": "assets/svg/clawd-mini-idle.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f364dfadc995be4095c9c9acd82e14fe22ee893",
+        "size": 2712,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/5f364dfadc995be4095c9c9acd82e14fe22ee893"
+      },
+      {
+        "path": "assets/svg/clawd-mini-peek.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8345a86f6e01b81ef1be8896d515a60d381993ef",
+        "size": 2365,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/8345a86f6e01b81ef1be8896d515a60d381993ef"
+      },
+      {
+        "path": "assets/svg/clawd-mini-sleep.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2e5ed8279df88f1ed56bc7459ccce1e6a65aa935",
+        "size": 3936,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/2e5ed8279df88f1ed56bc7459ccce1e6a65aa935"
+      },
+      {
+        "path": "assets/svg/clawd-mini-typing.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "79d9c1ab827aeb9ffd55fcbc6f8692025c1565c8",
+        "size": 5494,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/79d9c1ab827aeb9ffd55fcbc6f8692025c1565c8"
+      },
+      {
+        "path": "assets/svg/clawd-notification.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2a5a6b2887eba457873aa2bc07d3291e4bf39de0",
+        "size": 20787,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/2a5a6b2887eba457873aa2bc07d3291e4bf39de0"
+      },
+      {
+        "path": "assets/svg/clawd-outlaw-bender.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d2d5cb4af2aa0478564ac63f3e558a52490674d",
+        "size": 5807,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/6d2d5cb4af2aa0478564ac63f3e558a52490674d"
+      },
+      {
+        "path": "assets/svg/clawd-react-annoyed.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "02aec00b374c449419e341a2ea7b402855507ad9",
+        "size": 6652,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/02aec00b374c449419e341a2ea7b402855507ad9"
+      },
+      {
+        "path": "assets/svg/clawd-react-double-jump.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad3fa84c200e6fce6509d276132148c992b11225",
+        "size": 8796,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/ad3fa84c200e6fce6509d276132148c992b11225"
+      },
+      {
+        "path": "assets/svg/clawd-react-double.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f0e85099848f18c1655d1c69a0fe52e433bca1e",
+        "size": 3781,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/5f0e85099848f18c1655d1c69a0fe52e433bca1e"
+      },
+      {
+        "path": "assets/svg/clawd-react-drag.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7708e42654a53f6991dd9b88fd649201f396526f",
+        "size": 3250,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/7708e42654a53f6991dd9b88fd649201f396526f"
+      },
+      {
+        "path": "assets/svg/clawd-react-left.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87e44d4ce9bc66d44d991484cceba3052d9ff325",
+        "size": 3344,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/87e44d4ce9bc66d44d991484cceba3052d9ff325"
+      },
+      {
+        "path": "assets/svg/clawd-react-right.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71a38a515e1bebe882c612d7f8269bad86134d98",
+        "size": 3373,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/71a38a515e1bebe882c612d7f8269bad86134d98"
+      },
+      {
+        "path": "assets/svg/clawd-sleeping.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31a6a2fce98cd7ed554f2cc569f0fd9cb2fb3e2a",
+        "size": 4554,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/31a6a2fce98cd7ed554f2cc569f0fd9cb2fb3e2a"
+      },
+      {
+        "path": "assets/svg/clawd-static-base.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c53f324abd15f47ae825a99329aec26dbadf5361",
+        "size": 920,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/c53f324abd15f47ae825a99329aec26dbadf5361"
+      },
+      {
+        "path": "assets/svg/clawd-wake.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b34f53ce9ecaa91cf2fd3bd70834f3e0f6e40d0",
+        "size": 6590,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/1b34f53ce9ecaa91cf2fd3bd70834f3e0f6e40d0"
+      },
+      {
+        "path": "assets/svg/clawd-working-building.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26fc50f806a23a43b06d00ca96a17434418ac47d",
+        "size": 12294,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/26fc50f806a23a43b06d00ca96a17434418ac47d"
+      },
+      {
+        "path": "assets/svg/clawd-working-carrying.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "12e6486fa6122795bd0a844a0a25eb4dca51b2de",
+        "size": 6235,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/12e6486fa6122795bd0a844a0a25eb4dca51b2de"
+      },
+      {
+        "path": "assets/svg/clawd-working-debugger.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7ccb05b2d524e0d6b48119bbd217499fd1923933",
+        "size": 8176,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/7ccb05b2d524e0d6b48119bbd217499fd1923933"
+      },
+      {
+        "path": "assets/svg/clawd-working-juggling.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f32e2b7f21487ad52ee1a88e08f50100b127267f",
+        "size": 6067,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/f32e2b7f21487ad52ee1a88e08f50100b127267f"
+      },
+      {
+        "path": "assets/svg/clawd-working-sweeping.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b90abcc0fe8f30cfb2c6b49b2f1c84264f46cd9",
+        "size": 9789,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/4b90abcc0fe8f30cfb2c6b49b2f1c84264f46cd9"
+      },
+      {
+        "path": "assets/svg/clawd-working-thinking.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db5c5ca49ed846457f68050d427710c01045a5cd",
+        "size": 24541,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/db5c5ca49ed846457f68050d427710c01045a5cd"
+      },
+      {
+        "path": "assets/svg/clawd-working-typing-boss.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "619bedd09c01ad04a56198c939bc14bdd4bcc43a",
+        "size": 15334,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/619bedd09c01ad04a56198c939bc14bdd4bcc43a"
+      },
+      {
+        "path": "assets/svg/clawd-working-typing.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e0bf92d38eb707cdf0385b268de9a8e4a75d665f",
+        "size": 11646,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/e0bf92d38eb707cdf0385b268de9a8e4a75d665f"
+      },
+      {
+        "path": "assets/svg/clawd-working-ultrathink.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cfad4f89a227041b7b063ae3df8f4ff417e75b3a",
+        "size": 5896,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/cfad4f89a227041b7b063ae3df8f4ff417e75b3a"
+      },
+      {
+        "path": "assets/svg/clawd-working-wizard.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "76cb4e76ec95cf4d68014395a64d3b9b37b24ff3",
+        "size": 14580,
+        "url": "https://api.github.com/repos/rullerzhou-afk/clawd-on-desk/git/blobs/76cb4e76ec95cf4d68014395a64d3b9b37b24ff3"
+      }
+    ]
+  },
+  "crosspet": {
+    "commit": "5c64326b6e7fc175eda0360c0bb5c4732541d138",
+    "files": [
+      {
+        "path": "characters/claude/annoyed.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b912b8850f59111db1d1ae85dd652e013cafe9e",
+        "size": 102394,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/3b912b8850f59111db1d1ae85dd652e013cafe9e"
+      },
+      {
+        "path": "characters/claude/asking.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dc422559c72f942bcff1d25f02ba8a5a2f76aa64",
+        "size": 89446,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/dc422559c72f942bcff1d25f02ba8a5a2f76aa64"
+      },
+      {
+        "path": "characters/claude/avatar.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "16b776f7ec3d935a6668bec137934b0b669d9cf4",
+        "size": 10866,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/16b776f7ec3d935a6668bec137934b0b669d9cf4"
+      },
+      {
+        "path": "characters/claude/busy_left.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6c3655088081a03136ebe18ddce8b00dd1800225",
+        "size": 120624,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/6c3655088081a03136ebe18ddce8b00dd1800225"
+      },
+      {
+        "path": "characters/claude/busy_right.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9900bbe2d9f366a2132661b8cf8730c47839178d",
+        "size": 115738,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/9900bbe2d9f366a2132661b8cf8730c47839178d"
+      },
+      {
+        "path": "characters/claude/bye.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f190db16a44728feb5f757e2bebdabf2c2ea7c81",
+        "size": 97560,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/f190db16a44728feb5f757e2bebdabf2c2ea7c81"
+      },
+      {
+        "path": "characters/claude/character.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15d5ee9ce66fda692db088c543f787c30bddf2f6",
+        "size": 5913,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/15d5ee9ce66fda692db088c543f787c30bddf2f6"
+      },
+      {
+        "path": "characters/claude/clawd.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bdaab6ddc03e761345b34e306c0215c8e2b1b82d",
+        "size": 100354,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/bdaab6ddc03e761345b34e306c0215c8e2b1b82d"
+      },
+      {
+        "path": "characters/claude/coaxed.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "897d389390be8396832adc60d40364d555e37478",
+        "size": 104392,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/897d389390be8396832adc60d40364d555e37478"
+      },
+      {
+        "path": "characters/claude/compact.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4123322dc3946c0214173270ffef6f17b0f82be6",
+        "size": 108322,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/4123322dc3946c0214173270ffef6f17b0f82be6"
+      },
+      {
+        "path": "characters/claude/delegating.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d74cbd665cc8bba8105bfb8f6757b108eb173926",
+        "size": 110202,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/d74cbd665cc8bba8105bfb8f6757b108eb173926"
+      },
+      {
+        "path": "characters/claude/dizzy.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "077d102c333f477095464263bf0af8ab70bb84f2",
+        "size": 108586,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/077d102c333f477095464263bf0af8ab70bb84f2"
+      },
+      {
+        "path": "characters/claude/edge_left.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3846be7f0c485f64e38e4e10532f5d8d75baea8d",
+        "size": 64560,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/3846be7f0c485f64e38e4e10532f5d8d75baea8d"
+      },
+      {
+        "path": "characters/claude/edge_left_peek.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "681c630c0a8d034fdbbdb04d6ece78c6befa1132",
+        "size": 89866,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/681c630c0a8d034fdbbdb04d6ece78c6befa1132"
+      },
+      {
+        "path": "characters/claude/edge_right.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b8a10736ca2c1390af3e2c53144b0b1ae8be593",
+        "size": 64528,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/9b8a10736ca2c1390af3e2c53144b0b1ae8be593"
+      },
+      {
+        "path": "characters/claude/edge_right_peek.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5ef220ce932777f4387eb45e80e7be65cb5a6f90",
+        "size": 76356,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/5ef220ce932777f4387eb45e80e7be65cb5a6f90"
+      },
+      {
+        "path": "characters/claude/fest_christmas.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a0acb1ba4c6f2e4ce954f3e94f3f9bcaf485378e",
+        "size": 100768,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/a0acb1ba4c6f2e4ce954f3e94f3f9bcaf485378e"
+      },
+      {
+        "path": "characters/claude/fest_dragonboat.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5144a9b210ee5934c735b737bcc8f6aff5a3a38d",
+        "size": 103836,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/5144a9b210ee5934c735b737bcc8f6aff5a3a38d"
+      },
+      {
+        "path": "characters/claude/fest_halloween.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b47a915480924153d1aeef91f5ca4cb5aa79de90",
+        "size": 105328,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/b47a915480924153d1aeef91f5ca4cb5aa79de90"
+      },
+      {
+        "path": "characters/claude/fest_lantern.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ef4de2c06b58efb14fff7cd34b71b60a0006a2d3",
+        "size": 104006,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/ef4de2c06b58efb14fff7cd34b71b60a0006a2d3"
+      },
+      {
+        "path": "characters/claude/fest_midautumn.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eae1b968897088915d26a15218b2a8cd374a72d2",
+        "size": 106414,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/eae1b968897088915d26a15218b2a8cd374a72d2"
+      },
+      {
+        "path": "characters/claude/fest_national.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aad826a7398fddef0f6b937a55f8e6ee62c01453",
+        "size": 112770,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/aad826a7398fddef0f6b937a55f8e6ee62c01453"
+      },
+      {
+        "path": "characters/claude/fest_newyear.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4dbfb89b2bee796f01daf88de530d269af860820",
+        "size": 102832,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/4dbfb89b2bee796f01daf88de530d269af860820"
+      },
+      {
+        "path": "characters/claude/fest_spring.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19021fd97444fb186f7061664c96ffa379f800e8",
+        "size": 104802,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/19021fd97444fb186f7061664c96ffa379f800e8"
+      },
+      {
+        "path": "characters/claude/forgiven.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2363a19781b8037128018f40fa0b98b321720cc8",
+        "size": 102186,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/2363a19781b8037128018f40fa0b98b321720cc8"
+      },
+      {
+        "path": "characters/claude/greet_afternoon.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3f1de0e54b55981fd0789ea53e23f1f1fb09a832",
+        "size": 101376,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/3f1de0e54b55981fd0789ea53e23f1f1fb09a832"
+      },
+      {
+        "path": "characters/claude/greet_dawn.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "46e06c01b7b22917cdfbcb144f0777721e7cf7dd",
+        "size": 95636,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/46e06c01b7b22917cdfbcb144f0777721e7cf7dd"
+      },
+      {
+        "path": "characters/claude/greet_evening.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cd8d98baecb6d177f3cb17515bd87a2782f67fd0",
+        "size": 106542,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/cd8d98baecb6d177f3cb17515bd87a2782f67fd0"
+      },
+      {
+        "path": "characters/claude/greet_morning.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7a56f16490b88f1d46c50e61854d3363ee3d5a2",
+        "size": 104658,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/d7a56f16490b88f1d46c50e61854d3363ee3d5a2"
+      },
+      {
+        "path": "characters/claude/greet_night.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c73e59894ed6bcc26670dd2e66d1ddd5cb5f947f",
+        "size": 105976,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/c73e59894ed6bcc26670dd2e66d1ddd5cb5f947f"
+      },
+      {
+        "path": "characters/claude/greet_noon.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "324761ec057b945ed216cbdf478896ace5695338",
+        "size": 101772,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/324761ec057b945ed216cbdf478896ace5695338"
+      },
+      {
+        "path": "characters/claude/happy-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b55cb8a1d07752f3994830cce1d8a238b99b3350",
+        "size": 103290,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/b55cb8a1d07752f3994830cce1d8a238b99b3350"
+      },
+      {
+        "path": "characters/claude/hum.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ed12fb869f7e36fcf88ec026961676be33f9567",
+        "size": 99154,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/4ed12fb869f7e36fcf88ec026961676be33f9567"
+      },
+      {
+        "path": "characters/claude/idle-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e7889fffa081771b0cdc43818c7bfec1cd208df",
+        "size": 101338,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/7e7889fffa081771b0cdc43818c7bfec1cd208df"
+      },
+      {
+        "path": "characters/claude/idle-3.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ced81c8dfabedbdfdbd25837af933f441ba79cb7",
+        "size": 101062,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/ced81c8dfabedbdfdbd25837af933f441ba79cb7"
+      },
+      {
+        "path": "characters/claude/idle-blink.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9d3e948281833b6daa369786169b7961c2844d00",
+        "size": 95676,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/9d3e948281833b6daa369786169b7961c2844d00"
+      },
+      {
+        "path": "characters/claude/idle.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "923813c01cc6f64245cdc855ed7739e60eeb463b",
+        "size": 96880,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/923813c01cc6f64245cdc855ed7739e60eeb463b"
+      },
+      {
+        "path": "characters/claude/listening.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "860a0cba791467b6d65a0d7a9593ba48bbfdde95",
+        "size": 107058,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/860a0cba791467b6d65a0d7a9593ba48bbfdde95"
+      },
+      {
+        "path": "characters/claude/oops.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b61268ca1e8f79b2163e2d75621fa05e4ebeabae",
+        "size": 103494,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/b61268ca1e8f79b2163e2d75621fa05e4ebeabae"
+      },
+      {
+        "path": "characters/claude/pat-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28261e7e98402fd3a26737db9736a8a911d1f08c",
+        "size": 99104,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/28261e7e98402fd3a26737db9736a8a911d1f08c"
+      },
+      {
+        "path": "characters/claude/portrait-card.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d0ca6dd7826cb615af13005b381b54a977544c5",
+        "size": 38862,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/0d0ca6dd7826cb615af13005b381b54a977544c5"
+      },
+      {
+        "path": "characters/claude/portrait.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "72853671ddbe8c4a74a0a769134ea59e0c0d1e77",
+        "size": 104872,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/72853671ddbe8c4a74a0a769134ea59e0c0d1e77"
+      },
+      {
+        "path": "characters/claude/proud.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d4e46ed38c58798682c077b62bbe6422c92e79ec",
+        "size": 94962,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/d4e46ed38c58798682c077b62bbe6422c92e79ec"
+      },
+      {
+        "path": "characters/claude/puffed.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dd92c5873ab10fadac708fe01f963a8a5cfd69c0",
+        "size": 104798,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/dd92c5873ab10fadac708fe01f963a8a5cfd69c0"
+      },
+      {
+        "path": "characters/claude/reading-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5b1e9a97063adf60ad0122e9135989517214846",
+        "size": 102842,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/c5b1e9a97063adf60ad0122e9135989517214846"
+      },
+      {
+        "path": "characters/claude/redhot.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3c5c70296a99cb19a0cfd0d3a2288fb7a68cbaf5",
+        "size": 109904,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/3c5c70296a99cb19a0cfd0d3a2288fb7a68cbaf5"
+      },
+      {
+        "path": "characters/claude/running.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "320cf1e3c27e96504548a324eaffaa3bac0cd3a0",
+        "size": 103714,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/320cf1e3c27e96504548a324eaffaa3bac0cd3a0"
+      },
+      {
+        "path": "characters/claude/searching.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "60a38b3fde335794feac04dafb6056df7d927125",
+        "size": 104610,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/60a38b3fde335794feac04dafb6056df7d927125"
+      },
+      {
+        "path": "characters/claude/sleeping-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81c4189e25dc37f091f0f1d3a8e445f5010242f3",
+        "size": 99768,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/81c4189e25dc37f091f0f1d3a8e445f5010242f3"
+      },
+      {
+        "path": "characters/claude/sorry.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b02f94c76676cb2e3da3fb0b0900fbfd5ccae74c",
+        "size": 89086,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/b02f94c76676cb2e3da3fb0b0900fbfd5ccae74c"
+      },
+      {
+        "path": "characters/claude/stretch.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "64a3c0b5ee29b28324d8fb4dcfd8e962bcf01e92",
+        "size": 98920,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/64a3c0b5ee29b28324d8fb4dcfd8e962bcf01e92"
+      },
+      {
+        "path": "characters/claude/sulk.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3e3f269c5daada0a332e0495e076059a43f8e663",
+        "size": 100828,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/3e3f269c5daada0a332e0495e076059a43f8e663"
+      },
+      {
+        "path": "characters/claude/surprised.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "da0ad0d54cb22bf9d1758ef224c3a969fafdc1f0",
+        "size": 98456,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/da0ad0d54cb22bf9d1758ef224c3a969fafdc1f0"
+      },
+      {
+        "path": "characters/claude/swamped_left.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28070fc8876704b89b13f67ea450590a925e7093",
+        "size": 100870,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/28070fc8876704b89b13f67ea450590a925e7093"
+      },
+      {
+        "path": "characters/claude/swamped_right.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a5839c0b1f8807bdac79c8b45f1bd3db1bc870db",
+        "size": 104326,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/a5839c0b1f8807bdac79c8b45f1bd3db1bc870db"
+      },
+      {
+        "path": "characters/claude/thinking-2.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a75a5c4102c20f8aa33e3bb4b2a8b0c4167f1387",
+        "size": 101662,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/a75a5c4102c20f8aa33e3bb4b2a8b0c4167f1387"
+      },
+      {
+        "path": "characters/claude/thinking.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1df515f42dfb1b26575df556998f46dc92586655",
+        "size": 97840,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/1df515f42dfb1b26575df556998f46dc92586655"
+      },
+      {
+        "path": "characters/claude/tired.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0aea3f56e7d840ee3464592c685697a71a58ac7b",
+        "size": 99054,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/0aea3f56e7d840ee3464592c685697a71a58ac7b"
+      },
+      {
+        "path": "characters/claude/update.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4af4abe3c001adfdd68a167fe7616853dd14089a",
+        "size": 92050,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/4af4abe3c001adfdd68a167fe7616853dd14089a"
+      },
+      {
+        "path": "characters/claude/writing.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f76a0c6e26154c00a1f186dc4e7228eafc089327",
+        "size": 102400,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/f76a0c6e26154c00a1f186dc4e7228eafc089327"
+      },
+      {
+        "path": "characters/claude/yawn.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "427c1a2eda8eb31637158492c96fd58487534b9b",
+        "size": 100518,
+        "url": "https://api.github.com/repos/lokicorvus/crosspet/git/blobs/427c1a2eda8eb31637158492c96fd58487534b9b"
+      }
+    ]
+  }
+}

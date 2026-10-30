@@ -1,0 +1,818 @@
+{
+  "canvas": [
+    364,
+    364
+  ],
+  "faceAnchor": [
+    176,
+    136
+  ],
+  "method": "connected-alpha segmentation; native RGBA retained for sway; fixed 1.08x premultiplied-alpha bilinear resampling for grab/drop; no repainting",
+  "stages": [
+    {
+      "name": "grab",
+      "source": "grab-atlas.png",
+      "scale": 1.08,
+      "frames": [
+        {
+          "file": "dragging-grab-00.png",
+          "sourceBounds": [
+            0,
+            30,
+            319,
+            328
+          ],
+          "sourceFace": [
+            153.8497536945813,
+            137.68185550082103
+          ],
+          "sourceAlphaPixels": 58321,
+          "outputAlphaPixels": 68706
+        },
+        {
+          "file": "dragging-grab-01.png",
+          "sourceBounds": [
+            318,
+            30,
+            633,
+            327
+          ],
+          "sourceFace": [
+            477.42193087008343,
+            137.3289630512515
+          ],
+          "sourceAlphaPixels": 58840,
+          "outputAlphaPixels": 69244
+        },
+        {
+          "file": "dragging-grab-02.png",
+          "sourceBounds": [
+            633,
+            30,
+            936,
+            324
+          ],
+          "sourceFace": [
+            790.2588235294118,
+            138.25395537525355
+          ],
+          "sourceAlphaPixels": 58883,
+          "outputAlphaPixels": 69251
+        },
+        {
+          "file": "dragging-grab-03.png",
+          "sourceBounds": [
+            951,
+            30,
+            1254,
+            324
+          ],
+          "sourceFace": [
+            1102.9007569386038,
+            137.61143818334736
+          ],
+          "sourceAlphaPixels": 58477,
+          "outputAlphaPixels": 68796
+        },
+        {
+          "file": "dragging-grab-04.png",
+          "sourceBounds": [
+            0,
+            320,
+            318,
+            628
+          ],
+          "sourceFace": [
+            158.0400480576692,
+            433.6708049659592
+          ],
+          "sourceAlphaPixels": 60739,
+          "outputAlphaPixels": 71498
+        },
+        {
+          "file": "dragging-grab-05.png",
+          "sourceBounds": [
+            317,
+            320,
+            635,
+            627
+          ],
+          "sourceFace": [
+            473.8575569358178,
+            433.76728778467907
+          ],
+          "sourceAlphaPixels": 62454,
+          "outputAlphaPixels": 73501
+        },
+        {
+          "file": "dragging-grab-06.png",
+          "sourceBounds": [
+            629,
+            322,
+            947,
+            626
+          ],
+          "sourceFace": [
+            786.4414715719064,
+            433.56897993311037
+          ],
+          "sourceAlphaPixels": 62265,
+          "outputAlphaPixels": 73254
+        },
+        {
+          "file": "dragging-grab-07.png",
+          "sourceBounds": [
+            944,
+            319,
+            1254,
+            625
+          ],
+          "sourceFace": [
+            1099.0733333333333,
+            432.25416666666666
+          ],
+          "sourceAlphaPixels": 61526,
+          "outputAlphaPixels": 72395
+        },
+        {
+          "file": "dragging-grab-08.png",
+          "sourceBounds": [
+            0,
+            621,
+            321,
+            931
+          ],
+          "sourceFace": [
+            155.73540690242862,
+            741.96591393268
+          ],
+          "sourceAlphaPixels": 62155,
+          "outputAlphaPixels": 73014
+        },
+        {
+          "file": "dragging-grab-09.png",
+          "sourceBounds": [
+            316,
+            624,
+            634,
+            926
+          ],
+          "sourceFace": [
+            477.3342822285482,
+            735.6319642130948
+          ],
+          "sourceAlphaPixels": 62552,
+          "outputAlphaPixels": 73444
+        },
+        {
+          "file": "dragging-grab-10.png",
+          "sourceBounds": [
+            631,
+            622,
+            951,
+            920
+          ],
+          "sourceFace": [
+            788.9169477234401,
+            734.0598650927487
+          ],
+          "sourceAlphaPixels": 63508,
+          "outputAlphaPixels": 74626
+        },
+        {
+          "file": "dragging-grab-11.png",
+          "sourceBounds": [
+            943,
+            621,
+            1254,
+            922
+          ],
+          "sourceFace": [
+            1101.404937202252,
+            732.1641403204851
+          ],
+          "sourceAlphaPixels": 62666,
+          "outputAlphaPixels": 73500
+        },
+        {
+          "file": "dragging-grab-12.png",
+          "sourceBounds": [
+            0,
+            927,
+            321,
+            1236
+          ],
+          "sourceFace": [
+            161.26159793814435,
+            1033.8921821305842
+          ],
+          "sourceAlphaPixels": 60036,
+          "outputAlphaPixels": 70704
+        },
+        {
+          "file": "dragging-grab-13.png",
+          "sourceBounds": [
+            315,
+            923,
+            636,
+            1224
+          ],
+          "sourceFace": [
+            476.33137337253254,
+            1033.727425451491
+          ],
+          "sourceAlphaPixels": 61219,
+          "outputAlphaPixels": 71943
+        },
+        {
+          "file": "dragging-grab-14.png",
+          "sourceBounds": [
+            628,
+            923,
+            949,
+            1216
+          ],
+          "sourceFace": [
+            788.922417313189,
+            1032.2417313189057
+          ],
+          "sourceAlphaPixels": 60419,
+          "outputAlphaPixels": 71209
+        },
+        {
+          "file": "dragging-grab-15.png",
+          "sourceBounds": [
+            942,
+            917,
+            1254,
+            1242
+          ],
+          "sourceFace": [
+            1102.5031315240083,
+            1033.0283924843425
+          ],
+          "sourceAlphaPixels": 60704,
+          "outputAlphaPixels": 71419
+        }
+      ]
+    },
+    {
+      "name": "sway",
+      "source": "sway-atlas.png",
+      "scale": 1,
+      "frames": [
+        {
+          "file": "dragging-sway-00.png",
+          "sourceBounds": [
+            0,
+            1,
+            322,
+            324
+          ],
+          "sourceFace": [
+            162.2834788937409,
+            121.29548762736536
+          ],
+          "sourceAlphaPixels": 67068,
+          "outputAlphaPixels": 67068,
+          "integerOffset": [
+            14,
+            15
+          ]
+        },
+        {
+          "file": "dragging-sway-01.png",
+          "sourceBounds": [
+            315,
+            0,
+            634,
+            324
+          ],
+          "sourceFace": [
+            474.4148672566372,
+            121.77168141592921
+          ],
+          "sourceAlphaPixels": 67529,
+          "outputAlphaPixels": 67529,
+          "integerOffset": [
+            -298,
+            14
+          ]
+        },
+        {
+          "file": "dragging-sway-02.png",
+          "sourceBounds": [
+            625,
+            0,
+            949,
+            324
+          ],
+          "sourceFace": [
+            786.6830659536542,
+            122.15222816399287
+          ],
+          "sourceAlphaPixels": 68056,
+          "outputAlphaPixels": 68056,
+          "integerOffset": [
+            -611,
+            14
+          ]
+        },
+        {
+          "file": "dragging-sway-03.png",
+          "sourceBounds": [
+            937,
+            0,
+            1254,
+            324
+          ],
+          "sourceFace": [
+            1098.857296522051,
+            122.99928289709572
+          ],
+          "sourceAlphaPixels": 67455,
+          "outputAlphaPixels": 67455,
+          "integerOffset": [
+            -923,
+            13
+          ]
+        },
+        {
+          "file": "dragging-sway-04.png",
+          "sourceBounds": [
+            0,
+            313,
+            323,
+            635
+          ],
+          "sourceFace": [
+            158.02785613540198,
+            435.54125528913966
+          ],
+          "sourceAlphaPixels": 67720,
+          "outputAlphaPixels": 67720,
+          "integerOffset": [
+            18,
+            -300
+          ]
+        },
+        {
+          "file": "dragging-sway-05.png",
+          "sourceBounds": [
+            309,
+            315,
+            631,
+            637
+          ],
+          "sourceFace": [
+            471.4061397318278,
+            436.51305575158784
+          ],
+          "sourceAlphaPixels": 67590,
+          "outputAlphaPixels": 67590,
+          "integerOffset": [
+            -295,
+            -301
+          ]
+        },
+        {
+          "file": "dragging-sway-06.png",
+          "sourceBounds": [
+            621,
+            318,
+            950,
+            635
+          ],
+          "sourceFace": [
+            785.3154968728284,
+            436.5368311327311
+          ],
+          "sourceAlphaPixels": 68859,
+          "outputAlphaPixels": 68859,
+          "integerOffset": [
+            -609,
+            -301
+          ]
+        },
+        {
+          "file": "dragging-sway-07.png",
+          "sourceBounds": [
+            940,
+            314,
+            1254,
+            633
+          ],
+          "sourceFace": [
+            1100.7803837953093,
+            434.8553660270078
+          ],
+          "sourceAlphaPixels": 67365,
+          "outputAlphaPixels": 67365,
+          "integerOffset": [
+            -925,
+            -299
+          ]
+        },
+        {
+          "file": "dragging-sway-08.png",
+          "sourceBounds": [
+            0,
+            632,
+            320,
+            948
+          ],
+          "sourceFace": [
+            162.79411764705884,
+            747.6133428981349
+          ],
+          "sourceAlphaPixels": 67458,
+          "outputAlphaPixels": 67458,
+          "integerOffset": [
+            13,
+            -612
+          ]
+        },
+        {
+          "file": "dragging-sway-09.png",
+          "sourceBounds": [
+            316,
+            627,
+            637,
+            948
+          ],
+          "sourceFace": [
+            475.72350410637466,
+            750.8064137661322
+          ],
+          "sourceAlphaPixels": 68886,
+          "outputAlphaPixels": 68886,
+          "integerOffset": [
+            -300,
+            -615
+          ]
+        },
+        {
+          "file": "dragging-sway-10.png",
+          "sourceBounds": [
+            628,
+            624,
+            953,
+            947
+          ],
+          "sourceFace": [
+            793.4066210867219,
+            747.5235696293631
+          ],
+          "sourceAlphaPixels": 69332,
+          "outputAlphaPixels": 69332,
+          "integerOffset": [
+            -617,
+            -612
+          ]
+        },
+        {
+          "file": "dragging-sway-11.png",
+          "sourceBounds": [
+            943,
+            624,
+            1254,
+            947
+          ],
+          "sourceFace": [
+            1106.5491949910554,
+            747.649373881932
+          ],
+          "sourceAlphaPixels": 67850,
+          "outputAlphaPixels": 67850,
+          "integerOffset": [
+            -931,
+            -612
+          ]
+        },
+        {
+          "file": "dragging-sway-12.png",
+          "sourceBounds": [
+            0,
+            943,
+            326,
+            1254
+          ],
+          "sourceFace": [
+            167.59456398640998,
+            1063.4548886372215
+          ],
+          "sourceAlphaPixels": 68456,
+          "outputAlphaPixels": 68456,
+          "integerOffset": [
+            8,
+            -927
+          ]
+        },
+        {
+          "file": "dragging-sway-13.png",
+          "sourceBounds": [
+            318,
+            940,
+            638,
+            1254
+          ],
+          "sourceFace": [
+            480.5963302752294,
+            1060.7417078334508
+          ],
+          "sourceAlphaPixels": 68406,
+          "outputAlphaPixels": 68406,
+          "integerOffset": [
+            -305,
+            -925
+          ]
+        },
+        {
+          "file": "dragging-sway-14.png",
+          "sourceBounds": [
+            630,
+            940,
+            952,
+            1254
+          ],
+          "sourceFace": [
+            793.941585535466,
+            1060.0469401947148
+          ],
+          "sourceAlphaPixels": 68865,
+          "outputAlphaPixels": 68865,
+          "integerOffset": [
+            -618,
+            -924
+          ]
+        },
+        {
+          "file": "dragging-sway-15.png",
+          "sourceBounds": [
+            942,
+            942,
+            1254,
+            1254
+          ],
+          "sourceFace": [
+            1106.5228551336147,
+            1060.229606188467
+          ],
+          "sourceAlphaPixels": 67672,
+          "outputAlphaPixels": 67672,
+          "integerOffset": [
+            -931,
+            -924
+          ]
+        }
+      ]
+    },
+    {
+      "name": "drop",
+      "source": "drop-atlas.png",
+      "scale": 1.08,
+      "frames": [
+        {
+          "file": "dragging-drop-00.png",
+          "sourceBounds": [
+            14,
+            17,
+            308,
+            317
+          ],
+          "sourceFace": [
+            162.20732265446225,
+            126.89565217391305
+          ],
+          "sourceAlphaPixels": 55335,
+          "outputAlphaPixels": 65141
+        },
+        {
+          "file": "dragging-drop-01.png",
+          "sourceBounds": [
+            320,
+            21,
+            629,
+            314
+          ],
+          "sourceFace": [
+            475.5039044556729,
+            128.2939825447864
+          ],
+          "sourceAlphaPixels": 56046,
+          "outputAlphaPixels": 65978
+        },
+        {
+          "file": "dragging-drop-02.png",
+          "sourceBounds": [
+            627,
+            17,
+            933,
+            322
+          ],
+          "sourceFace": [
+            785.3612960497115,
+            129.3209054593875
+          ],
+          "sourceAlphaPixels": 57733,
+          "outputAlphaPixels": 67891
+        },
+        {
+          "file": "dragging-drop-03.png",
+          "sourceBounds": [
+            949,
+            20,
+            1239,
+            322
+          ],
+          "sourceFace": [
+            1098.2511190689347,
+            130.76857654431512
+          ],
+          "sourceAlphaPixels": 56389,
+          "outputAlphaPixels": 66279
+        },
+        {
+          "file": "dragging-drop-04.png",
+          "sourceBounds": [
+            0,
+            317,
+            309,
+            630
+          ],
+          "sourceFace": [
+            161.01678765880217,
+            439.475499092559
+          ],
+          "sourceAlphaPixels": 55897,
+          "outputAlphaPixels": 65821
+        },
+        {
+          "file": "dragging-drop-05.png",
+          "sourceBounds": [
+            322,
+            336,
+            628,
+            631
+          ],
+          "sourceFace": [
+            474.01066295781175,
+            440.69309225776544
+          ],
+          "sourceAlphaPixels": 55816,
+          "outputAlphaPixels": 65561
+        },
+        {
+          "file": "dragging-drop-06.png",
+          "sourceBounds": [
+            627,
+            337,
+            935,
+            637
+          ],
+          "sourceFace": [
+            784.7366812227074,
+            445.3851528384279
+          ],
+          "sourceAlphaPixels": 57012,
+          "outputAlphaPixels": 66989
+        },
+        {
+          "file": "dragging-drop-07.png",
+          "sourceBounds": [
+            945,
+            326,
+            1244,
+            629
+          ],
+          "sourceFace": [
+            1097.0004344048652,
+            450.76281494352736
+          ],
+          "sourceAlphaPixels": 55362,
+          "outputAlphaPixels": 65070
+        },
+        {
+          "file": "dragging-drop-08.png",
+          "sourceBounds": [
+            14,
+            658,
+            318,
+            939
+          ],
+          "sourceFace": [
+            162.22339489885664,
+            760.8755496921724
+          ],
+          "sourceAlphaPixels": 55889,
+          "outputAlphaPixels": 65734
+        },
+        {
+          "file": "dragging-drop-09.png",
+          "sourceBounds": [
+            318,
+            655,
+            633,
+            942
+          ],
+          "sourceFace": [
+            473.93569553805776,
+            758.262467191601
+          ],
+          "sourceAlphaPixels": 55810,
+          "outputAlphaPixels": 65579
+        },
+        {
+          "file": "dragging-drop-10.png",
+          "sourceBounds": [
+            628,
+            643,
+            937,
+            942
+          ],
+          "sourceFace": [
+            784.8615520282187,
+            753.944885361552
+          ],
+          "sourceAlphaPixels": 57487,
+          "outputAlphaPixels": 67582
+        },
+        {
+          "file": "dragging-drop-11.png",
+          "sourceBounds": [
+            939,
+            644,
+            1241,
+            939
+          ],
+          "sourceFace": [
+            1096.7582128777924,
+            752.0578186596583
+          ],
+          "sourceAlphaPixels": 56753,
+          "outputAlphaPixels": 66699
+        },
+        {
+          "file": "dragging-drop-12.png",
+          "sourceBounds": [
+            17,
+            945,
+            308,
+            1238
+          ],
+          "sourceFace": [
+            160.54805194805195,
+            1053.377922077922
+          ],
+          "sourceAlphaPixels": 56959,
+          "outputAlphaPixels": 67046
+        },
+        {
+          "file": "dragging-drop-13.png",
+          "sourceBounds": [
+            320,
+            935,
+            623,
+            1238
+          ],
+          "sourceFace": [
+            470.91171477079797,
+            1053.002546689304
+          ],
+          "sourceAlphaPixels": 57869,
+          "outputAlphaPixels": 68028
+        },
+        {
+          "file": "dragging-drop-14.png",
+          "sourceBounds": [
+            630,
+            941,
+            935,
+            1238
+          ],
+          "sourceFace": [
+            783.5387876218737,
+            1052.620178041543
+          ],
+          "sourceAlphaPixels": 57969,
+          "outputAlphaPixels": 68143
+        },
+        {
+          "file": "dragging-drop-15.png",
+          "sourceBounds": [
+            947,
+            942,
+            1239,
+            1239
+          ],
+          "sourceFace": [
+            1095.9527491408935,
+            1053.5635738831616
+          ],
+          "sourceAlphaPixels": 56660,
+          "outputAlphaPixels": 66599
+        }
+      ]
+    }
+  ]
+}

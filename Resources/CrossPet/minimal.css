@@ -1,0 +1,23 @@
+/* Keep the original character and account-bubble presentation. */
+html body #foot, html body #newsCard { display: none !important; }
+html:not(.qishi-account-open) body #bubble { visibility: hidden; pointer-events: none; }
+html body #wrap { justify-content: flex-end; padding-bottom: 8px; box-sizing: border-box; }
+#qishi-motion { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; display: none; }
+html.qishi-motion-active #qishi-motion { display: block; }
+html.qishi-motion-active body #body img { visibility: hidden !important; }
+html.qishi-motion-releasing body #body img.on { visibility: visible !important; opacity: var(--qishi-rest-opacity,0) !important; transition: none !important; }
+/* The presenter alone owns transforms while interacting. Nested upstream bob,
+   slide, opacity and breathing animations cannot add a second displacement. */
+html.qishi-edge-hover body #body,
+html.qishi-dragging body #stage,
+html.qishi-edge-hover body #stage {
+  animation: none !important; transform: none !important; transition: none !important;
+}
+html.qishi-edge-hover body #body img { animation: none !important; transition: none !important; translate: none !important; }
+html.qishi-edge-hover body #body img { transform: translateX(var(--qishi-edge-offset,0px)); }
+html.qishi-edge-hover body #blink { visibility: hidden !important; }
+/* Preserve the normal pose while its window follows the pointer. */
+html.qishi-dragging body #body { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  html body #bubble { transition: none; }
+}
