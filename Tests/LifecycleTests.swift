@@ -74,7 +74,12 @@ import SwiftUI
         expect(app.activationPolicy() == .accessory && window.isVisible, "hide Dock immediately preserves open window")
         store.setHideDockIcon(false); settle()
         expect(app.activationPolicy() == .regular && window.isVisible, "show Dock immediately preserves open window")
-        delegate.claude.preferences.showPet = false; delegate.claude.save(); settle()
+        delegate.claude.preferences.showClaude = false; delegate.claude.save(); settle()
+        let pets = delegate.nativePets!
+        expect(!pets.claude.panel.isVisible && pets.clawd.panel.isVisible, "Claude-chan hides on her own while Clawd stays")
+        delegate.claude.preferences.showClaude = true; delegate.claude.preferences.showClawd = false; delegate.claude.save(); settle()
+        expect(pets.claude.panel.isVisible && !pets.clawd.panel.isVisible, "Clawd hides on his own while Claude-chan stays")
+        delegate.claude.preferences.showClaude = false; delegate.claude.save(); settle()
         window.performClose(nil); settle()
         expect(!window.isVisible && app.activationPolicy() == .accessory, "close leaves menu-bar-only app")
         expect(!delegate.applicationShouldTerminateAfterLastWindowClosed(app), "background process stays alive after close")

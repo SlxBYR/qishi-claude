@@ -5,6 +5,7 @@ import SwiftUI
     static let reopenNotification = Notification.Name("local.qishi.claude-companion.reopen.\(getuid())")
     let store: MonitorStore
     let claude: ClaudeStore
+    let webRTC: WebRTCMonitor
     private(set) var pet: NSPanel?
     private(set) var nativePets: NativePets?
     private var approvalPanel: NSPanel?
@@ -15,7 +16,7 @@ import SwiftUI
     private let persistWindowFrames: Bool
 
     init(store: MonitorStore, persistWindowFrames: Bool = true) {
-        self.store = store; self.claude = ClaudeStore(preview: store.preview); self.persistWindowFrames = persistWindowFrames; super.init()
+        self.store = store; self.claude = ClaudeStore(preview: store.preview); self.webRTC = WebRTCMonitor(preview: store.preview); self.persistWindowFrames = persistWindowFrames; super.init()
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -37,7 +38,7 @@ import SwiftUI
             self?.updateActivationPolicy(); self?.updateStatus()
         }
         store.onStatusChange = { [weak self] in self?.updateStatus(); self?.updatePet() }
-        updateStatus(); updatePet(); store.start()
+        updateStatus(); updatePet(); store.start(); webRTC.start()
         menuTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.updateStatus() }
         }
@@ -48,12 +49,12 @@ import SwiftUI
     func application(_ application: NSApplication, open urls: [URL]) { showMain() }
 
     @objc func showCompanions() {
-        claude.preferences.showPet = true; claude.save()
+        claude.preferences.showClaude = true; claude.preferences.showClawd = true; claude.save()
         nativePets?.claude.panel.orderFrontRegardless(); nativePets?.clawd.panel.orderFrontRegardless()
     }
     @objc func showMain() {
         if window == nil {
-            let created = QishiMainWindow(store: store, claude: claude, persistFrame: persistWindowFrames)
+            let created = QishiMainWindow(store: store, claude: claude, webRTC: webRTC, persistFrame: persistWindowFrames)
             created.delegate = self
             window = created
         }
@@ -82,7 +83,8 @@ import SwiftUI
         }
     }
     @objc func showWork() { store.selectedPage = 2; showMain() }
-    @objc func togglePet() { claude.preferences.showPet.toggle(); claude.save() }
+    @objc func toggleClaudePet() { claude.preferences.showClaude.toggle(); claude.save() }
+    @objc func toggleClawdPet() { claude.preferences.showClawd.toggle(); claude.save() }
     @objc func showSettings() { store.selectedPage = 1; showMain() }
     @objc func refresh() { Task { await store.check() } }
     @objc func toggleDockIcon() { store.setHideDockIcon(!store.settings.hideDockIcon) }
@@ -119,7 +121,8 @@ import SwiftUI
         menu.addItem(.separator())
         menu.addItem(item("Claude · \(LT(claude.pose.title))", #selector(showWork)))
         menu.addItem(item(L("打开 Claude 工作台", "Open Claude Workbench"), #selector(showWork)))
-        let petItem = item(L("显示桌面伙伴", "Show Companions"), #selector(togglePet)); petItem.state = claude.preferences.showPet ? .on : .off; menu.addItem(petItem)
+        let claudeItem = item(L("显示 Claude 娘", "Show Claude-chan"), #selector(toggleClaudePet)); claudeItem.state = claude.preferences.showClaude ? .on : .off; menu.addItem(claudeItem)
+        let clawdItem = item(L("显示 Clawd", "Show Clawd"), #selector(toggleClawdPet)); clawdItem.state = claude.preferences.showClawd ? .on : .off; menu.addItem(clawdItem)
         menu.addItem(item(L("打开栖时", "Open Qishi"), #selector(showMain)))
         let check = item(store.isChecking ? L("正在检查…", "Checking…") : L("立即检查 Gmail", "Check Gmail Now"), #selector(refresh))
         check.isEnabled = store.settings.isConfigured && store.settings.monitoring && !store.isChecking
@@ -133,10 +136,14 @@ import SwiftUI
         statusItem?.menu = menu
         statusItem?.button?.toolTip = L("栖时", "Qishi") + " · Claude \(LT(claude.pose.title))"
     }
-    func applicationWillTerminate(_ notification: Notification) { claude.stop() }
+    func applicationWillTerminate(_ notification: Notification) { claude.stop(); webRTC.stop() }
     private func updatePet() {
         if nativePets == nil {
-            nativePets = NativePets(persistent: persistWindowFrames, showMain: { [weak self] in self?.showMain() })
+            nativePets = NativePets(persistent: persistWindowFrames, showMain: { [weak self] in self?.showMain() }, hide: { [weak self] kind in
+                guard let self else { return }
+                if kind == .claude { self.claude.preferences.showClaude = false } else { self.claude.preferences.showClawd = false }
+                self.claude.save()
+            })
             pet = nativePets?.claude.panel
         }
         nativePets?.update(claude, registeredAt: store.settings.registeredAt)

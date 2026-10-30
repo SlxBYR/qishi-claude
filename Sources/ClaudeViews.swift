@@ -68,15 +68,18 @@ struct ClawdStage: View {
     @ViewState private var current = ClawdAnimations.pool.randomElement() ?? "idle"
     @ViewState private var turn = 0
     var size: CGFloat = 260
+    /// Shown instead of the random loop while set (the WebRTC leak alert).
+    var override: String?
     var body: some View {
         Button(action: advance) {
-            OriginalClawdAnimation(name: current, animate: !reduceMotion)
+            OriginalClawdAnimation(name: override ?? current, animate: !reduceMotion)
                 .frame(width: size, height: size)
         }.buttonStyle(.plain)
-            .help(L("点一下换个动作", "Click for another animation"))
+            .disabled(override != nil)
+            .help(override == nil ? L("点一下换个动作", "Click for another animation") : L("检测到 WebRTC 泄漏", "WebRTC leak detected"))
             .accessibilityLabel(L("Clawd 像素动画，点按换一个", "Clawd pixel animation; press for another"))
-            .task(id: turn) {
-                guard !reduceMotion else { return }
+            .task(id: "\(turn)-\(override ?? "")") {
+                guard !reduceMotion, override == nil else { return }
                 let loop = max(0.5, ClawdAnimations.duration(current))
                 let seconds = loop * max(1, (3 / loop).rounded(.up))
                 do { try await Task.sleep(for: .seconds(seconds)); advance() } catch {}
@@ -85,6 +88,53 @@ struct ClawdStage: View {
     private func advance() {
         current = ClawdAnimations.pool.filter { $0 != current }.randomElement() ?? "idle"
         turn += 1
+    }
+}
+/// Layers of the Claude starburst, split by Scripts/make-claude-logo.py.
+@MainActor enum ClaudeLogoArt {
+    struct Layout: Decodable {
+        struct Spoke: Decodable { let file: String; let angle: Double }
+        let size: [Double]; let center: [Double]; let spokes: [Spoke]
+    }
+    static let folder = Bundle.main.resourceURL?.appendingPathComponent("ClaudeLogo")
+    static let layout: Layout? = folder.flatMap { try? JSONDecoder().decode(Layout.self, from: Data(contentsOf: $0.appendingPathComponent("layout.json"))) }
+    private static var images: [String: NSImage] = [:]
+    static func image(_ file: String) -> NSImage? {
+        if let cached = images[file] { return cached }
+        guard let url = folder?.appendingPathComponent(file), let image = NSImage(contentsOf: url) else { return nil }
+        images[file] = image
+        return image
+    }
+}
+/// The workbench mark: each ray of the Claude starburst stretches and settles
+/// in turn, a wave travelling around the hub; it quickens while Claude works.
+struct ClaudeLogoView: View {
+    var busy: Bool
+    var size: CGFloat = 200
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    var body: some View {
+        Group {
+            if let layout = ClaudeLogoArt.layout {
+                let anchor = UnitPoint(x: layout.center[0] / layout.size[0], y: layout.center[1] / layout.size[1])
+                TimelineView(.animation(paused: reduceMotion)) { context in
+                    let phase = context.date.timeIntervalSinceReferenceDate / (busy ? 1.6 : 3.4) * 2 * .pi
+                    ZStack {
+                        ForEach(layout.spokes.indices, id: \.self) { index in
+                            let spoke = layout.spokes[index]
+                            layer(spoke.file)
+                                .scaleEffect(reduceMotion ? 1 : 1 + 0.09 * sin(phase - spoke.angle * .pi / 180), anchor: anchor)
+                        }
+                        layer("hub.png").scaleEffect(reduceMotion ? 1 : 1 + 0.025 * sin(phase * 2), anchor: anchor)
+                    }
+                }
+            } else {
+                Image(systemName: "sparkle").resizable().scaledToFit().foregroundStyle(Color.qishiAccent)
+            }
+        }.frame(width: size, height: size)
+            .accessibilityElement().accessibilityLabel("Claude")
+    }
+    private func layer(_ file: String) -> some View {
+        Group { if let image = ClaudeLogoArt.image(file) { Image(nsImage: image).resizable().scaledToFit() } }
     }
 }
 struct ClaudeWorkView: View {
@@ -99,7 +149,7 @@ struct ClaudeWorkView: View {
                 }
                 NativeCard {
                     HStack(spacing: 18) {
-                        ClawdStage()
+                        ClaudeLogoView(busy: claude.pose.busy || claude.busyCount > 0).padding(30)
                         VStack(alignment: .leading, spacing: 12) {
                             Label(claude.connected ? L("Claude Code 已接入", "Claude Code connected") : L("Claude Code 未接入", "Claude Code not connected"),
                                   systemImage: claude.connected ? "link" : "sparkle")
@@ -118,8 +168,9 @@ struct ClaudeWorkView: View {
                                 if !claude.connected {
                                     Button(L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.glassProminent)
                                 }
-                                Button(claude.preferences.showPet ? L("收起桌面伙伴", "Hide companions") : L("显示桌面伙伴", "Show companions")) {
-                                    claude.preferences.showPet.toggle(); claude.save()
+                                Button(claude.preferences.anyPetShown ? L("收起桌面伙伴", "Hide companions") : L("显示桌面伙伴", "Show companions")) {
+                                    let show = !claude.preferences.anyPetShown
+                                    claude.preferences.showClaude = show; claude.preferences.showClawd = show; claude.save()
                                 }.buttonStyle(.glass)
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -285,7 +336,8 @@ struct ClaudeSettingsView: View {
                 NativeCard {
                     VStack(alignment: .leading, spacing: 14) {
                         CardTitle(title: L("桌面伙伴", "Desktop companions"), symbol: "sparkles")
-                        toggle(L("显示 Claude 娘与 Clawd", "Show Claude-chan and Clawd"), \.showPet)
+                        toggle(L("显示 Claude 娘", "Show Claude-chan"), \.showClaude)
+                        toggle(L("显示 Clawd", "Show Clawd"), \.showClawd)
                         toggle(L("浮在其他窗口上方", "Float above other windows"), \.alwaysOnTop)
                         HStack(spacing: 12) {
                             Text(L("大小", "Size")).font(.system(size: 13))

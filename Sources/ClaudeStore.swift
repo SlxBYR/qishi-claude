@@ -3,12 +3,36 @@ import Combine
 import UserNotifications
 
 struct ClaudePreferences: Codable {
-    var showPet = true
+    var showClaude = true
+    var showClawd = true
     var approvals = false
     var notifications = false
     var alwaysOnTop = true
-    var compact = false
     var petScale = 1.0
+    var anyPetShown: Bool { showClaude || showClawd }
+
+    init() {}
+    private enum CodingKeys: String, CodingKey {
+        case showClaude, showClawd, approvals, notifications, alwaysOnTop, petScale
+        case showPet  // single switch for both pets in builds up to 24
+    }
+    // Missing keys keep their defaults, so an older file never resets the rest.
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let legacy = try values.decodeIfPresent(Bool.self, forKey: .showPet) ?? true
+        showClaude = try values.decodeIfPresent(Bool.self, forKey: .showClaude) ?? legacy
+        showClawd = try values.decodeIfPresent(Bool.self, forKey: .showClawd) ?? legacy
+        approvals = try values.decodeIfPresent(Bool.self, forKey: .approvals) ?? false
+        notifications = try values.decodeIfPresent(Bool.self, forKey: .notifications) ?? false
+        alwaysOnTop = try values.decodeIfPresent(Bool.self, forKey: .alwaysOnTop) ?? true
+        petScale = try values.decodeIfPresent(Double.self, forKey: .petScale) ?? 1.0
+    }
+    func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(showClaude, forKey: .showClaude); try values.encode(showClawd, forKey: .showClawd)
+        try values.encode(approvals, forKey: .approvals); try values.encode(notifications, forKey: .notifications)
+        try values.encode(alwaysOnTop, forKey: .alwaysOnTop); try values.encode(petScale, forKey: .petScale)
+    }
 }
 @MainActor final class ClaudeStore: ObservableObject {
     @Published var state = ClaudeState()

@@ -4,7 +4,7 @@ import WebKit
 @MainActor enum PetVerification {
     static func run(to folder: URL) {
         try! FileManager.default.createDirectory(at:folder,withIntermediateDirectories:true)
-        let pets = NativePets(persistent:false,showMain:{})
+        let pets = NativePets(persistent:false,showMain:{},hide:{ _ in })
         let store = ClaudeStore(preview:true)
         store.state = ClaudeState()
         pets.update(store)

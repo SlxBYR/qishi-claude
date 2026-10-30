@@ -58,6 +58,7 @@ final class PetResourceHandler: NSObject, WKURLSchemeHandler {
     let persistent: Bool
     var ready = false, dragging = false
     var showMain: (() -> Void)?
+    var hide: (() -> Void)?
     private var pendingScript: String?
     private var timer: Timer?
     private var lastMouse = NSPoint.zero, tickInFlight = false
@@ -294,7 +295,7 @@ final class PetResourceHandler: NSObject, WKURLSchemeHandler {
             let item = NSMenuItem(title:L("账号存活天数", "Account Age"),action:#selector(showAccount),keyEquivalent:"")
             item.target = self; menu.addItem(item); menu.addItem(.separator())
         }
-        for (title, action) in [(kind == .claude ? L("摸摸头", "Pat") : L("逗逗 Clawd", "Play with Clawd"),#selector(pat)),(L("戳一下", "Poke"),#selector(poke)),(L("打开栖时", "Open Qishi"),#selector(openMain)),(L("退出", "Quit"),#selector(quit))] {
+        for (title, action) in [(kind == .claude ? L("摸摸头", "Pat") : L("逗逗 Clawd", "Play with Clawd"),#selector(pat)),(L("戳一下", "Poke"),#selector(poke)),(kind == .claude ? L("隐藏 Claude 娘", "Hide Claude-chan") : L("隐藏 Clawd", "Hide Clawd"),#selector(hidePet)),(L("打开栖时", "Open Qishi"),#selector(openMain)),(L("退出", "Quit"),#selector(quit))] {
             let item = NSMenuItem(title:title,action:action,keyEquivalent:""); item.target = self; menu.addItem(item)
         }
         NSMenu.popUpContextMenu(menu,with:event,for:view)
@@ -302,6 +303,7 @@ final class PetResourceHandler: NSObject, WKURLSchemeHandler {
     @objc private func pat() { run(kind == .claude ? "handleClick('pat')" : "qishiClick(30)") }
     @objc private func poke() { run(kind == .claude ? "handleClick('poke')" : "qishiClick(130,2)") }
     @objc private func openMain() { showMain?() }
+    @objc private func hidePet() { hide?() }
     @objc private func quit() {
         run(kind == .claude ? "farewell('',2000)" : "qishiClick(90,2)")
         DispatchQueue.main.asyncAfter(deadline:.now()+2) { NSApp.terminate(nil) }
@@ -315,13 +317,14 @@ final class PetResourceHandler: NSObject, WKURLSchemeHandler {
 @MainActor final class NativePets {
     let claude: NativePetWindow, clawd: NativePetWindow
     private var lastPayload = "", lastState = ""
-    init(persistent: Bool, showMain: @escaping () -> Void) {
+    init(persistent: Bool, showMain: @escaping () -> Void, hide: @escaping (NativePetWindow.Kind) -> Void) {
         claude = NativePetWindow(kind:.claude,persistent:persistent)
         clawd = NativePetWindow(kind:.clawd,persistent:persistent)
         claude.showMain = showMain; clawd.showMain = showMain
+        claude.hide = { hide(.claude) }; clawd.hide = { hide(.clawd) }
     }
     func update(_ store: ClaudeStore, registeredAt: Date? = nil) {
-        for pet in [claude,clawd] { pet.present(show:store.preferences.showPet,scale:store.preferences.petScale,onTop:store.preferences.alwaysOnTop) }
+        for (pet, show) in [(claude, store.preferences.showClaude), (clawd, store.preferences.showClawd)] { pet.present(show:show,scale:store.preferences.petScale,onTop:store.preferences.alwaysOnTop) }
         let live = store.live
         func state(_ s: ClaudeSession) -> [String:Any] {
             var p = s.pose == .error ? "oops" : s.pose.rawValue

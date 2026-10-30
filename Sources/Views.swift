@@ -189,31 +189,83 @@ struct AppearanceMenu: View {
 /// System sidebar: AppKit draws its floating Liquid Glass panel and selection.
 struct QishiSidebar: View {
     @Binding var selection: Int
+    @ObservedObject var webRTC: WebRTCMonitor
     @ObservedObject var prefs = AppPreferences.shared
     var body: some View {
         List(selection: Binding<Int?>(get: { selection }, set: { if let page = $0 { selection = page } })) {
-            Section {
-                row(L("Claude 工作台", "Claude"), symbol: "sparkles", page: 2)
-                row(L("桌宠与接入", "Companions"), symbol: "person.2", page: 3)
-                row(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
-                row(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
-            } header: {
-                Label(L("栖时", "Qishi"), systemImage: "hourglass")
-            }
+            row(L("Claude 工作台", "Claude"), symbol: "sparkles", page: 2)
+            row(L("桌宠与接入", "Companions"), symbol: "person.2", page: 3)
+            row(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
+            row(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
         }.listStyle(.sidebar)
+            .safeAreaInset(edge: .bottom) {
+                VStack(spacing: 4) {
+                    // A WebRTC leak overrides the random loop with the error animation.
+                    ClawdStage(size: 168, override: webRTC.status.isLeak ? "error" : nil)
+                    WebRTCStatusRow(monitor: webRTC)
+                }.padding(.horizontal, 10).padding(.bottom, 10)
+            }
     }
     private func row(_ title: String, symbol: String, page: Int) -> some View {
         Label(title, systemImage: symbol).listItemTint(.qishiAccent).tag(page).accessibilityIdentifier("sidebar-\(page)")
     }
 }
 
+/// Sidebar footer: the browserleaks.com WebRTC verdict; a click re-checks.
+struct WebRTCStatusRow: View {
+    @ObservedObject var monitor: WebRTCMonitor
+    var body: some View {
+        Button { monitor.check() } label: {
+            HStack(spacing: 8) {
+                Image(systemName: symbol).font(.system(size: 14, weight: .medium)).foregroundStyle(tone)
+                    .symbolEffect(.rotate, isActive: monitor.status == .checking)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title).font(.system(size: 12, weight: .medium)).foregroundStyle(monitor.status.isLeak ? Color.red : Color.primary)
+                    Text(detail).font(.system(size: 10)).foregroundStyle(.secondary).lineLimit(1).monospacedDigit()
+                }
+                Spacer(minLength: 0)
+            }.padding(.horizontal, 10).padding(.vertical, 7)
+                .background(Color.primary.opacity(0.05), in: RoundedRectangle(cornerRadius: 10))
+                .contentShape(RoundedRectangle(cornerRadius: 10))
+        }.buttonStyle(.plain)
+            .disabled(monitor.status == .checking || monitor.preview)
+            .help(L("WebRTC 泄漏检测（browserleaks.com），点按重新检测", "WebRTC leak test (browserleaks.com); click to re-check"))
+            .accessibilityIdentifier("webrtc-status")
+    }
+    private var symbol: String {
+        switch monitor.status {
+        case .noLeak: return "checkmark.shield"
+        case .leak: return "exclamationmark.shield"
+        case .checking, .idle: return "arrow.triangle.2.circlepath"
+        case .failed: return "questionmark.circle"
+        }
+    }
+    private var tone: Color {
+        switch monitor.status { case .noLeak: return .green; case .leak: return .red; case .failed: return .orange; default: return .secondary }
+    }
+    private var title: String {
+        switch monitor.status {
+        case .noLeak: return L("WebRTC 无泄漏", "WebRTC: no leak")
+        case .leak(let verdict): return L("WebRTC 泄漏", "WebRTC leak") + " · " + verdict
+        case .checking, .idle: return L("正在检测 WebRTC…", "Checking WebRTC…")
+        case .failed: return L("WebRTC 检测失败", "WebRTC check failed")
+        }
+    }
+    private var detail: String {
+        if case .failed(let reason) = monitor.status { return reason }
+        guard let ip = monitor.publicIP else { return "browserleaks.com" }
+        return ip + (monitor.checkedAt.map { " · " + $0.qishiFormatted(date: .omitted) } ?? "")
+    }
+}
+
 struct QishiRoot: View {
     @ObservedObject var store: MonitorStore
     @ObservedObject var claude: ClaudeStore
+    @ObservedObject var webRTC: WebRTCMonitor
     @ObservedObject var prefs = AppPreferences.shared
     var body: some View {
         NavigationSplitView {
-            QishiSidebar(selection: $store.selectedPage)
+            QishiSidebar(selection: $store.selectedPage, webRTC: webRTC)
                 .navigationSplitViewColumnWidth(min: 190, ideal: 210, max: 260)
         } detail: {
             Group {
@@ -227,7 +279,10 @@ struct QishiRoot: View {
                 // Pages read the language when their body is built; a new
                 // identity rebuilds them all at once after a switch.
                 .id(prefs.language)
-        }.frame(minWidth: 920, minHeight: 700)
+        }
+        // No minimum frame here: QishiMainWindow.minSize bounds the window, and a
+        // SwiftUI minimum made the split view grow past the window while the
+        // sidebar slid in, then snap back on the last frame.
             .tint(.qishiAccent)
             .environment(\.locale, Loc.locale)
             .alert(L("栖时", "Qishi"), isPresented: Binding(get: { store.message != nil || claude.message != nil }, set: { if !$0 { store.message = nil; claude.message = nil } })) {
