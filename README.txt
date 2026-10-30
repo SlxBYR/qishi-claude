@@ -1,5 +1,13 @@
 栖时·Claude 2.2.1（build 30，原生 Liquid Glass 界面、Claude 工作台、Token 活动热力图与 WebRTC 检测）
 
+⚠ 项目状态：半成品
+这是一个仍在开发中的半成品，不是正式版本。功能、界面和数据格式随时可能变化，可能存在未发现的问题。
+Windows 版目前只在 macOS 上做过隔离预览，尚未在 Windows 实机完整验证；macOS 版也未经过真实 Gmail 与 Claude 账号的完整验收。
+macOS 包为本机临时签名（未经 Apple 公证），首次打开需在“系统设置 › 隐私与安全性”中允许，或右键选择“打开”。Windows 包未签名，SmartScreen 可能提示，需选择“仍要运行”。
+欢迎试用和反馈，但请勿将其用于重要场景。
+
+下载：GitHub Releases 提供 macOS（.dmg，Apple 芯片，macOS 27+）与 Windows（单文件便携 .exe 或 .zip，x64）安装包。
+
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
 工作台左侧是独立的 Claude 标志动画：中心与各道光芒的根部固定不动，光芒外段从根部缓慢伸缩（周期约 7–11 秒、节奏互不相同），标志始终连成一体；Claude 工作时稍快。右侧玻璃卡片显示状态。
 侧栏导航下方显示一张海报（Resources/Sidebar/poster.png），只作展示，点按不切换页面。
@@ -55,10 +63,10 @@ macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Nod
 5 分钟没有工作事件的忙碌会话显示“等待更新”，以免把历史状态当成实时工作。
 普通 Claude 桌面聊天不提供此事件协议；本版本接入的是 Claude Code。
 
-源码构建与测试（供日后开发；本次不执行应用构建）
+源码构建与测试
   bash Scripts/build.sh
   bash Scripts/test.sh
-推送到 GitHub（私有仓库 SlxBYR/qishi-claude，提交全部改动后推送当前分支）：
+推送到 GitHub（公开仓库 SlxBYR/qishi-claude，提交全部改动后推送当前分支）：
   bash Scripts/push.sh "提交说明"
 仅运行桌宠回归（WebKit 静态贴边与原生贴边移动）：
   bash Scripts/test.sh --motion-only

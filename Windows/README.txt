@@ -1,12 +1,15 @@
-栖时 · Claude Windows 2.2.1（build 25）
+栖时 · Claude Windows 2.2.1（build 30）
+
+⚠ 半成品：仍在开发中，尚未在 Windows 实机完整验证；程序未签名，SmartScreen 可能提示，选择“仍要运行”即可。
 
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边，不再播放探出、收回或挥手动画。Clawd 的贴边与悬停探出保持不变。
-工作台只保留 Clawd 小螃蟹的像素动画，与 macOS 版共用同一组 GIF，随机播放，点一下换一段。
-本次交付范围
-本次只替换用户现有 macOS 应用的动画资源，不生成新的 Windows 应用或压缩包。此目录保留共享动画与 Windows 源码修复；现有 Windows 2.2.1 压缩包未更新。下述新增动画及窗口运动行为属于当前源码，不能视为已安装进旧 Windows 发布包。
+工作台左侧是 Claude 标志动画：核心与光芒根部固定，光芒外段从根部缓慢伸缩（周期约 7–11 秒），Claude 工作时稍快；右侧卡片显示状态。
+侧栏导航下方显示海报；侧栏底部是 Clawd 小螃蟹像素动画（与 macOS 版共用同一组 GIF，随机播放，点一下换一段）与 WebRTC 泄漏检测。
+与 macOS 版 build 30 同步。
 
 运行
-解压整个 Windows 压缩包，双击 Qishi Claude.exe。请保留目录内所有文件。
+单文件版：双击 Qishi-Claude-Windows-x64.exe（首次启动会解压到临时目录，稍慢）。
+压缩包版：解压整个 Windows 压缩包，双击 Qishi Claude.exe。请保留目录内所有文件。
 支持 Windows 10 22H2 / Windows 11 x64。ARM64 可使用 npm run build -- --arm64 单独构建。
 桌面先显示 Claude 娘与 Clawd；右键角色或双击系统托盘小螃蟹打开工作台。
 
@@ -16,7 +19,11 @@
 • Clawd 小螃蟹的素材、动画和交互保持不变。
 • 支持透明双桌宠、拖动、点击、摇晃、眼神跟随、待机睡眠、屏幕贴边与位置保存。
 • Windows 系统托盘、原生菜单、通知、窗口与多显示器适配。
-• Claude 工作台、多个会话、额度、上下文、可选单次工具授权；浅色 / 深色 / 跟随系统与中文 / English 切换。
+• Claude 工作台、额度、上下文、可选单次工具授权；浅色 / 深色 / 跟随系统与中文 / English 切换。
+• 会话列表只显示最近 5 个有过工具调用的会话。
+• Token 活动：读取本机 Claude Code 会话记录（%USERPROFILE%\.claude\projects\**\*.jsonl，支持 CLAUDE_CONFIG_DIR）中每条回复的用量，按消息去重、按本地日期汇总成近一年日历热力图，可切换每天 / 每周 / 累计总量，悬停显示日期与数值，另有今天 / 本周 / 近一年合计与近 14 天明细。只读用量数字、时间与消息标识，不读取对话正文，不联网；每 2 分钟刷新。
+• WebRTC 泄漏检测：在隐藏窗口打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与公网 IP；启动时检测，之后每 5 分钟一次，点击状态可重新检测。结果不是 No Leak 时，侧栏 Clawd 持续播放错误动画。
+• Claude 娘与 Clawd 可分别显示或隐藏（托盘菜单、“桌宠与接入”或右键角色）；旧版“显示桌面伙伴”设置会自动拆分沿用。
 • Gmail 只读检查（全部邮件、垃圾邮件、已删除邮件）与账号计时。
 • Gmail 应用专用密码仅由 Electron safeStorage 调用 Windows DPAPI 加密后本地存储；不会写入普通设置文件。
 
@@ -30,13 +37,12 @@ Claude 设置：%USERPROFILE%\.claude\settings.json（支持 CLAUDE_CONFIG_DIR�
 不会读取 Claude 登录凭据，不会新增额度 API 调用，不会自动批准工具。
 应用关闭、授权关闭、请求超时、会话完成或转入新一轮时，授权返回 Claude 原生流程。
 
-源码构建（供日后开发；本次不构建）
+源码构建
 安装 Node.js 22 或更新版本，进入 Windows 文件夹：
   npm ci
   npm test
   npm run build
-输出在项目 outputs/Windows-build。开发预览：npm run demo。
-本次不生成新的 Windows 压缩包；原有 2.2.1 包与校验值保持不变。
+输出在仓库上一级目录的 Windows-build 文件夹。开发预览：npm run demo。
 npm test 包含窗口运动回归：单调收敛、拖动接管、目标切换和过期贴边回调。共享的 Claude 娘静态贴边由 Qishi 目录的 bash Scripts/test.sh --motion-only 在真实 WebKit 中验证。
 本项目使用固定版本 Electron 45.1.0 和 imapflow 2.10.0；安装依赖需要联网。
 可选：设置环境变量 QISHI_ELECTRON_ZIP_DIR，指定已下载 Electron ZIP 所在目录，以复用本地安装包。目录内 ZIP 的版本、平台和架构须与本次构建一致，例如 electron-v45.1.0-win32-x64.zip；填写目录路径，不是 ZIP 文件路径。
@@ -51,5 +57,5 @@ npm test 包含窗口运动回归：单调收敛、拖动接管、目标切换�
 原始素材及许可证保留在 resources/assets 中。
 Claude 娘：CrossPet / lokicorvus，CC BY-NC-SA 4.0；新增拖动差分沿用原角色设定与素材授权。
 Clawd：Clawd on Desk / rullerzhou-afk；美术资源权利由原权利人保留。
-供个人本机使用；未经权利人授权，不公开分发包含相关素材的整合应用。
+源码以 AGPL-3.0 发布（见仓库根目录 LICENSE）；美术素材不受 AGPL 覆盖，以各自许可为准。
 非 Anthropic 官方应用。

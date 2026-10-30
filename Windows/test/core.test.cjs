@@ -128,11 +128,12 @@ test('trusted sender matching checks the complete mailbox domain', () => {
 });
 
 test('settings normalize email and preserve unrelated saved values', () => {
-  const before = { ...core.defaults(), positions: { clawd: { x: 60, y: 80 } }, showPet: false };
+  const before = { ...core.defaults(), positions: { clawd: { x: 60, y: 80 } }, showClawd: false };
   const after = core.validateSettings({ email: ' DEMO@GMAIL.COM ', intervalMinutes: 10, registeredAt: 1_600_000_000, password: 'not-persisted', arbitrary: true }, before);
   assert.equal(after.email, 'demo@gmail.com');
   assert.equal(after.intervalMinutes, 10);
-  assert.equal(after.showPet, false);
+  assert.equal(after.showClawd, false);
+  assert.equal(after.showClaude, true);
   assert.deepEqual(after.positions, before.positions);
   assert.equal('password' in after, false);
   assert.equal('arbitrary' in after, false);
@@ -203,4 +204,15 @@ test('atomic persistence and concurrent hooks retain every update', async t => {
   assert.deepEqual(fs.readdirSync(root), ['state.json']);
   fs.writeFileSync(file, '{invalid');
   assert.equal(core.readJSON(file, 'fallback'), 'fallback');
+});
+
+test('legacy single companion switch splits into one per character', () => {
+  const legacy = core.loadSettings({ showPet: false, petScale: 1.2 });
+  assert.equal(legacy.showClaude, false);
+  assert.equal(legacy.showClawd, false);
+  assert.equal(legacy.petScale, 1.2);
+  assert.equal('showPet' in legacy, false);
+  const mixed = core.loadSettings({ showPet: false, showClaude: true });
+  assert.deepEqual([mixed.showClaude, mixed.showClawd], [true, false]);
+  assert.deepEqual([core.loadSettings(null).showClaude, core.loadSettings({}).showClawd], [true, true]);
 });
