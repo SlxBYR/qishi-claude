@@ -211,8 +211,6 @@ struct ClaudeWorkView: View {
                         } else {
                             Text(L("等待 Claude Code 上报额度", "Waiting for Claude Code to report usage")).font(.system(size: 13)).foregroundStyle(.secondary)
                         }
-                        Divider()
-                        ClaudeDesktopUsageSection(reader: claude.desktop)
                     }
                 }
                 NativeCard {
@@ -290,59 +288,6 @@ struct ClaudeWorkView: View {
                 }
             }.font(.system(size: 10)).foregroundStyle(.secondary)
         }.opacity(stale || resetPassed ? 0.65 : 1)
-    }
-}
-/// Limits read from Claude Desktop: live while it runs, the last reading otherwise.
-struct ClaudeDesktopUsageSection: View {
-    @ObservedObject var reader: ClaudeDesktopReader
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Label("Claude Desktop", systemImage: "macwindow").font(.system(size: 13, weight: .semibold))
-                Spacer()
-                Text(status).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(1)
-            }
-            if !reader.trusted {
-                HStack(alignment: .top, spacing: 12) {
-                    Text(L("需要“辅助功能”权限才能读取 Claude 界面上显示的额度。", "Accessibility permission is needed to read the limits Claude shows."))
-                        .font(.system(size: 12)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-                    Spacer()
-                    Button(L("授予权限", "Grant access")) { reader.requestAccess() }.buttonStyle(.glass)
-                }
-            }
-            if let snapshot = reader.snapshot {
-                ForEach(snapshot.quotas) { quota in row(quota) }
-                    .opacity(reader.running ? 1 : 0.7)
-            } else if reader.trusted {
-                Text(L("在 Claude 中打开 设置 → 用量，即会自动读取并保存。", "Open Settings → Usage in Claude; the limits are read and kept automatically."))
-                    .font(.system(size: 12)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
-            }
-        }
-    }
-    private var status: String {
-        let time = reader.snapshot.map { $0.capturedAt.qishiFormatted(date: .abbreviated, time: .shortened) }
-        if reader.running { return L("运行中", "Running") + (time.map { L(" · 读取于 ", " · read ") + $0 } ?? "") }
-        return L("未运行", "Not running") + (time.map { L(" · 上次数据 ", " · last data ") + $0 } ?? "")
-    }
-    private func title(_ id: String) -> String {
-        switch id {
-        case "five_hour": return L("当前会话", "Current session")
-        case "seven_day": return L("每周 · 所有模型", "Weekly · all models")
-        case "seven_day_opus": return L("每周 · Opus", "Weekly · Opus")
-        case "seven_day_sonnet": return L("每周 · Sonnet", "Weekly · Sonnet")
-        default: return id
-        }
-    }
-    private func row(_ quota: DesktopQuota) -> some View {
-        VStack(alignment: .leading, spacing: 7) {
-            HStack {
-                Text(title(quota.id)).font(.system(size: 13, weight: .medium))
-                Spacer()
-                Text(L("已用 \(Int(quota.used))% · 剩余 \(Int(100 - quota.used))%", "\(Int(quota.used))% used · \(Int(100 - quota.used))% left")).font(.system(size: 12)).monospacedDigit()
-            }
-            ProgressView(value: quota.used, total: 100).tint(quota.used >= 90 ? .red : quota.used >= 70 ? .orange : .qishiAccent)
-            if let reset = quota.reset { Text(reset).font(.system(size: 10)).foregroundStyle(.secondary) }
-        }
     }
 }
 struct ClaudeApprovalCard: View {

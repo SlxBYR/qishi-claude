@@ -43,8 +43,6 @@ struct ClaudePreferences: Codable {
     @Published var selectedID: String?
     @Published var now = Date()
     let preview: Bool
-    /// Limits shown by Claude Desktop, read on screen while it runs.
-    let desktop: ClaudeDesktopReader
     var onChange: (() -> Void)?
     var showMain: (() -> Void)?
     private var timer: Timer?
@@ -53,7 +51,6 @@ struct ClaudePreferences: Codable {
     private var tick = 0
     init(preview: Bool = false) {
         self.preview = preview
-        desktop = ClaudeDesktopReader(preview: preview)
         if preview {
             let time = Date().timeIntervalSince1970
             var first = ClaudeSession(id: "preview-one", cwd: "/Projects/栖时", model: "Claude Sonnet", pose: .writing, tool: "Edit", updated: time, toolCount: 12)
@@ -80,13 +77,11 @@ struct ClaudePreferences: Codable {
     }
     func start() {
         guard !preview else { return }
-        desktop.start()
         poll()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in Task { @MainActor in self?.poll() } }
     }
     func stop() {
         timer?.invalidate(); timer = nil
-        desktop.stop()
         guard !preview else { return }
         try? FileManager.default.removeItem(at: ClaudeFiles.root.appendingPathComponent("heartbeat.json"))
     }

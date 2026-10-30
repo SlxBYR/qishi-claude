@@ -57,18 +57,6 @@ actor FixtureSession: IMAPCommanding {
         migrated.hideDockIcon = true
         let reloaded = try JSONDecoder().decode(MonitorSettings.self, from: JSONEncoder().encode(migrated))
         expect(reloaded == migrated, "Dock preference survives save and reload")
-        // Claude Desktop usage, read from on-screen text in reading order.
-        let english = DesktopUsageParser.parse(["Settings", "Usage", "Plan usage limits", "Current session", "Resets in 3 hr 12 min", "18% used",
-                                                "Weekly limits", "All models", "Resets Thu 9:00 AM", "42% used", "Opus only", "Resets Thu 9:00 AM", "7% used"], at: Date(timeIntervalSince1970: 5))
-        expect(english?.quotas.map(\.id) == ["five_hour", "seven_day", "seven_day_opus"], "desktop usage finds session, weekly and Opus limits")
-        expect(english?.quotas.first?.used == 18 && english?.quotas.first?.reset == "Resets in 3 hr 12 min", "desktop usage keeps percent and reset wording")
-        let chinese = DesktopUsageParser.parse(["用量", "当前会话", "3 小时 12 分钟后重置", "已使用 25%", "所有模型", "已使用 60%"], at: Date())
-        expect(chinese?.quotas.map(\.used) == [25, 60] && chinese?.quotas.first?.reset == "3 小时 12 分钟后重置", "desktop usage reads the Chinese interface")
-        expect(DesktopUsageParser.parse(["Claude Opus 4.5", "Write a summary where 95% of the text is kept", "Sonnet", "100%"], at: Date()) == nil,
-               "conversation text with a model name and a percentage is not usage")
-        expect(DesktopUsageParser.parse(["Current session", "Resets soon", "All models", "120% used"], at: Date()) == nil, "out-of-range or missing percentages are ignored")
-        expect(DesktopUsageParser.percent("15% used") == 15 && DesktopUsageParser.percent("15%") == 15 && DesktopUsageParser.percent("about 15% faster") == nil,
-               "only usage-style percentages count")
         let start = Date(timeIntervalSince1970: 1_000_000)
         expect(Elapsed(since: start, now: start).days == 0, "zero age")
         expect(Elapsed(since: start, now: start.addingTimeInterval(90061)).clock == "01 : 01 : 01", "zero-padded clock formatting")
