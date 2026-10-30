@@ -53,7 +53,7 @@ actor FixtureSession: IMAPCommanding {
         let legacy = Data(#"{"email":"fixture@gmail.com","registeredAt":1234,"intervalMinutes":15,"monitoring":false,"desktopCard":true,"alwaysOnTop":true,"notify":true}"#.utf8)
         var migrated = try JSONDecoder().decode(MonitorSettings.self, from: legacy)
         expect(!migrated.hideDockIcon, "legacy settings default to visible Dock while open")
-        expect(migrated.email == "fixture@gmail.com" && migrated.intervalMinutes == 15 && !migrated.monitoring && migrated.desktopCard && migrated.alwaysOnTop && migrated.notify, "upgrade retains all existing settings")
+        expect(migrated.email == "fixture@gmail.com" && migrated.intervalMinutes == 15 && !migrated.monitoring && migrated.notify, "upgrade retains existing settings and ignores the removed desktop-card keys")
         migrated.hideDockIcon = true
         let reloaded = try JSONDecoder().decode(MonitorSettings.self, from: JSONEncoder().encode(migrated))
         expect(reloaded == migrated, "Dock preference survives save and reload")

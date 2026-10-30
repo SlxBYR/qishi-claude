@@ -141,8 +141,6 @@ private struct SavedState: Codable {
     func setMonitoring(_ enabled: Bool) {
         settings.monitoring = enabled; save(); restartPolling()
     }
-    func setDesktop(_ enabled: Bool) { settings.desktopCard = enabled; save(); onAppearanceChange?() }
-    func setOnTop(_ enabled: Bool) { settings.alwaysOnTop = enabled; save(); onAppearanceChange?() }
     func setHideDockIcon(_ enabled: Bool) { settings.hideDockIcon = enabled; save(); onAppearanceChange?() }
     func setNotifications(_ enabled: Bool) {
         guard enabled else { settings.notify = false; save(); return }

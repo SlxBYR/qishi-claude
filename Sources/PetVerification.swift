@@ -117,7 +117,7 @@ import WebKit
         _ = js(pets.claude,"setPose('idle',true);handleClick('pat')"); settle(0.4)
         expect(js(pets.claude,"pose==='pat'") as? Bool == true,"head-pat reaction")
         _ = js(pets.claude,"setTucked('left',true)"); settle(0.5)
-        expect(js(pets.claude,"pose==='edge_left_peek'") as? Bool == true,"CrossPet edge peek art")
+        expect(js(pets.claude,"pose==='edge_left'") as? Bool == true,"Claude-chan tucks with the static edge art, never the peek")
         snapshot(pets.claude,"claude-edge"); _ = js(pets.claude,"setTucked(null)")
         _ = js(pets.claude,"shaken();shaken();shaken()"); settle(0.4)
         expect(js(pets.claude,"pose==='dizzy'") as? Bool == true,"shake reaction")

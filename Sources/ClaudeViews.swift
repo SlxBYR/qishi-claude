@@ -2,14 +2,6 @@ import SwiftUI
 import AppKit
 import ImageIO
 
-@MainActor enum ClaudeArt {
-    static var cache: [String: NSImage] = [:]
-    static func image(_ name: String) -> NSImage? {
-        if let image = cache[name] { return image }
-        guard let url = Bundle.main.resourceURL?.appendingPathComponent("Claude/\(name).webp"), let image = NSImage(contentsOf: url) else { return nil }
-        cache[name] = image; return image
-    }
-}
 struct OriginalClawdAnimation: NSViewRepresentable {
     var name: String
     var animate: Bool
@@ -21,6 +13,8 @@ struct OriginalClawdAnimation: NSViewRepresentable {
         view.imageFrameStyle = .none
         view.setContentHuggingPriority(.defaultLow, for: .horizontal)
         view.setContentHuggingPriority(.defaultLow, for: .vertical)
+        view.wantsLayer = true
+        view.layer?.magnificationFilter = .nearest
         return view
     }
     func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSImageView, context: Context) -> CGSize? {
@@ -43,84 +37,61 @@ struct OriginalClawdAnimation: NSViewRepresentable {
         view.setAccessibilityLabel(L("Clawd 原版动画", "Original Clawd animation"))
     }
 }
-struct ClawdPet: View {
-    @ObservedObject var claude: ClaudeStore
-    @Environment(\.accessibilityReduceMotion) var reduceMotion
-    var name: String {
-        if claude.pose == .asking { return "notification" }
-        if claude.busyCount > 1 || (claude.focus?.agents.count ?? 0) > 1 { return "juggling" }
-        switch claude.pose {
-        case .thinking: return "thinking"
-        case .reading, .searching: return "idle-reading"
-        case .writing: return "typing"
-        case .running: return "building"
-        case .delegating: return "headphones-groove"
-        case .compact: return "sweeping"
-        case .happy: return "happy"
-        case .error: return "error"
-        case .sleeping: return "sleeping"
-        default: return "idle"
+/// Durations of the bundled Clawd GIFs, read once from their frame delays.
+@MainActor enum ClawdAnimations {
+    /// Upstream Clawd on Desk loops plus the Qishi originals drawn by
+    /// Scripts/make-clawd-animations.py. Alert loops (error, notification) are
+    /// left out so a random pick never looks like a real problem.
+    static let pool = ["idle", "idle-reading", "typing", "building", "thinking", "juggling", "sweeping",
+                       "headphones-groove", "happy", "sleeping",
+                       "qishi-hop", "qishi-wave", "qishi-look", "qishi-crabwalk", "qishi-heart", "qishi-hum"]
+    private static var durations: [String: Double] = [:]
+    static func duration(_ name: String) -> Double {
+        if let cached = durations[name] { return cached }
+        var total = 0.0
+        if let url = Bundle.main.resourceURL?.appendingPathComponent("Clawd/\(name).gif"),
+           let source = CGImageSourceCreateWithURL(url as CFURL, nil) {
+            for index in 0..<CGImageSourceGetCount(source) {
+                let properties = CGImageSourceCopyPropertiesAtIndex(source, index, nil) as? [CFString: Any]
+                let gif = properties?[kCGImagePropertyGIFDictionary] as? [CFString: Any]
+                total += (gif?[kCGImagePropertyGIFUnclampedDelayTime] as? Double) ?? (gif?[kCGImagePropertyGIFDelayTime] as? Double) ?? 0.1
+            }
         }
-    }
-    var body: some View {
-        OriginalClawdAnimation(name: name, animate: !reduceMotion)
-            .frame(width: 112, height: 112).clipped()
-            .accessibilityElement(children: .ignore).accessibilityLabel("Clawd, \(LT(claude.pose.title))")
+        durations[name] = total
+        return total
     }
 }
-struct ClaudeDuo: View {
-    @ObservedObject var claude: ClaudeStore
-    @ObservedObject var monitor: MonitorStore
-    @ViewState private var accountVisible = false
-    @ViewState private var accountInteraction = UUID()
-    var height: CGFloat = 220
+/// The workbench's only character: Clawd's pixel animations in random order.
+/// Each pick plays whole loops (at least three seconds); a click skips ahead.
+struct ClawdStage: View {
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @ViewState private var current = ClawdAnimations.pool.randomElement() ?? "idle"
+    @ViewState private var turn = 0
+    var size: CGFloat = 260
     var body: some View {
-        HStack(alignment: .bottom, spacing: -20) {
-            Button {
-                claude.pat(); accountVisible = true; accountInteraction = UUID()
-            } label: {
-                Group {
-                    if let img = ClaudeArt.image(claude.petAsset) {
-                        Image(nsImage: img).resizable().aspectRatio(contentMode: .fit)
-                    } else { Image(systemName: "person.crop.circle").resizable().aspectRatio(contentMode: .fit).padding(50) }
-                }.frame(width: height * 0.85, height: height)
-            }.buttonStyle(.plain)
-                .accessibilityLabel(L("Claude 娘，查看账号存活天数", "Claude-chan: show account age"))
-                .help(L("查看账号存活天数", "Show account age"))
-                .overlay(alignment: .top) {
-                    if accountVisible {
-                        TimelineView(.periodic(from: .now, by: 1)) { context in
-                            // An in-character speech bubble: it keeps the
-                            // CrossPet paper look in both appearances.
-                            Text(monitor.settings.registeredAt.map { accountAge(Elapsed(since: $0, now: context.date).days) } ?? L("请先设置账号注册时间", "Set the registration time first"))
-                                .font(.system(size: 13)).monospacedDigit()
-                                .foregroundStyle(Color(red: 74/255, green: 36/255, blue: 24/255))
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 11).padding(.vertical, 6)
-                                .background(Color.white.opacity(0.95), in: RoundedRectangle(cornerRadius: 12))
-                                .overlay { RoundedRectangle(cornerRadius: 12).stroke(Color.qishiAccent, lineWidth: 1.5) }
-                                .shadow(color: .black.opacity(0.12), radius: 3, y: 2)
-                                .onTapGesture { accountVisible = false }
-                        }.offset(y: -8)
-                    }
-                }
-            ClawdPet(claude: claude).padding(.bottom, 14).onTapGesture { claude.pat() }
-        }.onExitCommand { accountVisible = false }
-            .task(id: accountInteraction) {
-                guard accountVisible else { return }
-                do { try await Task.sleep(for: .seconds(8)); accountVisible = false } catch {}
+        Button(action: advance) {
+            OriginalClawdAnimation(name: current, animate: !reduceMotion)
+                .frame(width: size, height: size)
+        }.buttonStyle(.plain)
+            .help(L("点一下换个动作", "Click for another animation"))
+            .accessibilityLabel(L("Clawd 像素动画，点按换一个", "Clawd pixel animation; press for another"))
+            .task(id: turn) {
+                guard !reduceMotion else { return }
+                let loop = max(0.5, ClawdAnimations.duration(current))
+                let seconds = loop * max(1, (3 / loop).rounded(.up))
+                do { try await Task.sleep(for: .seconds(seconds)); advance() } catch {}
             }
     }
-    private func accountAge(_ days: Int) -> String { L("账号已存活 \(days) 天", days == 1 ? "Account alive for 1 day" : "Account alive for \(days) days") }
+    private func advance() {
+        current = ClawdAnimations.pool.filter { $0 != current }.randomElement() ?? "idle"
+        turn += 1
+    }
 }
 struct ClaudeWorkView: View {
     @ObservedObject var claude: ClaudeStore
     @ObservedObject var monitor: MonitorStore
     var body: some View {
-        VStack(spacing: 0) {
-            PageHeader(title: L("Claude 工作台", "Claude Workbench")) {
-                Button { claude.openClaude() } label: { Label(L("打开 Claude", "Open Claude"), systemImage: "arrow.up.forward.app") }
-            }
+        Group {
             PageScroll {
                 if claude.preview {
                     Label(L("界面预览 · 示例数据", "Interface preview · sample data"), systemImage: "photo")
@@ -128,7 +99,7 @@ struct ClaudeWorkView: View {
                 }
                 NativeCard {
                     HStack(spacing: 18) {
-                        ClaudeDuo(claude: claude, monitor: monitor, height: 208)
+                        ClawdStage()
                         VStack(alignment: .leading, spacing: 12) {
                             Label(claude.connected ? L("Claude Code 已接入", "Claude Code connected") : L("Claude Code 未接入", "Claude Code not connected"),
                                   systemImage: claude.connected ? "link" : "sparkle")
@@ -143,12 +114,13 @@ struct ClaudeWorkView: View {
                                 }.font(.system(size: 11)).foregroundStyle(.secondary)
                             }
                             HStack(spacing: 10) {
+                                Spacer()
                                 if !claude.connected {
-                                    Button(L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.borderedProminent)
+                                    Button(L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.glassProminent)
                                 }
                                 Button(claude.preferences.showPet ? L("收起桌面伙伴", "Hide companions") : L("显示桌面伙伴", "Show companions")) {
                                     claude.preferences.showPet.toggle(); claude.save()
-                                }.buttonStyle(.bordered)
+                                }.buttonStyle(.glass)
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }.frame(maxWidth: .infinity)
@@ -188,25 +160,17 @@ struct ClaudeWorkView: View {
                                 .font(.system(size: 12)).foregroundStyle(.secondary)
                         }
                         Spacer(); StatusPill(snapshot: monitor.snapshot)
-                        Button(L("查看", "View")) { monitor.selectedPage = 0 }.buttonStyle(.bordered)
-                    }
-                }
-                if !claude.state.events.isEmpty {
-                    NativeCard {
-                        VStack(alignment: .leading, spacing: 10) {
-                            CardTitle(title: L("最近活动", "Recent activity"), symbol: "clock.arrow.circlepath")
-                            ForEach(Array(claude.state.events.suffix(6).reversed())) { event in
-                                HStack(spacing: 12) {
-                                    Text(LT(event.project)).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
-                                    Text(LT(event.title) + (event.tool.isEmpty ? "" : " · \(event.tool)")).lineLimit(1)
-                                    Text(Date(timeIntervalSince1970: event.time), style: .time).monospacedDigit().frame(minWidth: 52, alignment: .trailing)
-                                }.font(.system(size: 11)).foregroundStyle(.secondary)
-                            }
-                        }
+                        Button(L("查看", "View")) { monitor.selectedPage = 0 }.buttonStyle(.glass)
                     }
                 }
             }
-        }
+        }.navigationTitle(L("Claude 工作台", "Claude Workbench"))
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button { claude.openClaude() } label: { Label(L("打开 Claude", "Open Claude"), systemImage: "arrow.up.forward.app") }
+                        .help(L("打开 Claude", "Open Claude"))
+                }
+            }
     }
     private func sessionRow(_ session: ClaudeSession) -> some View {
         let selected = claude.focus?.id == session.id
@@ -243,7 +207,7 @@ struct ClaudeWorkView: View {
                 Text(LT(q.title)).font(.system(size: 13, weight: .medium))
                 Spacer(); Text(L("已用 \(Int(q.used))% · 剩余 \(Int(100 - q.used))%", "\(Int(q.used))% used · \(Int(100 - q.used))% left")).font(.system(size: 12)).monospacedDigit()
             }
-            UsageBar(value: q.used, color: q.used >= 90 ? .red : q.used >= 70 ? .orange : .qishiAccent)
+            ProgressView(value: q.used, total: 100).tint(q.used >= 90 ? .red : q.used >= 70 ? .orange : .qishiAccent)
             HStack {
                 if let reset = q.resetsAt {
                     Text(resetPassed ? L("已到重置时间，等待新数据", "Reset time reached; waiting for new data") : L("重置：", "Resets: ") + Date(timeIntervalSince1970: reset).qishiFormatted())
@@ -272,10 +236,10 @@ struct ClaudeApprovalCard: View {
                        "Applies to this action only · returns to Claude in \(max(0, Int(request.expires - claude.now.timeIntervalSince1970))) s"))
                     .font(.system(size: 11)).foregroundStyle(.secondary)
                 HStack {
-                    Button(L("回 Claude 处理", "Handle in Claude")) { claude.decide(request, choice: "native"); claude.openClaude() }.buttonStyle(.bordered)
                     Spacer()
-                    Button(L("拒绝", "Deny"), role: .destructive) { claude.decide(request, choice: "deny") }.buttonStyle(.bordered)
-                    Button(L("允许一次", "Allow once")) { claude.decide(request, choice: "allow") }.buttonStyle(.borderedProminent)
+                    Button(L("回 Claude 处理", "Handle in Claude")) { claude.decide(request, choice: "native"); claude.openClaude() }.buttonStyle(.glass)
+                    Button(L("拒绝", "Deny"), role: .destructive) { claude.decide(request, choice: "deny") }.buttonStyle(.glass)
+                    Button(L("允许一次", "Allow once")) { claude.decide(request, choice: "allow") }.buttonStyle(.glassProminent)
                 }
             }
         }
@@ -297,8 +261,7 @@ struct ClaudeApprovalQueue: View {
 struct ClaudeSettingsView: View {
     @ObservedObject var claude: ClaudeStore
     var body: some View {
-        VStack(spacing: 0) {
-            PageHeader(title: L("桌宠与接入", "Companions & Integration")) { EmptyView() }
+        Group {
             PageScroll {
                 NativeCard {
                     VStack(alignment: .leading, spacing: 14) {
@@ -308,12 +271,15 @@ struct ClaudeSettingsView: View {
                                   systemImage: claude.connected ? "checkmark.circle.fill" : "circle.dashed")
                                 .font(.system(size: 13)).foregroundStyle(claude.connected ? Color.green : Color.secondary)
                             Spacer()
-                            if claude.connected { Button(L("撤销接入", "Disconnect")) { claude.connect(false) }.buttonStyle(.bordered) }
-                            Button(claude.connected ? L("修复接入", "Repair") : L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.borderedProminent)
+                            if claude.connected { Button(L("撤销接入", "Disconnect")) { claude.connect(false) }.buttonStyle(.glass) }
+                            Button(claude.connected ? L("修复接入", "Repair") : L("接入 Claude Code", "Connect Claude Code")) { claude.connect(true) }.buttonStyle(.glassProminent)
                         }
-                        Button(L("查看接入备份", "Show integration backups"), systemImage: "folder") {
-                            NSWorkspace.shared.open(ClaudeFiles.root.appendingPathComponent("Backups"))
-                        }.buttonStyle(.accentLink).font(.system(size: 12))
+                        HStack {
+                            Spacer()
+                            Button(L("查看接入备份", "Show integration backups"), systemImage: "folder") {
+                                NSWorkspace.shared.open(ClaudeFiles.root.appendingPathComponent("Backups"))
+                            }.buttonStyle(.accentLink).font(.system(size: 12))
+                        }
                     }
                 }
                 NativeCard {
@@ -354,42 +320,9 @@ struct ClaudeSettingsView: View {
                     }
                 }
             }
-        }
+        }.navigationTitle(L("桌宠与接入", "Companions & Integration"))
     }
     private func toggle(_ title: String, _ key: WritableKeyPath<ClaudePreferences, Bool>) -> some View {
         SettingToggle(title: title, isOn: Binding(get: { claude.preferences[keyPath: key] }, set: { claude.preferences[keyPath: key] = $0; claude.save() }))
-    }
-}
-struct ClaudePetView: View {
-    @ObservedObject var claude: ClaudeStore
-    @ObservedObject var monitor: MonitorStore
-    var body: some View {
-        VStack(spacing: 2) {
-            if !claude.preferences.compact { ClaudeDuo(claude: claude, monitor: monitor, height: 205) }
-            Button { claude.showMain?() } label: {
-                VStack(spacing: 6) {
-                    HStack(spacing: 8) {
-                        Image(systemName: claude.pose.symbol).foregroundStyle(Color.qishiAccent)
-                        Text("Claude & Clawd").fontWeight(.semibold)
-                        Spacer(minLength: 8)
-                        Text(LT(claude.pose.title)).foregroundStyle(.secondary)
-                    }.font(.system(size: 11))
-                    if let q = claude.focus, let ts = q.quotaUpdated {
-                        HStack {
-                            ForEach(q.quota.prefix(2)) { limit in
-                                Text(L("\(limit.id == "five_hour" ? "5h" : "7d") 剩 \(Int(100 - limit.used))%", "\(limit.id == "five_hour" ? "5h" : "7d") \(Int(100 - limit.used))% left"))
-                            }
-                            if claude.now.timeIntervalSince1970 - ts > 900 { Text(L("· 旧数据", "· stale")) }
-                        }.font(.system(size: 10)).foregroundStyle(.secondary)
-                    }
-                }.padding(13).frame(width: 280).glassEffect(.regular, in: RoundedRectangle(cornerRadius: 18))
-            }.buttonStyle(.plain).help(L("打开 Claude 工作台", "Open the Claude workbench"))
-        }.padding(12)
-            .contextMenu {
-                Button(L("打开工作台", "Open workbench")) { claude.showMain?() }
-                Button(L("摸摸头", "Pat")) { claude.pat() }
-                Button(claude.preferences.compact ? L("展开两位伙伴", "Show both companions") : L("收起为状态条", "Collapse to status bar")) { claude.preferences.compact.toggle(); claude.save() }
-                Button(L("暂时隐藏", "Hide for now")) { claude.preferences.showPet = false; claude.save() }
-            }
     }
 }

@@ -5,16 +5,15 @@ BUILD="${QISHI_BUILD_DIR:-$ROOT/.build}"
 mkdir -p "$BUILD"
 run_motion_tests() {
   command -v node >/dev/null || { printf '%s\n' 'FAIL: Node.js is required for motion tests.' >&2; return 1; }
-  node "$ROOT/Tests/EdgeHoverTests.cjs"
-  node --test "$ROOT/Tests/MotionMathTests.cjs" "$ROOT/Windows/test/native-motion.test.cjs"
+  node --test "$ROOT/Windows/test/native-motion.test.cjs"
   xcrun swiftc -swift-version 5 -parse-as-library -target arm64-apple-macosx27.0 \
-    -module-cache-path "$BUILD/ModuleCache" "$ROOT/Tests/EdgeHoverWebTests.swift" -o "$BUILD/EdgeHoverWebTests"
+    -module-cache-path "$BUILD/ModuleCache" "$ROOT/Tests/CompanionWebTests.swift" -o "$BUILD/CompanionWebTests"
   local motion_output="${QISHI_MOTION_TEST_OUTPUT:-$BUILD/MotionVerification}"
   mkdir -p "$motion_output"
   local web_motion_output
-  web_motion_output="$("$BUILD/EdgeHoverWebTests" "$ROOT/Resources" "$motion_output")"
+  web_motion_output="$("$BUILD/CompanionWebTests" "$ROOT/Resources" "$motion_output")"
   printf '%s\n' "$web_motion_output"
-  [[ "$web_motion_output" == *'real WKWebView checks completed'* ]] || { printf '%s\n' 'FAIL: WebKit motion checks did not complete; run in a logged-in macOS desktop session.' >&2; return 1; }
+  [[ "$web_motion_output" == *'real WKWebView checks completed'* ]] || { printf '%s\n' 'FAIL: WebKit companion checks did not complete; run in a logged-in macOS desktop session.' >&2; return 1; }
   xcrun swiftc -swift-version 5 -D QISHI_TESTS -parse-as-library -target arm64-apple-macosx27.0 \
     -module-cache-path "$BUILD/ModuleCache" "$ROOT"/Sources/*.swift "$ROOT/Tests/NativeMotionTests.swift" -o "$BUILD/NativeMotionTests"
   local native_motion_output

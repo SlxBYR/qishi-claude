@@ -18,7 +18,6 @@ struct ClaudePreferences: Codable {
     @Published var message: String?
     @Published var selectedID: String?
     @Published var now = Date()
-    @Published var patUntil = Date.distantPast
     let preview: Bool
     var onChange: (() -> Void)?
     var showMain: (() -> Void)?
@@ -51,14 +50,6 @@ struct ClaudePreferences: Codable {
         if let s = live.first(where: { $0.pose.busy }) { return s.pose }
         if let s = live.first, now.timeIntervalSince1970 - s.updated < 15, [.happy, .error].contains(s.pose) { return s.pose }
         return (sessions.first.map { now.timeIntervalSince1970 - $0.updated > 600 } ?? false) ? .sleeping : .idle
-    }
-    var petAsset: String {
-        if patUntil > now && pose != .asking { return "pat-2" }
-        if busyCount > 2 { return "swamped_left" }
-        if busyCount > 1 { return "busy_left" }
-        if pose == .happy, let s = live.first, s.toolCount >= 8 { return "proud" }
-        if pose == .idle, let q = focus, let ts = q.quotaUpdated, now.timeIntervalSince1970 - ts < 900, q.quota.contains(where: { $0.used >= 90 }) { return "tired" }
-        return pose.asset
     }
     func start() {
         guard !preview else { return }
@@ -135,7 +126,6 @@ struct ClaudePreferences: Codable {
         let content = UNMutableNotificationContent(); content.title = title; content.body = body; content.sound = .default
         UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil))
     }
-    func pat() { patUntil = Date().addingTimeInterval(3); now = Date() }
     func openProject(_ session: ClaudeSession) {
         guard session.cwd.hasPrefix("/"), FileManager.default.fileExists(atPath: session.cwd) else { message = "此项目文件夹当前不可用。"; return }
         NSWorkspace.shared.open(URL(fileURLWithPath: session.cwd))

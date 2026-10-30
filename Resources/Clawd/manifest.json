@@ -63,5 +63,43 @@
       "upstream": "assets/gif/clawd-typing.gif",
       "gitBlobSHA": "eb2a64489fecaf5745efa45412f4d824a8dcad6d"
     }
+  ],
+  "localAdditions": [
+    {
+      "file": "qishi-hop.gif",
+      "description": "蹦跳",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    },
+    {
+      "file": "qishi-wave.gif",
+      "description": "挥手",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    },
+    {
+      "file": "qishi-look.gif",
+      "description": "张望",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    },
+    {
+      "file": "qishi-crabwalk.gif",
+      "description": "横着走",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    },
+    {
+      "file": "qishi-heart.gif",
+      "description": "比心",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    },
+    {
+      "file": "qishi-hum.gif",
+      "description": "哼歌",
+      "source": "Scripts/make-clawd-animations.py",
+      "note": "Drawn on Clawd's 15x16 cell grid from clawd-idle-follow.svg; the character's art rights stay with the original rights holder."
+    }
   ]
 }

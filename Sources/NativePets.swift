@@ -200,7 +200,8 @@ final class PetResourceHandler: NSObject, WKURLSchemeHandler {
         if persistent { panel.saveFrame(usingName:frameKey) }
     }
     private func updateHover(_ inside: Bool) {
-        guard dock != nil, !dockOut, !dragging else { return }
+        // Only Clawd peeks out under the pointer; Claude-chan's tuck is static.
+        guard kind == .clawd, dock != nil, !dockOut, !dragging else { return }
         if inside {
             leaveSince = nil
             if !peek {

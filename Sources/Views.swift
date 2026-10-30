@@ -79,12 +79,13 @@ struct StatusPill: View {
     }
 }
 
+/// Content card on a native Liquid Glass surface. AppKit renders the glass,
+/// so contrast, transparency and appearance settings apply automatically.
 struct NativeCard<Content: View>: View {
     @ViewBuilder var content: Content
     var body: some View {
         content.padding(20).frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.qishiCard, in: RoundedRectangle(cornerRadius: QishiLayout.cardRadius))
-            .overlay { RoundedRectangle(cornerRadius: QishiLayout.cardRadius).stroke(.primary.opacity(0.07), lineWidth: 1) }
+            .glassEffect(.regular, in: .rect(cornerRadius: QishiLayout.cardRadius))
     }
 }
 
@@ -95,20 +96,6 @@ struct AccentLinkStyle: ButtonStyle {
     }
 }
 extension ButtonStyle where Self == AccentLinkStyle { static var accentLink: AccentLinkStyle { AccentLinkStyle() } }
-
-/// Usage bar drawn in brand colors so it reads the same in every window state.
-struct UsageBar: View {
-    var value: Double
-    var color: Color = .qishiAccent
-    var body: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color.primary.opacity(0.08))
-                Capsule().fill(color).frame(width: proxy.size.width * min(1, max(0, value / 100)))
-            }
-        }.frame(height: 6).accessibilityValue("\(Int(value))%")
-    }
-}
 
 /// One card heading style for every page.
 struct CardTitle: View {
@@ -163,131 +150,60 @@ struct ClockReadout: View {
 }
 
 enum QishiLayout {
-    static let sidebarWidth: CGFloat = 188
-    // The detail title shares the top chrome; the sidebar brand clears the
-    // system window controls without moving every page below them.
-    static let pageHeaderTopInset: CGFloat = 12
-    static let sidebarTopInset: CGFloat = 52
-    static let headerHeight: CGFloat = 56
     static let pageInset: CGFloat = 24
     static let cardSpacing: CGFloat = 18
-    static let cardRadius: CGFloat = 18
+    static let cardRadius: CGFloat = 20
 }
 
-struct PageHeader<Trailing: View>: View {
-    var title: String
-    @ViewBuilder var trailing: Trailing
-    var body: some View {
-        HStack(alignment: .center, spacing: 16) {
-            Text(title).font(.system(size: 22, weight: .semibold))
-                .accessibilityIdentifier("page-title")
-            Spacer(minLength: 8)
-            trailing.buttonStyle(.glass)
-        }
-        .frame(height: QishiLayout.headerHeight, alignment: .center)
-        .padding(.horizontal, QishiLayout.pageInset)
-        .padding(.top, QishiLayout.pageHeaderTopInset)
-        .padding(.bottom, 20)
-    }
-}
-
-/// Scrolling page body with the shared inset and card spacing.
+/// Scrolling page body with the shared inset and card spacing. The window
+/// toolbar carries the page title and actions, so content starts right below it.
 struct PageScroll<Content: View>: View {
     @ViewBuilder var content: Content
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: QishiLayout.cardSpacing) { content }
-                .padding(.horizontal, QishiLayout.pageInset).padding(.bottom, 24)
+                .padding(.horizontal, QishiLayout.pageInset).padding(.top, 8).padding(.bottom, 24)
         }
     }
 }
 
-/// Equal-width segments that fill the sidebar; the selection uses the accent.
-struct SegmentedChoice<Value: Hashable>: View {
-    var options: [(value: Value, symbol: String?, title: String)]
-    @Binding var selection: Value
+/// Native toolbar menu for the interface theme and language.
+struct AppearanceMenu: View {
+    @ObservedObject var prefs = AppPreferences.shared
     var body: some View {
-        HStack(spacing: 2) {
-            ForEach(options.indices, id: \.self) { index in
-                let option = options[index]
-                let selected = option.value == selection
-                Button { selection = option.value } label: {
-                    Group {
-                        if let symbol = option.symbol { Image(systemName: symbol) } else { Text(option.title) }
-                    }.font(.system(size: 11, weight: selected ? .semibold : .regular))
-                        .foregroundStyle(selected ? Color.white : Color.secondary)
-                        .frame(maxWidth: .infinity).frame(height: 22)
-                        .background(selected ? Color.qishiAccent : .clear, in: RoundedRectangle(cornerRadius: 6))
-                        .contentShape(Rectangle())
-                }.buttonStyle(.plain).help(option.title)
-                    .accessibilityLabel(option.title).accessibilityAddTraits(selected ? [.isSelected] : [])
-            }
-        }.padding(2).background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 8))
+        Menu {
+            Picker(L("外观", "Appearance"), selection: $prefs.theme) {
+                ForEach(AppTheme.allCases) { theme in Label(theme.title, systemImage: theme.symbol).tag(theme) }
+            }.pickerStyle(.inline)
+            Picker(L("语言", "Language"), selection: $prefs.language) {
+                Text("中文").tag(AppLanguage.zh)
+                Text("English").tag(AppLanguage.en)
+            }.pickerStyle(.inline)
+        } label: {
+            Label(L("外观与语言", "Appearance & Language"), systemImage: prefs.theme.symbol)
+        }.help(L("外观与语言", "Appearance & Language"))
+            .accessibilityIdentifier("appearance-menu")
     }
 }
 
-// AppKit owns the glass rendering, appearance, contrast, and transparency
-// accessibility settings. This backdrop must never intercept sidebar clicks.
-struct NativeSidebarGlass: NSViewRepresentable {
-    final class Backdrop: NSGlassEffectView {
-        override func hitTest(_ point: NSPoint) -> NSView? { nil }
-    }
-    func makeNSView(context: Context) -> Backdrop {
-        let view = Backdrop()
-        view.style = .regular
-        view.cornerRadius = 0
-        view.effectIsInteractive = false
-        return view
-    }
-    func updateNSView(_ view: Backdrop, context: Context) {}
-}
-
+/// System sidebar: AppKit draws its floating Liquid Glass panel and selection.
 struct QishiSidebar: View {
     @Binding var selection: Int
     @ObservedObject var prefs = AppPreferences.shared
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            HStack(spacing: 10) {
-                Image(systemName: "hourglass").font(.system(size: 22, weight: .medium)).foregroundStyle(Color.qishiAccent)
-                    .frame(width: 42, height: 42).glassEffect(.regular, in: RoundedRectangle(cornerRadius: 13))
-                Text(L("栖时", "Qishi")).font(.system(size: 21, weight: .semibold))
-            }.frame(height: QishiLayout.headerHeight)
-            VStack(spacing: 6) {
-                nav(L("Claude 工作台", "Claude"), symbol: "sparkles", page: 2)
-                nav(L("桌宠与接入", "Companions"), symbol: "person.2", page: 3)
-                nav(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
-                nav(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
+        List(selection: Binding<Int?>(get: { selection }, set: { if let page = $0 { selection = page } })) {
+            Section {
+                row(L("Claude 工作台", "Claude"), symbol: "sparkles", page: 2)
+                row(L("桌宠与接入", "Companions"), symbol: "person.2", page: 3)
+                row(L("账户守护", "Account"), symbol: "square.grid.2x2", page: 0)
+                row(L("连接与计时", "Connection"), symbol: "slider.horizontal.3", page: 1)
+            } header: {
+                Label(L("栖时", "Qishi"), systemImage: "hourglass")
             }
-            Spacer()
-            VStack(spacing: 8) {
-                SegmentedChoice(options: AppTheme.allCases.map { ($0, $0.symbol, $0.title) }, selection: $prefs.theme)
-                    .accessibilityIdentifier("theme-picker")
-                SegmentedChoice(options: [(AppLanguage.zh, nil, "中文"), (AppLanguage.en, nil, "EN")], selection: $prefs.language)
-                    .accessibilityIdentifier("language-picker")
-            }
-        }.padding(.horizontal, 16).padding(.top, QishiLayout.sidebarTopInset).padding(.bottom, 20).frame(width: QishiLayout.sidebarWidth)
-            .frame(maxHeight: .infinity)
-            // The glass draws a rim along its own edges. Bleeding it past the
-            // sidebar tucks that rim under the opaque page (later in the
-            // HStack, so drawn on top) and outside the window bounds.
-            .background(NativeSidebarGlass().padding(-QishiLayout.pageInset))
+        }.listStyle(.sidebar)
     }
-    func nav(_ title: String, symbol: String, page: Int) -> some View {
-        let selected = selection == page
-        return Button { selection = page } label: {
-            Label {
-                Text(title).foregroundStyle(selected ? Color.primary : Color.primary.opacity(0.85))
-            } icon: {
-                Image(systemName: symbol).foregroundStyle(selected ? Color.qishiAccent : Color.secondary).frame(width: 18)
-            }.font(.system(size: 13, weight: selected ? .semibold : .medium))
-                .frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 12).padding(.vertical, 10)
-                .background(selected ? Color.qishiAccent.opacity(0.14) : .clear, in: RoundedRectangle(cornerRadius: 10))
-                // The hit region is the entire highlighted row, including its
-                // padding, not just the image and text of a plain Button.
-                .contentShape(RoundedRectangle(cornerRadius: 10))
-        }.buttonStyle(.plain)
-            .accessibilityIdentifier("sidebar-\(page)")
-            .accessibilityAddTraits(selected ? [.isSelected] : [])
+    private func row(_ title: String, symbol: String, page: Int) -> some View {
+        Label(title, systemImage: symbol).listItemTint(.qishiAccent).tag(page).accessibilityIdentifier("sidebar-\(page)")
     }
 }
 
@@ -296,12 +212,10 @@ struct QishiRoot: View {
     @ObservedObject var claude: ClaudeStore
     @ObservedObject var prefs = AppPreferences.shared
     var body: some View {
-        HStack(spacing: 0) {
-            // No Divider here: the window itself is transparent, so a separate
-            // separator view left a see-through seam. The hairline is drawn
-            // inside the sidebar, over an opaque root background.
+        NavigationSplitView {
             QishiSidebar(selection: $store.selectedPage)
-                .overlay(alignment: .trailing) { Rectangle().fill(Color.primary.opacity(0.08)).frame(width: 1) }
+                .navigationSplitViewColumnWidth(min: 190, ideal: 210, max: 260)
+        } detail: {
             Group {
                 if store.selectedPage == 2 { ClaudeWorkView(claude: claude, monitor: store) }
                 else if store.selectedPage == 3 { ClaudeSettingsView(claude: claude) }
@@ -309,12 +223,11 @@ struct QishiRoot: View {
                 else { ConnectionView(store: store) }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.qishiPage)
+                .toolbar { ToolbarItem(placement: .primaryAction) { AppearanceMenu() } }
                 // Pages read the language when their body is built; a new
                 // identity rebuilds them all at once after a switch.
                 .id(prefs.language)
         }.frame(minWidth: 920, minHeight: 700)
-            .background(Color.qishiPage)
-            .ignoresSafeArea(.container, edges: .top)
             .tint(.qishiAccent)
             .environment(\.locale, Loc.locale)
             .alert(L("栖时", "Qishi"), isPresented: Binding(get: { store.message != nil || claude.message != nil }, set: { if !$0 { store.message = nil; claude.message = nil } })) {
@@ -326,13 +239,7 @@ struct QishiRoot: View {
 struct DashboardView: View {
     @ObservedObject var store: MonitorStore
     var body: some View {
-        VStack(spacing: 0) {
-            PageHeader(title: L("账户守护", "Account")) {
-                Button { Task { await store.check() } } label: { Image(systemName: "arrow.clockwise").frame(width: 20, height: 20) }
-                    .controlSize(.large).help(L("立即检查 Gmail", "Check Gmail now"))
-                    .accessibilityLabel(L("立即检查 Gmail", "Check Gmail now"))
-                    .disabled(store.isChecking || !store.settings.isConfigured || !store.settings.monitoring)
-            }
+        Group {
             PageScroll {
                 NativeCard {
                     VStack(alignment: .leading, spacing: 18) {
@@ -387,13 +294,12 @@ struct DashboardView: View {
                             }.padding(12).frame(maxWidth: .infinity, alignment: .leading).background(.red.opacity(0.07), in: RoundedRectangle(cornerRadius: 10))
                         }
                         HStack {
+                            Spacer()
                             if store.settings.isConfigured {
-                                Button(L("在 Gmail 查看", "Open in Gmail"), systemImage: "arrow.up.right") { store.openGmail() }.buttonStyle(.bordered)
-                                Spacer()
-                                Button(store.settings.monitoring ? L("暂停检测", "Pause monitoring") : L("继续检测", "Resume monitoring")) { store.setMonitoring(!store.settings.monitoring) }.buttonStyle(.accentLink)
+                                Button(store.settings.monitoring ? L("暂停检测", "Pause monitoring") : L("继续检测", "Resume monitoring")) { store.setMonitoring(!store.settings.monitoring) }.buttonStyle(.glass)
+                                Button(L("在 Gmail 查看", "Open in Gmail"), systemImage: "arrow.up.right") { store.openGmail() }.buttonStyle(.glassProminent)
                             } else {
-                                Button(L("连接 Gmail", "Connect Gmail"), systemImage: "link") { store.selectedPage = 1 }.buttonStyle(.borderedProminent)
-                                Spacer()
+                                Button(L("连接 Gmail", "Connect Gmail"), systemImage: "link") { store.selectedPage = 1 }.buttonStyle(.glassProminent)
                             }
                         }
                         HStack(spacing: 5) {
@@ -406,16 +312,15 @@ struct DashboardView: View {
                         }.font(.system(size: 11)).foregroundStyle(.secondary)
                     }
                 }
-                NativeCard {
-                    HStack {
-                        CardTitle(title: L("桌面卡片", "Desktop card"), symbol: "rectangle.on.rectangle")
-                        Spacer()
-                        Toggle(L("显示桌面卡片", "Show desktop card"), isOn: Binding(get: { store.settings.desktopCard }, set: store.setDesktop))
-                            .labelsHidden().toggleStyle(.switch).controlSize(.small)
-                    }
+            }
+        }.navigationTitle(L("账户守护", "Account"))
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button { Task { await store.check() } } label: { Label(L("立即检查 Gmail", "Check Gmail now"), systemImage: "arrow.clockwise") }
+                        .help(L("立即检查 Gmail", "Check Gmail now"))
+                        .disabled(store.isChecking || !store.settings.isConfigured || !store.settings.monitoring)
                 }
             }
-        }
     }
 }
 
@@ -439,123 +344,80 @@ struct ConnectionView: View {
     @ViewState private var formError: String?
     @ViewState private var confirmDisconnect = false
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            PageHeader(title: L("连接与计时", "Connection & Timer")) { EmptyView() }
-            PageScroll {
-                NativeCard {
-                    VStack(alignment: .leading, spacing: 14) {
-                        CardTitle(title: L("Gmail 邮箱", "Gmail"), symbol: "envelope")
-                        SettingsRow(title: L("邮箱地址", "Email")) {
-                            TextField(L("邮箱地址", "Email"), text: $email, prompt: Text("name@gmail.com"))
-                                .textContentType(.username).labelsHidden().accessibilityLabel(L("邮箱地址", "Email"))
-                        }
-                        SettingsRow(title: L("应用专用密码", "App password")) {
-                            SecureField(L("应用专用密码", "App password"), text: $password,
-                                        prompt: Text(store.settings.email.isEmpty ? L("16 位应用专用密码", "16-character app password") : L("留空以使用已保存密码", "Leave empty to keep the saved one")))
-                                .textContentType(.password).labelsHidden().accessibilityLabel(L("应用专用密码", "App password"))
-                        }
-                        Link(L("获取应用专用密码", "Get an app password"), destination: URL(string: "https://myaccount.google.com/apppasswords")!)
-                            .font(.system(size: 12)).foregroundStyle(Color.qishiAccent).padding(.leading, 128)
-                    }.textFieldStyle(.roundedBorder)
-                }
-                NativeCard {
-                    VStack(alignment: .leading, spacing: 14) {
-                        CardTitle(title: L("注册计时", "Registration timer"), symbol: "hourglass")
-                        SettingsRow(title: L("账号注册时间", "Registered at")) {
-                            DatePicker(L("账号注册时间", "Registered at"), selection: $registration, in: ...Date(), displayedComponents: [.date, .hourAndMinute]).labelsHidden()
-                        }
-                        SettingsRow(title: L("检查间隔", "Check interval")) {
-                            Picker(L("检查间隔", "Check interval"), selection: $interval) {
-                                Text(L("1 分钟", "1 min")).tag(1)
-                                Text(L("5 分钟 · 推荐", "5 min · recommended")).tag(5)
-                                Text(L("15 分钟", "15 min")).tag(15)
-                                Text(L("30 分钟", "30 min")).tag(30)
-                            }.labelsHidden().frame(width: 200, alignment: .leading)
-                        }
-                        if store.settings.email.isEmpty {
+        PageScroll {
+            if let formError {
+                Label(LT(formError), systemImage: "exclamationmark.circle").foregroundStyle(.red)
+                    .font(.system(size: 12)).fixedSize(horizontal: false, vertical: true)
+            }
+            if let storageError = store.storageError {
+                Label(LT(storageError), systemImage: "exclamationmark.triangle").foregroundStyle(.red)
+                    .font(.system(size: 12)).fixedSize(horizontal: false, vertical: true)
+            }
+            NativeCard {
+                VStack(alignment: .leading, spacing: 14) {
+                    CardTitle(title: L("Gmail 邮箱", "Gmail"), symbol: "envelope")
+                    SettingsRow(title: L("邮箱地址", "Email")) {
+                        TextField(L("邮箱地址", "Email"), text: $email, prompt: Text("name@gmail.com"))
+                            .textContentType(.username).labelsHidden().accessibilityLabel(L("邮箱地址", "Email"))
+                    }
+                    SettingsRow(title: L("应用专用密码", "App password")) {
+                        SecureField(L("应用专用密码", "App password"), text: $password,
+                                    prompt: Text(store.settings.email.isEmpty ? L("16 位应用专用密码", "16-character app password") : L("留空以使用已保存密码", "Leave empty to keep the saved one")))
+                            .textContentType(.password).labelsHidden().accessibilityLabel(L("应用专用密码", "App password"))
+                    }
+                    Link(L("获取应用专用密码", "Get an app password"), destination: URL(string: "https://myaccount.google.com/apppasswords")!)
+                        .font(.system(size: 12)).foregroundStyle(Color.qishiAccent).padding(.leading, 128)
+                }.textFieldStyle(.roundedBorder)
+            }
+            NativeCard {
+                VStack(alignment: .leading, spacing: 14) {
+                    CardTitle(title: L("注册计时", "Registration timer"), symbol: "hourglass")
+                    SettingsRow(title: L("账号注册时间", "Registered at")) {
+                        DatePicker(L("账号注册时间", "Registered at"), selection: $registration, in: ...Date(), displayedComponents: [.date, .hourAndMinute]).labelsHidden()
+                    }
+                    SettingsRow(title: L("检查间隔", "Check interval")) {
+                        Picker(L("检查间隔", "Check interval"), selection: $interval) {
+                            Text(L("1 分钟", "1 min")).tag(1)
+                            Text(L("5 分钟 · 推荐", "5 min · recommended")).tag(5)
+                            Text(L("15 分钟", "15 min")).tag(15)
+                            Text(L("30 分钟", "30 min")).tag(30)
+                        }.labelsHidden().frame(width: 200, alignment: .leading)
+                    }
+                    if store.settings.email.isEmpty {
+                        HStack {
+                            Spacer()
                             Button(L("仅保存注册时间", "Save registration time only")) {
                                 do { try store.saveRegistration(registration); formError = nil }
                                 catch { formError = error.localizedDescription }
-                            }.buttonStyle(.bordered).padding(.leading, 128)
+                            }.buttonStyle(.glass)
                         }
                     }
                 }
-                NativeCard {
-                    VStack(alignment: .leading, spacing: 14) {
-                        CardTitle(title: L("显示与提醒", "Display & alerts"), symbol: "macwindow")
-                        SettingToggle(title: L("隐藏 Dock 图标", "Hide Dock icon"), isOn: Binding(get: { store.settings.hideDockIcon }, set: store.setHideDockIcon))
-                        Divider()
-                        SettingToggle(title: L("显示桌面卡片", "Show desktop card"), isOn: Binding(get: { store.settings.desktopCard }, set: store.setDesktop))
-                        SettingToggle(title: L("卡片保持在其他窗口上方", "Keep card above other windows"), isOn: Binding(get: { store.settings.alwaysOnTop }, set: store.setOnTop))
-                            .disabled(!store.settings.desktopCard)
-                        SettingToggle(title: L("发现新匹配邮件时通知", "Notify on new matching email"), isOn: Binding(get: { store.settings.notify }, set: store.setNotifications))
-                    }
+            }
+            NativeCard {
+                VStack(alignment: .leading, spacing: 14) {
+                    CardTitle(title: L("显示与提醒", "Display & alerts"), symbol: "macwindow")
+                    SettingToggle(title: L("隐藏 Dock 图标", "Hide Dock icon"), isOn: Binding(get: { store.settings.hideDockIcon }, set: store.setHideDockIcon))
+                    SettingToggle(title: L("发现新匹配邮件时通知", "Notify on new matching email"), isOn: Binding(get: { store.settings.notify }, set: store.setNotifications))
                 }
             }
-            VStack(alignment: .leading, spacing: 10) {
-                if let formError {
-                    Label(LT(formError), systemImage: "exclamationmark.circle").foregroundStyle(.red)
-                        .font(.system(size: 12)).fixedSize(horizontal: false, vertical: true)
-                }
-                if let storageError = store.storageError {
-                    Label(LT(storageError), systemImage: "exclamationmark.triangle").foregroundStyle(.red)
-                        .font(.system(size: 12)).fixedSize(horizontal: false, vertical: true)
-                }
-                HStack {
-                    if !store.settings.email.isEmpty { Button(L("断开连接", "Disconnect"), role: .destructive) { confirmDisconnect = true }.buttonStyle(.glass) }
-                    Spacer()
-                    Button(L("保存并检查", "Save and check")) {
-                        do { try store.apply(email: email, password: password, registered: registration, interval: interval); password = ""; formError = nil }
-                        catch { formError = error.localizedDescription }
-                    }.buttonStyle(.glassProminent).keyboardShortcut(.return, modifiers: .command)
-                }
-            }.padding(.horizontal, QishiLayout.pageInset).padding(.vertical, 16)
-                .background(.bar).overlay(alignment: .top) { Divider() }
-        }.onAppear { email = store.settings.email; registration = store.settings.registeredAt ?? Date(); interval = store.settings.intervalMinutes }
+        }.navigationTitle(L("连接与计时", "Connection & Timer"))
+            // Floating Liquid Glass actions; content scrolls beneath them.
+            .safeAreaInset(edge: .bottom) {
+                GlassEffectContainer {
+                    HStack {
+                        Spacer()
+                        if !store.settings.email.isEmpty { Button(L("断开连接", "Disconnect"), role: .destructive) { confirmDisconnect = true }.buttonStyle(.glass) }
+                        Button(L("保存并检查", "Save and check")) {
+                            do { try store.apply(email: email, password: password, registered: registration, interval: interval); password = ""; formError = nil }
+                            catch { formError = error.localizedDescription }
+                        }.buttonStyle(.glassProminent).keyboardShortcut(.return, modifiers: .command)
+                    }.controlSize(.large)
+                }.padding(.horizontal, QishiLayout.pageInset).padding(.vertical, 14)
+            }
+            .onAppear { email = store.settings.email; registration = store.settings.registeredAt ?? Date(); interval = store.settings.intervalMinutes }
             .confirmationDialog(L("断开 Gmail 并移除本机保存的密码？", "Disconnect Gmail and remove the saved password?"), isPresented: $confirmDisconnect) {
                 Button(L("断开并移除密码", "Disconnect and remove"), role: .destructive) { do { try store.disconnect(); email = ""; password = "" } catch { formError = error.localizedDescription } }
             } message: { Text(L("注册时间会保留。你可以稍后重新连接。", "The registration time is kept. You can reconnect later.")) }
-    }
-}
-
-struct DesktopCardView: View {
-    @ObservedObject var store: MonitorStore
-    @ObservedObject var prefs = AppPreferences.shared
-    var open: () -> Void
-    var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            let elapsed = store.settings.registeredAt.map { Elapsed(since: $0, now: context.date) }
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Label {
-                        Text(L("栖时", "Qishi")).font(.system(size: 13, weight: .semibold))
-                    } icon: { Image(systemName: "hourglass").foregroundStyle(Color.qishiAccent) }
-                    Spacer()
-                    Button(action: open) { Image(systemName: "arrow.up.right") }.buttonStyle(.plain).foregroundStyle(.secondary)
-                        .help(L("打开栖时", "Open Qishi")).accessibilityLabel(L("打开栖时", "Open Qishi"))
-                }
-                HStack(alignment: .center, spacing: 7) {
-                    HStack(alignment: .firstTextBaseline, spacing: 6) {
-                        Text(elapsed.map { String($0.days) } ?? "—").font(.system(size: 46, weight: .light, design: .rounded)).monospacedDigit()
-                        Text(L("天", "days")).font(.system(size: 13)).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    ClockReadout(elapsed: elapsed, size: 17, showUnits: false)
-                }
-                HStack {
-                    StatusPill(snapshot: store.snapshot, checking: store.isChecking, now: context.date)
-                    Spacer()
-                    if let last = store.snapshot.lastChecked { Text(last, style: .time).font(.system(size: 10)).foregroundStyle(.secondary) }
-                }
-                Text(store.settings.email.isEmpty ? L("连接 Gmail，设置注册时间", "Connect Gmail and set the registration time") : store.settings.email)
-                    .font(.system(size: 10)).foregroundStyle(.secondary).lineLimit(1)
-            }.padding(20).frame(width: 344, height: 196)
-                .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 24))
-                .contentShape(RoundedRectangle(cornerRadius: 24))
-                .onTapGesture(count: 2, perform: open)
-        }.padding(8)
-            .id(prefs.language)
-            .tint(.qishiAccent)
-            .environment(\.locale, Loc.locale)
     }
 }

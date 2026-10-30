@@ -9,7 +9,6 @@ import SwiftUI
     private(set) var nativePets: NativePets?
     private var approvalPanel: NSPanel?
     private(set) var window: NSWindow?
-    private var card: NSPanel?
     private var statusItem: NSStatusItem?
     private var menuTimer: Timer?
     private var mainIsOpen = false
@@ -35,7 +34,7 @@ import SwiftUI
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.button?.image = ClawdStatusIcon.image
         store.onAppearanceChange = { [weak self] in
-            self?.updateActivationPolicy(); self?.updateCard(); self?.updateStatus()
+            self?.updateActivationPolicy(); self?.updateStatus()
         }
         store.onStatusChange = { [weak self] in self?.updateStatus(); self?.updatePet() }
         updateStatus(); updatePet(); store.start()
@@ -62,9 +61,7 @@ import SwiftUI
         updateActivationPolicy()
         if window?.isMiniaturized == true { window?.deminiaturize(nil) }
         window?.makeKeyAndOrderFront(nil)
-        positionWindowControls()
         NSApp.activate(ignoringOtherApps: true)
-        updateCard()
     }
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         if sender === approvalPanel {
@@ -74,7 +71,6 @@ import SwiftUI
         guard sender === window else { return true }
         mainIsOpen = false
         sender.orderOut(nil)
-        card?.orderOut(nil)
         updateActivationPolicy()
         return false
     }
@@ -85,19 +81,10 @@ import SwiftUI
             if mainIsOpen { window?.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps: true) }
         }
     }
-    func windowDidResize(_ notification: Notification) { positionWindowControls() }
-    func windowDidEndLiveResize(_ notification: Notification) { positionWindowControls() }
-    private func positionWindowControls() {
-        (window as? QishiMainWindow)?.positionWindowControls()
-    }
     @objc func showWork() { store.selectedPage = 2; showMain() }
     @objc func togglePet() { claude.preferences.showPet.toggle(); claude.save() }
     @objc func showSettings() { store.selectedPage = 1; showMain() }
     @objc func refresh() { Task { await store.check() } }
-    @objc func toggleCard() {
-        if !store.settings.desktopCard && !mainIsOpen { showMain() }
-        store.setDesktop(!store.settings.desktopCard)
-    }
     @objc func toggleDockIcon() { store.setHideDockIcon(!store.settings.hideDockIcon) }
     @objc func toggleMonitoring() { store.setMonitoring(!store.settings.monitoring) }
     @objc func openMail() { store.openGmail() }
@@ -137,7 +124,6 @@ import SwiftUI
         let check = item(store.isChecking ? L("正在检查…", "Checking…") : L("立即检查 Gmail", "Check Gmail Now"), #selector(refresh))
         check.isEnabled = store.settings.isConfigured && store.settings.monitoring && !store.isChecking
         menu.addItem(check)
-        let desktop = item(L("显示桌面卡片", "Show Desktop Card"), #selector(toggleCard)); desktop.state = store.settings.desktopCard ? .on : .off; menu.addItem(desktop)
         let dock = item(L("隐藏 Dock 图标", "Hide Dock Icon"), #selector(toggleDockIcon)); dock.state = store.settings.hideDockIcon ? .on : .off; menu.addItem(dock)
         if store.settings.isConfigured { menu.addItem(item(store.settings.monitoring ? L("暂停检测", "Pause Monitoring") : L("继续检测", "Resume Monitoring"), #selector(toggleMonitoring))) }
         menu.addItem(item(L("连接与计时…", "Connection & Timer…"), #selector(showSettings)))
@@ -166,24 +152,6 @@ import SwiftUI
             panel.center(); approvalPanel = panel
         }
         if approvalPanel?.isVisible != true { approvalPanel?.orderFrontRegardless() }
-    }
-    private func updateCard() {
-        guard mainIsOpen, store.settings.desktopCard else { card?.orderOut(nil); return }
-        if card == nil {
-            let panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 360, height: 212), styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
-            panel.contentView = NSHostingView(rootView: DesktopCardView(store: store, open: { [weak self] in self?.showMain() }))
-            panel.isOpaque = false; panel.backgroundColor = .clear; panel.hasShadow = false
-            panel.isMovableByWindowBackground = true; panel.hidesOnDeactivate = false
-            panel.isReleasedWhenClosed = false
-            panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
-            if !(persistWindowFrames && panel.setFrameUsingName("QishiDesktopCard")), let screen = NSScreen.main {
-                panel.setFrameOrigin(NSPoint(x: screen.visibleFrame.maxX - 392, y: screen.visibleFrame.maxY - 244))
-            }
-            if persistWindowFrames { panel.setFrameAutosaveName("QishiDesktopCard") }
-            card = panel
-        }
-        card?.level = store.settings.alwaysOnTop ? .floating : NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.desktopIconWindow)) + 1)
-        card?.orderFrontRegardless()
     }
 }
 

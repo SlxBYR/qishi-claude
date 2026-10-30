@@ -1,31 +1,26 @@
-栖时·Claude 2.2.1（build 24，动画资源修复）
+栖时·Claude 2.2.1（build 25，原生 Liquid Glass 界面与 Clawd 工作台）
 
-当前交互：已移除 Claude 娘的抓起、悬空摆动和放下动画；拖动只移动角色，边缘悬停动画保留。
-边缘悬停使用每侧同一张完整原画，按上一帧的位置和速度平滑探出/收回；固定五官，只做小幅局部挥手。探出后先停留，前 6 秒无挥手，每 10 秒仅轻挥一次，动作约 2.4 秒。
+当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
+工作台只保留 Clawd 小螃蟹的像素动画，在原版动画与栖时新绘的 6 段动画（蹦跳、挥手、张望、横着走、比心、哼歌）之间随机播放，点一下换一段。
 原生 macOS Claude 工作台与独立 Windows 桌面端，基于用户提供的栖时源码整合。
 macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Node 或 Electron。Windows 版为独立的 Windows 10/11 x64 便携程序，见 Windows/README.txt。
 
-本次动画资源修复
-• 直接替换原应用中的 Claude 娘动画资源，保留应用版本 2.2.1（build 24），不生成新应用或新发布包，也不重新编译原应用二进制。
-• 本次替换范围为 CrossPet 动画页面、脚本、样式与插值数据。Clawd 小螃蟹的原画与动画方式保持原样。
-• 源码同时保留原生窗口移动取消、过期回调保护及相关测试，但这些原生源码改动未重新编译进原应用。本次安装效果不能包含这部分未构建改动。
-• 项目 outputs 中原有 2.2.1 压缩包及校验值保持不变，不含本次应用内替换的动画资源；当前不计划生成新发布包。
-
 功能
-• 界面支持浅色 / 深色 / 跟随系统三种外观，以及中文 / English 切换（工作台侧栏底部）；主体色为 Claude 标志色 #D97757。
+• macOS 界面使用系统原生组件呈现 Liquid Glass：NavigationSplitView 浮动侧栏、窗口工具栏玻璃按钮、glassEffect 卡片与 glass / glassProminent 按钮。
+• 浅色 / 深色 / 跟随系统三种外观与中文 / English 切换（工具栏“外观与语言”菜单）；主体色为 Claude 标志色 #D97757。侧栏选中底色跟随系统强调色。
 • 精简主界面：移除装饰标语和重复说明，来源与许可可展开查看。
-• Claude 娘 + Clawd 小螃蟹同屏：跟随思考、阅读、写代码、运行、搜索、子任务、等待、压缩、完成、出错和休息状态。
+• 桌面上 Claude 娘 + Clawd 小螃蟹同屏，跟随思考、阅读、写代码、运行、搜索、子任务、等待、压缩、完成、出错和休息状态。
 • 桌面小螃蟹使用 Clawd on Desk 原始 SVG、原始 renderer.js 与样式；支持眼神跟随、点击、拖拽、待机、睡眠和贴边。
 • Claude 娘以 CrossPet 动作逻辑、effects.js 特效和全部 60 张原图为基础，保留呼吸摆动、眨眼、摸头、甩晕、生气、节日动作与多任务表演。
-• 多会话列表、并行工具和子任务跟踪、最近 150 条活动、打开项目文件夹。
+• 多会话列表、并行工具和子任务跟踪、打开项目文件夹。
 • Claude Code 官方状态栏上报的 5 小时、每周和可选支出额度；上下文用量、更新时间与过期标记。
 • 可选完成/出错/等待通知，可选单次工具授权浮窗，允许一次、拒绝或交回 Claude。
 • 桌宠可分别拖动、记忆位置、调整大小、置顶、隐藏；移除桌面标签、额度条与常驻按钮；点击 Claude 娘显示 CrossPet 风格的账号存活天数气泡。
-• 保留栖时的注册计时、Gmail 只读邮件检测、提醒、桌面卡片与菜单栏常驻。
+• 保留栖时的注册计时、Gmail 只读邮件检测、提醒与菜单栏常驻。
 
 开始使用
 1. 打开“栖时·Claude.app”，直接出现两个透明桌宠，不弹出工作台。右键角色可摸头、戳一下、打开原有栖时功能或退出。
-   点击 Claude 娘（桌面或工作台）可查看账号已存活天数；气泡 8 秒后自动收起，也可点击气泡关闭。
+   点击桌面上的 Claude 娘可查看账号已存活天数；气泡 8 秒后自动收起，也可点击气泡关闭。
 2. 首次接入时右键“打开栖时”，进入“桌宠与接入”，点击“接入 Claude Code”。
 3. 重新开启 Claude Code 会话；如 Claude 要求信任钩子，在 Claude 内确认。
 4. 发起任务，两个角色会跟随事件切换；额度在 Claude 的状态栏推送数据后出现。
@@ -61,16 +56,16 @@ macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Nod
   bash Scripts/test.sh
 推送到 GitHub（私有仓库 SlxBYR/qishi-claude，提交全部改动后推送当前分支）：
   bash Scripts/push.sh "提交说明"
-仅运行动画回归：
+仅运行桌宠回归（WebKit 静态贴边与原生贴边移动）：
   bash Scripts/test.sh --motion-only
 Windows：在 Windows/ 运行 npm ci、npm test、npm run build；也可运行 Scripts/build-windows.ps1。
 默认生成 ../栖时·Claude.app，编译缓存写入 .build。
 可通过 QISHI_BUILD_DIR 与 QISHI_OUTPUT_DIR 指定缓存和输出目录。
-测试脚本需要 Node.js，并在已登录的 macOS 桌面会话运行真实 WebKit 与窗口检查。动画截图和循环逐帧输出默认写入 .build/MotionVerification，可通过 QISHI_MOTION_TEST_OUTPUT 修改路径。
-动画测试覆盖相邻帧与循环端点、反向与重抓连续性、减少动态效果及资源失败。脚本另外编译独立测试程序验证原生移动中断及过期回调；这不代表现有应用二进制已更新。
-如需重新生成对齐/位移元数据，运行 python3 Scripts/prepare-motion.py；此步骤需要 Pillow、NumPy 与 OpenCV，不会改写原始 PNG，也不是运行应用所必需。
+测试脚本需要 Node.js，并在已登录的 macOS 桌面会话运行真实 WebKit 与窗口检查。贴边截图默认写入 .build/MotionVerification，可通过 QISHI_MOTION_TEST_OUTPUT 修改路径。
+桌宠测试覆盖静态贴边、悬停不探出、拖动与隐藏；脚本另外编译独立测试程序验证原生贴边移动中断及过期回调。
+工作台的 Clawd 新动画由 python3 Scripts/make-clawd-animations.py 在 Clawd 原始 15×16 像素网格上逐帧绘制（需要 Pillow），输出到 Resources/Clawd/qishi-*.gif。
 使用完整 Xcode 可打开 Qishi.xcodeproj。主应用使用非沙盒签名以访问用户主动接入的 Claude 设置；WidgetKit 扩展仍需自己的开发团队及 App Group。
-命令行交付版不嵌入系统 WidgetKit 扩展；桌面卡片与双角色浮窗可以直接使用。
+命令行交付版不嵌入系统 WidgetKit 扩展；双角色浮窗可以直接使用。
 
 验证模式（不访问真实账号设置）
   栖时·Claude.app/Contents/MacOS/Qishi --demo

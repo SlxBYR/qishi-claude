@@ -5,15 +5,13 @@ struct MonitorSettings: Codable, Equatable, Sendable {
     var registeredAt: Date?
     var intervalMinutes = 5
     var monitoring = true
-    var desktopCard = false
-    var alwaysOnTop = false
     var notify = false
     var hideDockIcon = false
 
     init() {}
 
     private enum CodingKeys: String, CodingKey {
-        case email, registeredAt, intervalMinutes, monitoring, desktopCard, alwaysOnTop, notify, hideDockIcon
+        case email, registeredAt, intervalMinutes, monitoring, notify, hideDockIcon
     }
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -21,8 +19,6 @@ struct MonitorSettings: Codable, Equatable, Sendable {
         registeredAt = try values.decodeIfPresent(Date.self, forKey: .registeredAt)
         intervalMinutes = try values.decodeIfPresent(Int.self, forKey: .intervalMinutes) ?? 5
         monitoring = try values.decodeIfPresent(Bool.self, forKey: .monitoring) ?? true
-        desktopCard = try values.decodeIfPresent(Bool.self, forKey: .desktopCard) ?? false
-        alwaysOnTop = try values.decodeIfPresent(Bool.self, forKey: .alwaysOnTop) ?? false
         notify = try values.decodeIfPresent(Bool.self, forKey: .notify) ?? false
         hideDockIcon = try values.decodeIfPresent(Bool.self, forKey: .hideDockIcon) ?? false
     }
