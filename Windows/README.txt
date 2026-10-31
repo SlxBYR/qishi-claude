@@ -1,11 +1,11 @@
-栖时 · Claude Windows 2.2.1（build 30）
+栖时 · Claude Windows 2.2.1（build 31）
 
 ⚠ 半成品：仍在开发中，尚未在 Windows 实机完整验证；程序未签名，SmartScreen 可能提示，选择“仍要运行”即可。
 
 当前交互：Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边，不再播放探出、收回或挥手动画。Clawd 的贴边与悬停探出保持不变。
 工作台左侧是 Claude 标志动画：核心与光芒根部固定，光芒外段从根部缓慢伸缩（周期约 7–11 秒），Claude 工作时稍快；右侧卡片显示状态。
 侧栏导航下方显示海报；侧栏底部是 Clawd 小螃蟹像素动画（与 macOS 版共用同一组 GIF，随机播放，点一下换一段）与 WebRTC 泄漏检测。
-与 macOS 版 build 30 同步。
+与 macOS 版 build 31 共用 Clawd 状态机与提示音，桌宠拖动改用指针事件、松手更可靠；Claude Desktop 额度记录与顶栏行走图标目前只有 macOS 版提供。
 
 运行
 单文件版：双击 Qishi-Claude-Windows-x64.exe（首次启动会解压到临时目录，稍慢）。
