@@ -74,6 +74,28 @@ actor FixtureSession: IMAPCommanding {
         expect(days.count == 3 && days.map(\.counts.total) == [1150, 3, 0], "replies are deduplicated, bucketed by day and zero-filled")
         expect(days[0].counts == TokenCounts(input: 10, output: 40, cacheWrite: 100, cacheRead: 1000), "a streamed reply keeps its largest counts")
         expect(TokenUsageParser.date("2026-10-30T23:59:59Z") != nil && TokenUsageParser.date("2026-10-30T23:59:59.123Z") != nil, "both timestamp forms parse")
+        // Claude Desktop's own usage record: times, percentages and a hashed organization only.
+        let record = Data(#"{"version":2,"samples":[{"t":1793277188297,"org":"org-a","u":{"fh":9,"sd":4}},{"t":1793278998465,"org":"org-a","u":{"fh":10,"sd":5,"xx":3}},{"t":"bad","u":{"fh":1}},{"t":1793280110525,"u":{"fh":true,"sd":-1}}]}"#.utf8)
+        let desktopSamples = DesktopUsageParser.samples(from: record) ?? []
+        expect(desktopSamples.count == 2 && desktopSamples[0].used == ["five_hour": 9, "seven_day": 4] && desktopSamples[1].used["xx"] == 3,
+               "desktop record maps known keys, keeps unknown ones and skips malformed rows")
+        expect(desktopSamples[0].time == 1_793_277_188 && desktopSamples[0].account.count == 12 && !desktopSamples[0].account.contains("org"),
+               "desktop times are seconds and the organization id is stored only as a hash")
+        expect(DesktopUsageParser.samples(from: Data("{}".utf8)) == nil && DesktopUsageParser.samples(from: Data("[1]".utf8)) == nil, "unknown formats are not usage")
+        var desktopHistory = DesktopUsageHistory()
+        expect(desktopHistory.merge(desktopSamples, now: 1_793_300_000) && !desktopHistory.merge(desktopSamples, now: 1_793_300_000), "readings merge once")
+        var aged = desktopHistory
+        expect(aged.merge([], now: 1_793_300_000 + 401 * 86_400) && aged.samples.isEmpty, "readings older than the keep window are dropped")
+        let window = (id: "five_hour", used: 20.0, resetsAt: Optional(1_000.0 + 18_000))
+        let laterDesktop = DesktopUsageSample(time: 2_000, account: "a", used: ["five_hour": 35, "seven_day": 50])
+        let merged = LimitMerger.merge(code: [window, (id: "spend_limit", used: 5, resetsAt: nil)], codeUpdated: 1_000, desktop: laterDesktop)
+        expect(merged.map(\.id) == ["five_hour", "seven_day", "spend_limit"] && merged[0].source == .claudeDesktop && merged[0].used == 35,
+               "the fresher Desktop reading wins and limits keep their order")
+        expect(merged[0].resetsAt == 19_000 && merged[1].resetsAt == nil && merged[2].source == .claudeCode, "a Desktop reading inside the same window keeps Claude Code's reset time")
+        let afterReset = LimitMerger.merge(code: [window], codeUpdated: 1_000, desktop: DesktopUsageSample(time: 20_000, account: "a", used: ["five_hour": 2]))
+        expect(afterReset[0].resetsAt == nil, "a Desktop reading after the reset drops the old reset time")
+        let older = LimitMerger.merge(code: [window], codeUpdated: 3_000, desktop: laterDesktop)
+        expect(older.first { $0.id == "five_hour" }?.source == .claudeCode, "an older Desktop reading never replaces Claude Code's")
         let start = Date(timeIntervalSince1970: 1_000_000)
         expect(Elapsed(since: start, now: start).days == 0, "zero age")
         expect(Elapsed(since: start, now: start.addingTimeInterval(90061)).clock == "01 : 01 : 01", "zero-padded clock formatting")

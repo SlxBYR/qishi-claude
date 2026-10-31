@@ -6,6 +6,7 @@ window.qishiEmit = (event, ...args) => hostListeners.get(event)?.(...args);
 window.electronAPI = new Proxy({}, { get: (_, key) => {
   if (String(key).startsWith('on')) return fn => hostListeners.set(key, fn);
   if (key === 'resumeFromReaction') return () => window.qishiResume?.();
+  if (key === 'pauseCursorPolling') return () => window.qishiPauseIdle?.();
   if (key === 'reportSoundPlaybackError') return error => qishiErrors.push(String(error));
   return () => {};
 }});

@@ -26,7 +26,7 @@ if [[ "${1:-}" == '--motion-only' ]]; then
   exit 0
 fi
 xcrun swiftc -swift-version 5 -parse-as-library -module-cache-path "$BUILD/ModuleCache" \
-  "$ROOT/Sources/Core.swift" "$ROOT/Sources/IMAP.swift" "$ROOT/Sources/TokenUsage.swift" "$ROOT/Tests/CoreTests.swift" -o "$BUILD/QishiTests"
+  "$ROOT/Sources/Core.swift" "$ROOT/Sources/IMAP.swift" "$ROOT/Sources/TokenUsage.swift" "$ROOT/Sources/DesktopUsage.swift" "$ROOT/Tests/CoreTests.swift" -o "$BUILD/QishiTests"
 "$BUILD/QishiTests"
 xcrun swiftc -swift-version 5 -parse-as-library -application-extension -target arm64-apple-macosx27.0 \
   -module-cache-path "$BUILD/ModuleCache" "$ROOT/Sources/Core.swift" "$ROOT/Widget/QishiWidget.swift" -o "$BUILD/QishiWidget"

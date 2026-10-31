@@ -9,11 +9,13 @@ struct ClaudePreferences: Codable {
     var notifications = false
     var alwaysOnTop = true
     var petScale = 1.0
+    /// Menu bar Clawd walks while any Claude session is working.
+    var walkingStatusIcon = true
     var anyPetShown: Bool { showClaude || showClawd }
 
     init() {}
     private enum CodingKeys: String, CodingKey {
-        case showClaude, showClawd, approvals, notifications, alwaysOnTop, petScale
+        case showClaude, showClawd, approvals, notifications, alwaysOnTop, petScale, walkingStatusIcon
         case showPet  // single switch for both pets in builds up to 24
     }
     // Missing keys keep their defaults, so an older file never resets the rest.
@@ -26,12 +28,14 @@ struct ClaudePreferences: Codable {
         notifications = try values.decodeIfPresent(Bool.self, forKey: .notifications) ?? false
         alwaysOnTop = try values.decodeIfPresent(Bool.self, forKey: .alwaysOnTop) ?? true
         petScale = try values.decodeIfPresent(Double.self, forKey: .petScale) ?? 1.0
+        walkingStatusIcon = try values.decodeIfPresent(Bool.self, forKey: .walkingStatusIcon) ?? true
     }
     func encode(to encoder: Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
         try values.encode(showClaude, forKey: .showClaude); try values.encode(showClawd, forKey: .showClawd)
         try values.encode(approvals, forKey: .approvals); try values.encode(notifications, forKey: .notifications)
         try values.encode(alwaysOnTop, forKey: .alwaysOnTop); try values.encode(petScale, forKey: .petScale)
+        try values.encode(walkingStatusIcon, forKey: .walkingStatusIcon)
     }
 }
 @MainActor final class ClaudeStore: ObservableObject {
@@ -45,6 +49,8 @@ struct ClaudePreferences: Codable {
     let preview: Bool
     /// Daily token totals read from Claude Code's local transcripts.
     let tokens: TokenUsageStore
+    /// Plan limits Claude Desktop records, kept while it runs.
+    let desktop: DesktopUsageStore
     var onChange: (() -> Void)?
     var showMain: (() -> Void)?
     private var timer: Timer?
@@ -54,6 +60,7 @@ struct ClaudePreferences: Codable {
     init(preview: Bool = false) {
         self.preview = preview
         tokens = TokenUsageStore(preview: preview)
+        desktop = DesktopUsageStore(preview: preview)
         if preview {
             let time = Date().timeIntervalSince1970
             var first = ClaudeSession(id: "preview-one", cwd: "/Projects/栖时", model: "Claude Sonnet", pose: .writing, tool: "Edit", updated: time, toolCount: 12)
@@ -72,6 +79,11 @@ struct ClaudePreferences: Codable {
     var live: [ClaudeSession] { sessions.filter { !$0.closed && !$0.stale(at: now.timeIntervalSince1970) && now.timeIntervalSince1970 - $0.updated < 3600 } }
     var busyCount: Int { live.filter { $0.pose.busy }.count }
     var focus: ClaudeSession? { sessions.first { $0.id == selectedID } ?? live.first ?? sessions.first }
+    /// Each limit from whichever source saw it last: the focused Claude Code session or Claude Desktop.
+    var limits: [MergedLimit] {
+        LimitMerger.merge(code: focus?.quota.map { ($0.id, $0.used, $0.resetsAt) } ?? [], codeUpdated: focus?.quotaUpdated,
+                          desktop: desktop.history.latest)
+    }
     var pose: ClaudePose {
         if !requests.isEmpty || live.contains(where: { $0.pose == .asking }) { return .asking }
         if let s = live.first(where: { $0.pose.busy }) { return s.pose }
@@ -81,12 +93,14 @@ struct ClaudePreferences: Codable {
     func start() {
         guard !preview else { return }
         tokens.start()
+        desktop.start()
         poll()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in Task { @MainActor in self?.poll() } }
     }
     func stop() {
         timer?.invalidate(); timer = nil
         tokens.stop()
+        desktop.stop()
         guard !preview else { return }
         try? FileManager.default.removeItem(at: ClaudeFiles.root.appendingPathComponent("heartbeat.json"))
     }

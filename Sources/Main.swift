@@ -11,6 +11,7 @@ import SwiftUI
     private var approvalPanel: NSPanel?
     private(set) var window: NSWindow?
     private var statusItem: NSStatusItem?
+    private var statusIcon: ClawdStatusAnimator?
     private var menuTimer: Timer?
     private var mainIsOpen = false
     private let persistWindowFrames: Bool
@@ -33,7 +34,7 @@ import SwiftUI
         }
         buildMainMenu()
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem?.button?.image = ClawdStatusIcon.image
+        if let button = statusItem?.button { statusIcon = ClawdStatusAnimator(button: button) }
         store.onAppearanceChange = { [weak self] in
             self?.updateActivationPolicy(); self?.updateStatus()
         }
@@ -85,6 +86,7 @@ import SwiftUI
     @objc func showWork() { store.selectedPage = 2; showMain() }
     @objc func toggleClaudePet() { claude.preferences.showClaude.toggle(); claude.save() }
     @objc func toggleClawdPet() { claude.preferences.showClawd.toggle(); claude.save() }
+    @objc func toggleWalkingStatusIcon() { claude.preferences.walkingStatusIcon.toggle(); claude.save() }
     @objc func showSettings() { store.selectedPage = 1; showMain() }
     @objc func refresh() { Task { await store.check() } }
     @objc func toggleDockIcon() { store.setHideDockIcon(!store.settings.hideDockIcon) }
@@ -122,6 +124,7 @@ import SwiftUI
         menu.addItem(item(L("打开 Claude 工作台", "Open Claude Workbench"), #selector(showWork)))
         let claudeItem = item(L("显示 Claude 娘", "Show Claude-chan"), #selector(toggleClaudePet)); claudeItem.state = claude.preferences.showClaude ? .on : .off; menu.addItem(claudeItem)
         let clawdItem = item(L("显示 Clawd", "Show Clawd"), #selector(toggleClawdPet)); clawdItem.state = claude.preferences.showClawd ? .on : .off; menu.addItem(clawdItem)
+        let walkItem = item(L("顶栏 Clawd 随 Claude 工作行走", "Menu Bar Clawd Walks While Claude Works"), #selector(toggleWalkingStatusIcon)); walkItem.state = claude.preferences.walkingStatusIcon ? .on : .off; menu.addItem(walkItem)
         let check = item(store.isChecking ? L("正在检查…", "Checking…") : L("立即检查 Gmail", "Check Gmail Now"), #selector(refresh))
         check.isEnabled = store.settings.isConfigured && store.settings.monitoring && !store.isChecking
         menu.addItem(check)
@@ -131,6 +134,8 @@ import SwiftUI
         menu.items.filter { $0.action == nil }.forEach { $0.isEnabled = false }
         statusItem?.menu = menu
         statusItem?.button?.toolTip = L("栖时", "Qishi") + " · Claude \(LT(claude.pose.title))"
+        statusIcon?.setWalking(claude.preferences.walkingStatusIcon && claude.busyCount > 0
+            && !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
     }
     func applicationWillTerminate(_ notification: Notification) { claude.stop(); webRTC.stop() }
     private func updatePet() {

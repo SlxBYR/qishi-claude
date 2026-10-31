@@ -196,23 +196,7 @@ struct ClaudeWorkView: View {
                     }
                 }
                 ForEach(claude.requests) { request in ClaudeApprovalCard(claude: claude, request: request) }
-                NativeCard {
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            CardTitle(title: L("用量与额度", "Usage & limits"), symbol: "chart.bar")
-                            Spacer()
-                            if let s = claude.focus { Text(s.model.isEmpty ? LT(s.project) : s.model).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(1) }
-                        }
-                        if let session = claude.focus, !session.quota.isEmpty {
-                            ForEach(session.quota) { quota in quotaRow(quota, session: session) }
-                            if let used = session.contextUsed {
-                                HStack { Text(L("上下文已用", "Context used")); Spacer(); Text("\(Int(used))%").monospacedDigit() }.font(.system(size: 11)).foregroundStyle(.secondary)
-                            }
-                        } else {
-                            Text(L("等待 Claude Code 上报额度", "Waiting for Claude Code to report usage")).font(.system(size: 13)).foregroundStyle(.secondary)
-                        }
-                    }
-                }
+                UsageLimitsCard(claude: claude, desktop: claude.desktop)
                 TokenActivityCard(store: claude.tokens)
                 NativeCard {
                     VStack(alignment: .leading, spacing: 12) {
@@ -272,26 +256,6 @@ struct ClaudeWorkView: View {
         return model + L(" · \(session.toolCount) 次工具调用", " · \(session.toolCount) tool calls") + agents
     }
     private func tone(_ pose: ClaudePose) -> Color { pose == .error ? .red : pose == .happy ? .green : pose == .asking ? .orange : pose.busy ? .qishiAccent : .secondary }
-    private func quotaRow(_ q: ClaudeQuota, session: ClaudeSession) -> some View {
-        let stale = session.quotaUpdated.map { claude.now.timeIntervalSince1970 - $0 > 900 } ?? true
-        let resetPassed = q.resetsAt.map { $0 <= claude.now.timeIntervalSince1970 } ?? false
-        return VStack(alignment: .leading, spacing: 7) {
-            HStack {
-                Text(LT(q.title)).font(.system(size: 13, weight: .medium))
-                Spacer(); Text(L("已用 \(Int(q.used))% · 剩余 \(Int(100 - q.used))%", "\(Int(q.used))% used · \(Int(100 - q.used))% left")).font(.system(size: 12)).monospacedDigit()
-            }
-            ProgressView(value: q.used, total: 100).tint(q.used >= 90 ? .red : q.used >= 70 ? .orange : .qishiAccent)
-            HStack {
-                if let reset = q.resetsAt {
-                    Text(resetPassed ? L("已到重置时间，等待新数据", "Reset time reached; waiting for new data") : L("重置：", "Resets: ") + Date(timeIntervalSince1970: reset).qishiFormatted())
-                }
-                Spacer()
-                if let ts = session.quotaUpdated {
-                    Text((stale ? L("旧数据 · ", "Stale · ") : "") + Date(timeIntervalSince1970: ts).qishiFormatted(date: .omitted))
-                }
-            }.font(.system(size: 10)).foregroundStyle(.secondary)
-        }.opacity(stale || resetPassed ? 0.65 : 1)
-    }
 }
 /// A year of token use as a calendar grid: columns are weeks, rows weekdays.
 /// Cells take four validated steps of the accent hue by quartile of the active
@@ -572,6 +536,7 @@ struct ClaudeSettingsView: View {
                         CardTitle(title: L("桌面伙伴", "Desktop companions"), symbol: "sparkles")
                         toggle(L("显示 Claude 娘", "Show Claude-chan"), \.showClaude)
                         toggle(L("显示 Clawd", "Show Clawd"), \.showClawd)
+                        toggle(L("顶栏 Clawd 随 Claude 工作行走", "Menu bar Clawd walks while Claude works"), \.walkingStatusIcon)
                         toggle(L("浮在其他窗口上方", "Float above other windows"), \.alwaysOnTop)
                         HStack(spacing: 12) {
                             Text(L("大小", "Size")).font(.system(size: 13))

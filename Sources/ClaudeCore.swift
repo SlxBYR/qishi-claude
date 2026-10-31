@@ -72,6 +72,8 @@ struct ClaudeEvent: Codable, Identifiable {
     var title: String
     var tool: String
     var time: Double
+    var hook: String? = nil
+    var agents: Int? = nil
 }
 struct ClaudeState: Codable {
     var sessions: [String: ClaudeSession] = [:]
@@ -111,7 +113,7 @@ struct ClaudeState: Codable {
         default: break
         }
         sessions[sid] = s
-        events.append(ClaudeEvent(session: sid, project: s.project, title: s.pose.title, tool: tool, time: now))
+        events.append(ClaudeEvent(session: sid, project: s.project, title: s.pose.title, tool: tool, time: now, hook: event, agents: s.agents.count))
         events = Array(events.suffix(150))
         sessions = sessions.filter { now - $0.value.updated < 86400 }
         if sessions.count > 100 { sessions = Dictionary(uniqueKeysWithValues: sessions.values.sorted { $0.updated > $1.updated }.prefix(100).map { ($0.id, $0) }) }

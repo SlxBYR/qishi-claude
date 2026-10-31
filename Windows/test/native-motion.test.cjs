@@ -10,11 +10,11 @@ const source = fs.readFileSync(path.join(__dirname, '../src/main.cjs'), 'utf8');
 const movement = source.slice(source.indexOf(' function cancelSlide('), source.indexOf(' async function pointer('));
 function fixture() {
   let now = 0, nextID = 0, position = [280, 100];
-  const tasks = new Map(), positions = [];
+  const tasks = new Map(), positions = [], bounds = [];
   const schedule = (callback, delay, repeat) => { const id = ++nextID; tasks.set(id, { callback, delay, repeat, at: now + delay }); return id; };
-  const pet = { kind: 'claude', dock: 'left', peek: false, out: false, dragging: false, down: null, dockGeneration: 0,
+  const pet = { kind: 'claude', size: { width: 260, height: 300 }, dock: 'left', peek: false, out: false, dragging: false, down: null, dockGeneration: 0,
     window: { isDestroyed: () => false, getPosition: () => [...position], getBounds: () => ({ x: position[0], y: position[1], width: 260, height: 300 }),
-      setPosition: (x, y) => { position = [x, y]; positions.push({ at: now, x, y }); } } };
+      setBounds: b => { position = [b.x, b.y]; bounds.push(b); positions.push({ at: now, x: b.x, y: b.y }); } } };
   const context = { performance: { now: () => now }, Date: { now: () => now }, Math, JSON,
     setInterval: (fn, ms) => schedule(fn, ms, true), clearInterval: id => tasks.delete(id),
     setTimeout: (fn, ms) => schedule(fn, ms, false), clearTimeout: id => tasks.delete(id),
@@ -32,7 +32,7 @@ function fixture() {
     }
     now = end; await Promise.resolve();
   }
-  return { context, pet, positions, advance, position: () => position };
+  return { context, pet, positions, bounds, advance, position: () => position };
 }
 
 test('docking converges monotonically without an integer-coordinate stall', async () => {
@@ -47,7 +47,7 @@ test('taking over during docking cancels all window movement and delayed dock wo
   const f = fixture(); f.context.applyDock(f.pet); await f.advance(96);
   assert.ok(f.position()[0] > 0 && f.position()[0] < 280);
   f.context.cancelSlide(f.pet); f.pet.dragging = true; f.pet.dock = null;
-  f.pet.window.setPosition(700, 250); const before = f.positions.length;
+  f.context.place(f.pet, 700, 250); const before = f.positions.length;
   await f.advance(1200);
   assert.deepEqual(f.position(), [700, 250]);
   assert.equal(f.positions.length, before);
@@ -70,4 +70,12 @@ test('a stale asynchronous dockCut result cannot move a newer docking request', 
   f.pet.peek = true; f.context.applyDock(f.pet);
   resolveCut(200); await Promise.resolve(); await f.advance(300);
   assert.deepEqual(f.position(), [0, 100]);
+});
+
+test('every move writes the logical size so Windows DPI rounding cannot grow the pet', async () => {
+  const f = fixture(); f.context.applyDock(f.pet); await f.advance(1200);
+  f.context.place(f.pet, 12.6, 40.2);
+  assert.ok(f.bounds.length > 10);
+  assert.ok(f.bounds.every(b => b.width === 260 && b.height === 300 && Number.isInteger(b.x) && Number.isInteger(b.y)));
+  assert.deepEqual(f.position(), [13, 40]);
 });

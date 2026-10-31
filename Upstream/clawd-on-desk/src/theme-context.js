@@ -169,4 +169,3 @@ function createThemeContext(theme, options = {}) {
 }
 
 module.exports = createThemeContext;
-
