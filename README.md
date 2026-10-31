@@ -27,6 +27,11 @@
 > macOS 包为本机临时签名（未经 Apple 公证），首次打开需在“系统设置 › 隐私与安全性”中允许，或右键选择“打开”。Windows 包未签名，SmartScreen 可能提示，需选择“仍要运行”。
 > 欢迎试用和反馈，但请勿将其用于重要场景。
 
+> [!IMPORTANT]
+> **Clawd 素材授权申请中。** 本项目中的 Clawd 动画与美术来自 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)，动画作者：鹿鹿（[@rullerzhou-afk](https://github.com/rullerzhou-afk)）。这些素材保留全部权利、不在 AGPL-3.0 范围内，目前正在向作者申请非商业使用、改编与随项目分发的许可；在获得同意之前，请勿再分发或改编这些素材。如作者不同意，将第一时间替换或移除。详见下文“素材与来源”。
+>
+> **Clawd artwork permission pending.** The Clawd animations and artwork come from [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), animated by [@rullerzhou-afk](https://github.com/rullerzhou-afk). They are all rights reserved and not covered by AGPL-3.0. Permission for non-commercial use, adaptation and redistribution has been requested from the author; please do not redistribute or adapt them until it is granted. If the author declines, they will be replaced or removed right away.
+
 ## 下载
 
 [GitHub Releases](https://github.com/SlxBYR/qishi-claude/releases) 提供 macOS（.dmg，Apple 芯片，macOS 27+）与 Windows（单文件便携 .exe 或 .zip，x64）安装包。
