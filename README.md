@@ -1,214 +1,218 @@
 <div align="center">
 
-<img src="docs/images/logo.png" width="128" alt="栖时·Claude 图标">
+**English** | [简体中文](README.zh-CN.md)
 
-# 栖时·Claude
+<img src="docs/images/logo.png" width="128" alt="Qishi·Claude icon">
 
-**住在桌面上的 Claude Code 伙伴：Claude 娘与 Clawd 小螃蟹跟着 Claude 一起工作。**
+# Qishi·Claude（栖时·Claude）
 
-原生 macOS Liquid Glass 工作台 · Token 活动热力图 · 额度追踪 · 桌宠 · WebRTC 泄漏检测
+**A Claude Code companion that lives on your desktop: Claude-chan and Clawd the crab work right alongside Claude.**
+
+Native macOS Liquid Glass workbench · Token activity heatmap · Usage limits · Desktop pets · WebRTC leak check
 
 [![Release](https://img.shields.io/github/v/release/SlxBYR/qishi-claude?include_prereleases&label=release&color=D97757)](https://github.com/SlxBYR/qishi-claude/releases)
 [![License](https://img.shields.io/github/license/SlxBYR/qishi-claude?color=D97757)](LICENSE)
-![macOS](https://img.shields.io/badge/macOS-27%2B%20%C2%B7%20Apple%20%E8%8A%AF%E7%89%87-000000?logo=apple)
+![macOS](https://img.shields.io/badge/macOS-27%2B%20%C2%B7%20Apple%20silicon-000000?logo=apple)
 ![Windows](https://img.shields.io/badge/Windows-10%2F11%20x64-0078D4?logo=windows)
-![Status](https://img.shields.io/badge/%E7%8A%B6%E6%80%81-%E5%8D%8A%E6%88%90%E5%93%81-orange)
+![Status](https://img.shields.io/badge/status-work%20in%20progress-orange)
 [![Stars](https://img.shields.io/github/stars/SlxBYR/qishi-claude?style=social)](https://github.com/SlxBYR/qishi-claude/stargazers)
 
-2.2.1（build 31）
+2.2.1 (build 31)
 
-<img src="docs/images/workbench.png" width="820" alt="Claude 工作台">
+<img src="docs/images/workbench.png" width="820" alt="Claude workbench">
 
 </div>
 
 > [!WARNING]
-> **项目状态：半成品。** 这是一个仍在开发中的半成品，不是正式版本。功能、界面和数据格式随时可能变化，可能存在未发现的问题。
-> Windows 版目前只在 macOS 上做过隔离预览，尚未在 Windows 实机完整验证；macOS 版也未经过真实 Gmail 与 Claude 账号的完整验收。
-> macOS 包为本机临时签名（未经 Apple 公证），首次打开需在“系统设置 › 隐私与安全性”中允许，或右键选择“打开”。Windows 包未签名，SmartScreen 可能提示，需选择“仍要运行”。
-> 欢迎试用和反馈，但请勿将其用于重要场景。
+> **Status: work in progress.** This is an unfinished project still under development, not a stable release. Features, UI and data formats may change at any time, and there may be undiscovered bugs.
+> The Windows version has only been previewed in isolation on macOS and has not been fully tested on real Windows machines; the macOS version has not been fully verified against real Gmail and Claude accounts either.
+> The macOS package is ad-hoc signed (not notarized by Apple). On first launch, allow it in System Settings › Privacy & Security, or right-click the app and choose Open. The Windows package is unsigned; if SmartScreen warns you, choose "Run anyway".
+> You're welcome to try it and send feedback, but please don't rely on it for anything important.
 
 > [!IMPORTANT]
-> **Clawd 素材授权申请中。** 本项目中的 Clawd 动画与美术来自 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)，动画作者：鹿鹿（[@rullerzhou-afk](https://github.com/rullerzhou-afk)）。这些素材保留全部权利、不在 AGPL-3.0 范围内，目前正在向作者申请非商业使用、改编与随项目分发的许可；在获得同意之前，请勿再分发或改编这些素材。如作者不同意，将第一时间替换或移除。详见下文“素材与来源”。
->
-> **Clawd artwork permission pending.** The Clawd animations and artwork come from [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), animated by [@rullerzhou-afk](https://github.com/rullerzhou-afk). They are all rights reserved and not covered by AGPL-3.0. Permission for non-commercial use, adaptation and redistribution has been requested from the author; please do not redistribute or adapt them until it is granted. If the author declines, they will be replaced or removed right away.
+> **Clawd artwork permission pending.** The Clawd animations and artwork in this project come from [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), animated by 鹿鹿 ([@rullerzhou-afk](https://github.com/rullerzhou-afk)). They are all rights reserved and not covered by AGPL-3.0. Permission for non-commercial use, adaptation and redistribution with this project has been requested from the author; please do not redistribute or adapt them until it is granted. If the author declines, they will be replaced or removed right away. See "Assets & Sources" below.
 
-## 下载
+## Download
 
-[GitHub Releases](https://github.com/SlxBYR/qishi-claude/releases) 提供 macOS（.dmg，Apple 芯片，macOS 27+）与 Windows（单文件便携 .exe 或 .zip，x64）安装包。
+[GitHub Releases](https://github.com/SlxBYR/qishi-claude/releases) provides packages for macOS (.dmg, Apple silicon, macOS 27+) and Windows (single-file portable .exe or .zip, x64).
 
-原生 macOS Claude 工作台与独立 Windows 桌面端，基于用户提供的栖时源码整合。macOS 版支持 Apple 芯片，最低 macOS 27，无需额外安装 Python、Node 或 Electron。Windows 版为独立的 Windows 10/11 x64 便携程序，见 [Windows/README.txt](Windows/README.txt)。
+A native macOS Claude workbench plus a standalone Windows desktop app, built on the original Qishi (栖时) source code. The macOS version runs on Apple silicon with macOS 27 or later and needs no Python, Node or Electron. The Windows version is a standalone portable app for Windows 10/11 x64; see [Windows/README.txt](Windows/README.txt) (Chinese).
 
-## 主要功能
+Qishi currently works with Claude Code. Support for other agents may come in the future.
 
-### 桌面伙伴：Claude 娘 + Clawd
+The app UI is available in Chinese and English.
+
+## Features
+
+### Desktop companions: Claude-chan + Clawd
 
 <table>
 <tr>
-<td align="center"><img src="Resources/Claude/idle.webp" width="110"><br><sub>待机</sub></td>
-<td align="center"><img src="Resources/Claude/thinking.webp" width="110"><br><sub>思考</sub></td>
-<td align="center"><img src="Resources/Claude/writing.webp" width="110"><br><sub>写代码</sub></td>
-<td align="center"><img src="Resources/Clawd/typing.gif" width="120"><br><sub>Clawd 打字</sub></td>
-<td align="center"><img src="Resources/Clawd/qishi-hop.gif" width="120"><br><sub>蹦跳</sub></td>
-<td align="center"><img src="Resources/Clawd/qishi-heart.gif" width="120"><br><sub>比心</sub></td>
+<td align="center"><img src="Resources/Claude/idle.webp" width="110"><br><sub>Idle</sub></td>
+<td align="center"><img src="Resources/Claude/thinking.webp" width="110"><br><sub>Thinking</sub></td>
+<td align="center"><img src="Resources/Claude/writing.webp" width="110"><br><sub>Coding</sub></td>
+<td align="center"><img src="Resources/Clawd/typing.gif" width="120"><br><sub>Clawd typing</sub></td>
+<td align="center"><img src="Resources/Clawd/qishi-hop.gif" width="120"><br><sub>Hop</sub></td>
+<td align="center"><img src="Resources/Clawd/qishi-heart.gif" width="120"><br><sub>Heart</sub></td>
 </tr>
 </table>
 
-桌面上 Claude 娘与 Clawd 小螃蟹同屏，跟随思考、阅读、写代码、运行、搜索、子任务、等待、压缩、完成、出错和休息状态切换动作。
+Claude-chan and Clawd the crab share your desktop and switch animations as Claude thinks, reads, writes code, runs commands, searches, delegates to subagents, waits, compacts context, finishes, hits an error or rests.
 
-- 桌面小螃蟹使用 Clawd on Desk 原始 SVG、原始 renderer.js 与样式；支持眼神跟随、点击、拖拽、待机、睡眠和贴边。
-- Claude 娘以 CrossPet 动作逻辑、effects.js 特效和全部 60 张原图为基础，保留呼吸摆动、眨眼、摸头、甩晕、生气、节日动作与多任务表演。
-- Claude 娘拖动只移动角色；拖到屏幕边缘时静态贴边（显示贴边原画、半藏），不再播放探出、收回或挥手动画，悬停也不会探出。
-- Claude 娘与 Clawd 可分别显示或隐藏（菜单栏、“桌宠与接入”或右键角色），也可分别拖动、记忆位置、调整大小、置顶；移除桌面标签、额度条与常驻按钮；点击 Claude 娘显示 CrossPet 风格的账号存活天数气泡。
-- 顶栏 Clawd 图标在 Claude 工作（思考、阅读、写代码、运行、搜索、子任务、整理上下文）时原地行走，空闲、等你回应、完成或出错时回到静态标志；行走帧沿用同一套描边网格，匀速播放，参照 RunCatNeo 用 Core Animation 关键帧遮罩实现，不靠定时器重绘。可在顶栏菜单或“桌宠与接入”关闭；系统开启“减弱动态效果”时保持静态。
-- 侧栏底部是 Clawd 小螃蟹，在原版动画与栖时新绘的 6 段动画（蹦跳、挥手、张望、横着走、比心、哼歌）之间随机播放，点一下换一段。
+- Clawd uses Clawd on Desk's original SVGs, renderer.js and styles, with eye tracking, clicks, dragging, idle, sleep and edge docking.
+- Claude-chan is built on CrossPet's motion logic, effects.js and all 60 original images, keeping breathing sway, blinking, head pats, dizzy spins, sulking, holiday animations and multi-task performances.
+- Dragging Claude-chan only moves the character. Dropped at a screen edge, she docks statically (half hidden, using the docking artwork) with no peek, retract or wave animation, and hovering doesn't make her peek out.
+- Claude-chan and Clawd can be shown or hidden separately (from the menu bar, the "Companions & Integration" page, or by right-clicking a character), and each can be dragged, remembers its position, and can be resized and kept on top. Desktop labels, limit bars and floating buttons have been removed. Clicking Claude-chan shows a CrossPet-style bubble with how many days your account has been alive.
+- The menu bar Clawd icon walks in place while Claude works (thinking, reading, coding, running, searching, subagents, compacting context), and returns to a static mark when idle, waiting for you, done or errored. The walking frames share the same outline grid, play at a steady pace, and are driven by a Core Animation keyframe mask in the style of RunCatNeo rather than timer redraws. It can be turned off from the menu bar menu or "Companions & Integration", and stays still when Reduce Motion is on.
+- At the bottom of the sidebar, Clawd randomly plays either its original animations or one of six new ones drawn for Qishi (hop, wave, look around, crab walk, heart, hum). Click it to switch.
 
-### Claude 工作台
+### Claude workbench
 
-页首截图就是 Windows 端的工作台：左侧 Claude 标志动画，右侧状态卡片，下方是用量与额度和 Token 活动热力图。
+The screenshot at the top is the Windows workbench: the Claude logo animation on the left, a status card on the right, and usage limits plus the Token activity heatmap below.
 
-- 工作台左侧是独立的 Claude 标志动画：中心与各道光芒的根部固定不动，光芒外段从根部缓慢伸缩（周期约 7–11 秒、节奏互不相同），标志始终连成一体；Claude 工作时稍快。右侧玻璃卡片显示状态。
-- 会话列表只显示最近 5 个有过工具调用的会话（0 次工具调用的会话隐藏）；并行工具和子任务跟踪、打开项目文件夹。
-- 可选完成 / 出错 / 等待通知，可选单次工具授权浮窗，允许一次、拒绝或交回 Claude。
+- The left side of the workbench is a standalone Claude logo animation: the center and the roots of every ray stay fixed while the outer part of each ray slowly stretches from its root (each on its own 7–11 second cycle), so the logo always stays in one piece. It speeds up slightly while Claude works. A glass card on the right shows the status.
+- The session list only shows the 5 most recent sessions that made tool calls (sessions with 0 tool calls are hidden), with tracking for parallel tools and subagents, and a button to open the project folder.
+- Optional notifications for completion, errors and waiting, and an optional one-time tool approval panel: allow once, deny, or hand back to Claude.
 
-### 用量、额度与 Token 活动
+### Usage, limits and Token activity
 
-- **额度**：Claude Code 官方状态栏上报的 5 小时、每周和可选支出额度；上下文用量、更新时间与过期标记。
-- **Claude Desktop 额度静默记录**（并入“用量与额度”）：仅在 Claude Desktop 运行时，每 20 秒检查一次它自己写在本机的用量记录（`~/Library/Application Support/Claude/plan-usage-history.json`），文件有变化才读取；只取时间与 5 小时、每周百分比，组织标识只存哈希，合并保存到数据目录的 `desktop-usage-history.json`（明文，最长 400 天），近 7 天可展开为趋势图与明细。不联网、不抓包、不用辅助功能、不操作窗口、不读取登录凭据、不写入 Claude 的任何文件。“用量与额度”中每项额度取两种来源里更新的一份并标注来源；Desktop 记录不含重置时间，只有与 Claude Code 上报处于同一窗口时才沿用其重置时间。记录何时更新由 Claude Desktop 自己决定（启动时，以及近 24 小时内打开过其用量面板时），可能比实际滞后；该文件格式属于 Claude 内部实现，变化时显示无法读取，不做猜测。
-- **Token 活动**：读取本机 Claude Code 会话记录（`~/.claude/projects/**/*.jsonl`，支持 `CLAUDE_CONFIG_DIR`）中每条回复的用量字段，按消息去重、按本地日期汇总，以近一年日历热力图显示（每列一周、每行一天，主体色四档，按有用量日子的四分位分档），可切换每天 / 每周 / 累计总量；悬停格子显示日期与数值，另有今天 / 本周 / 近一年合计与近 14 天明细表。只读用量数字、时间与消息标识，不读取或保存对话正文，不联网；每 2 分钟增量刷新。
+- **Limits**: the 5-hour, weekly and optional spend limits reported by Claude Code's official status line, plus context usage, update time and stale markers.
+- **Silent Claude Desktop limit history** (merged into "Usage & limits"): only while Claude Desktop is running, Qishi checks the usage history that Claude Desktop itself writes on your Mac (`~/Library/Application Support/Claude/plan-usage-history.json`) every 20 seconds and reads it only when it changes. It keeps just the timestamps and the 5-hour and weekly percentages, stores the organization ID only as a hash, and merges everything into `desktop-usage-history.json` in its data directory (plain text, up to 400 days). The last 7 days can be expanded into a trend chart and details. No network access, no traffic capture, no Accessibility APIs, no window automation, no reading login credentials, and nothing written to any Claude file. In "Usage & limits", each limit shows whichever of the two sources is newer and labels its source. Desktop records carry no reset time, so a reset time is only reused when it falls in the same window as a Claude Code report. Claude Desktop decides when to update its records (at launch, and when its usage panel was opened in the last 24 hours), so they may lag behind. The file format is internal to Claude; if it changes, Qishi shows it as unreadable instead of guessing.
+- **Token activity**: reads the usage fields of every reply in your local Claude Code transcripts (`~/.claude/projects/**/*.jsonl`, respecting `CLAUDE_CONFIG_DIR`), de-duplicates by message and sums by local date into a one-year calendar heatmap (one column per week, one row per day, four shades of the accent color split by the quartiles of days with usage). Switch between daily, weekly and cumulative totals; hover a cell for its date and value. Also shows today / this week / past-year totals and a 14-day table. It only reads usage numbers, timestamps and message IDs, never reads or stores conversation text, never goes online, and refreshes incrementally every 2 minutes.
 
-### 桌宠与接入
+### Pets & integration
 
-<img src="docs/images/companion.png" width="720" alt="桌宠与接入设置">
+<img src="docs/images/companion.png" width="720" alt="Pets and integration settings">
 
-一键接入 Claude Code，分别控制两个桌宠的显示、置顶与大小，开关完成通知和单次工具授权（macOS 版另有顶栏行走图标开关）。接入细节见下文“接入行为”。
+Connect Claude Code in one click, control each pet's visibility, always-on-top and size, and toggle completion notifications and one-time tool approval (the macOS version also has a toggle for the walking menu bar icon). See "How the integration works" below.
 
-### 账户守护与 WebRTC 检测
+### Account guard & WebRTC check
 
-<img src="docs/images/guard.png" width="720" alt="账户守护：注册计时与 Gmail 检测">
+<img src="docs/images/guard.png" width="720" alt="Account guard: registration timer and Gmail check">
 
-- 保留栖时的注册计时、Gmail 只读邮件检测、提醒与菜单栏常驻。
-- 侧栏同时显示 WebRTC 泄漏检测：用离屏 WebKit 打开 https://browserleaks.com/webrtc，读取“WebRTC Leak Test”结果与 WebRTC 公网 IP；启动时检测，之后每 5 分钟一次，点击状态可重新检测。结果不是 No Leak 时，Clawd 持续播放错误动画。
+- Keeps Qishi's original registration timer, read-only Gmail check, reminders and menu bar presence.
+- The sidebar also shows a WebRTC leak check: an offscreen WebKit view opens https://browserleaks.com/webrtc and reads the "WebRTC Leak Test" result and WebRTC public IP. It runs at launch and every 5 minutes after that; click the status to check again. Whenever the result isn't "No Leak", Clawd keeps playing its error animation.
 
-### 界面
+### Interface
 
-- macOS 界面使用系统原生组件呈现 Liquid Glass：NavigationSplitView 浮动侧栏、窗口工具栏玻璃按钮、glassEffect 卡片与 glass / glassProminent 按钮。
-- 浅色 / 深色 / 跟随系统三种外观与中文 / English 切换（工具栏“外观与语言”菜单）；主体色为 Claude 标志色 `#D97757`。侧栏选中底色跟随系统强调色。
-- 精简主界面：移除装饰标语和重复说明，来源与许可可展开查看。
-- 侧栏导航下方显示一张海报（`Resources/Sidebar/poster.png`），只作展示，点按不切换页面。
+- The macOS UI uses native system components for Liquid Glass: a floating NavigationSplitView sidebar, glass toolbar buttons, glassEffect cards, and glass / glassProminent buttons.
+- Light / dark / system appearance and Chinese / English switching (the "Appearance & Language" toolbar menu). The accent color is Claude's logo color `#D97757`; the selected sidebar row follows the system accent color.
+- A streamlined main window: decorative slogans and repeated explanations removed; sources and licenses can be expanded on demand.
+- A poster (`Resources/Sidebar/poster.png`) sits below the sidebar navigation. It's decorative only; clicking it doesn't switch pages.
 
-> 以上截图来自 Windows 端，由 `npm run verify-ui` 使用示例数据渲染；macOS 版界面为原生 Liquid Glass 风格，布局略有不同。
+> The screenshots above come from the Windows version, rendered with sample data by `npm run verify-ui`. The macOS version uses a native Liquid Glass look with a slightly different layout.
 
-## 开始使用
+## Getting started
 
-1. 打开“栖时·Claude.app”，直接出现两个透明桌宠，不弹出工作台。右键角色可摸头、戳一下、打开原有栖时功能或退出。
-   点击桌面上的 Claude 娘可查看账号已存活天数；气泡 8 秒后自动收起，也可点击气泡关闭。
-2. 首次接入时右键“打开栖时”，进入“桌宠与接入”，点击“接入 Claude Code”。
-3. 重新开启 Claude Code 会话；如 Claude 要求信任钩子，在 Claude 内确认。
-4. 发起任务，两个角色会跟随事件切换；额度在 Claude 的状态栏推送数据后出现。
-5. 如需在栖时确认工具请求，再开启“在栖时确认单次工具授权”。该开关默认关闭。
-6. 账号存活天数按“连接与计时”保存的注册时间计算，每满 24 小时增加 1 天；未设置时显示设置提示。此数值是注册时长，不是对账号可用性的实时验证。
-7. Gmail 在“连接与计时”中设置；首次启动会复制旧栖时的非密码设置，并兼容读取旧钥匙串密码。新保存和删除使用独立的钥匙串条目，不删除旧版密码。
+1. Open "栖时·Claude.app". The two transparent desktop pets appear right away; the workbench doesn't pop up. Right-click a character to pat it, poke it, open Qishi's other features, or quit.
+   Click Claude-chan on the desktop to see how many days your account has been alive. The bubble closes after 8 seconds, or click it to close.
+2. To connect for the first time, right-click and choose "Open Qishi", go to "Companions & Integration", and click "Connect Claude Code".
+3. Start a new Claude Code session. If Claude asks you to trust the hooks, confirm inside Claude.
+4. Start a task and both characters will follow the events. Limits appear once Claude's status line pushes data.
+5. To approve tool requests in Qishi, also turn on "Approve single tool requests in Qishi". It's off by default.
+6. Account age is calculated from the registration time saved under "Connection" and goes up by 1 every full 24 hours; if it isn't set, a setup hint is shown. This number is how long the account has existed, not a live check of whether the account still works.
+7. Set up Gmail under "Connection". On first launch, Qishi copies the non-password settings of the old Qishi and can still read the old Keychain password. New saves and deletions use a separate Keychain item and never delete the old password.
 
-## 接入行为
+## How the integration works
 
-- 更新 `~/.claude/settings.json`；若启动环境设置 `CLAUDE_CONFIG_DIR`，则使用该目录。
-- 仅添加带 `--qishi-hook` 标记的钩子，并接入 `--qishi-statusline`。
-- 已有钩子、权限、模型等设置保留；原有命令状态栏串行执行并保留输出（最长 3 秒）。
-- 接入前保存 settings.json 完整备份。撤销仅移除本应用钩子，若状态栏仍由本应用管理则恢复原字段；后续用户改动保留。
-- 工作桥接程序复制到独立数据目录，移动 App 不会让钩子路径失效。
-- 不自动安装第三方插件，不修改 Claude 程序，不读取 Claude 登录凭据，不发起额外额度接口请求。
+- Updates `~/.claude/settings.json`; if `CLAUDE_CONFIG_DIR` is set in the launch environment, that directory is used instead.
+- Only adds hooks marked with `--qishi-hook`, and hooks into `--qishi-statusline`.
+- Existing hooks, permissions, model and other settings are kept. An existing command status line keeps running in sequence and its output is preserved (up to 3 seconds).
+- A full backup of settings.json is saved before connecting. Disconnecting removes only this app's hooks and restores the original status line field if this app still manages it; later changes you made are kept.
+- The bridge program is copied into a separate data directory, so moving the app doesn't break the hook paths.
+- Never installs third-party plugins, never modifies the Claude app, never reads Claude login credentials, and never makes extra requests to usage APIs.
 
-## 数据与授权
+## Data & permissions
 
-- 数据目录：`~/Library/Application Support/QishiClaude`
-- 备份：该目录的 `Backups` 文件夹。
-- 工作状态只留会话标识的哈希、项目路径、事件名、工具名、时间、计数与用量，不保存提示词、回复或会话正文。
-- 授权开启后，为完整展示一次请求，参数会暂存在该目录的 `requests` 文件夹中；处理后删除，异常残留在下次启动时清理。
-- 授权目录权限 0700，文件 0600；只支持明确的单次允许 / 拒绝，不新增永久权限规则。
-- 未启动应用、关闭授权、超时、会话切换或应用退出时，不合成决定，交回 Claude 原生流程。
-- 问题回答和计划确认仍在 Claude 内完成；没有自动批准功能。
+- Data directory: `~/Library/Application Support/QishiClaude`
+- Backups: the `Backups` folder inside that directory.
+- Work state keeps only hashed session IDs, project paths, event names, tool names, times, counts and usage. Prompts, replies and conversation text are never saved.
+- When approvals are on, request arguments are temporarily stored in the `requests` folder of that directory so the whole request can be shown; they're deleted once handled, and leftovers are cleaned up at the next launch.
+- The approval directory is 0700 and its files are 0600. Only explicit one-time allow / deny is supported; no permanent permission rules are added.
+- If the app isn't running, approvals are off, a request times out, the session changes or the app quits, no decision is made up: control goes back to Claude's own flow.
+- Questions and plan confirmations are still handled inside Claude. There is no auto-approval.
 
-## 额度与状态边界
+## Limits & status boundaries
 
-- 额度取决于 Claude Code 实际上报或 Claude Desktop 自身记录；缺失就是未知，不能当成剩余 100%。
-- 15 分钟未更新的额度标记为旧数据；到达重置时间后等待新的真实数据，不自行假定已重置。
-- 5 分钟没有工作事件的忙碌会话显示“等待更新”，以免把历史状态当成实时工作。
-- 普通 Claude 桌面聊天不提供此事件协议；本版本接入的是 Claude Code。
+- Limits depend on what Claude Code actually reports or what Claude Desktop itself records. Missing means unknown, never "100% remaining".
+- Limits not updated for 15 minutes are marked as stale. After the reset time passes, Qishi waits for fresh real data instead of assuming a reset.
+- A busy session with no work events for 5 minutes shows "Awaiting update", so old state isn't mistaken for live work.
+- Regular Claude desktop chat doesn't provide this event protocol; this version works with Claude Code, and other agents may be supported in the future.
 
-## 源码构建与测试
+## Building & testing from source
 
 ```bash
 bash Scripts/build.sh
 bash Scripts/test.sh
 ```
 
-推送到 GitHub（公开仓库 SlxBYR/qishi-claude，提交全部改动后推送当前分支）：
+Push to GitHub (public repository SlxBYR/qishi-claude; commits every change, then pushes the current branch):
 
 ```bash
-bash Scripts/push.sh "提交说明"
+bash Scripts/push.sh "commit message"
 ```
 
-仅运行桌宠回归（WebKit 静态贴边与原生贴边移动）：
+Run only the pet regression tests (WebKit static docking and native docking motion):
 
 ```bash
 bash Scripts/test.sh --motion-only
 ```
 
-- Windows：在 `Windows/` 运行 `npm ci`、`npm test`、`npm run build`；也可运行 `Scripts/build-windows.ps1`。
-- 默认生成 `../栖时·Claude.app`，编译缓存写入 `.build`。可通过 `QISHI_BUILD_DIR` 与 `QISHI_OUTPUT_DIR` 指定缓存和输出目录。
-- 测试脚本需要 Node.js，并在已登录的 macOS 桌面会话运行真实 WebKit 与窗口检查。贴边截图默认写入 `.build/MotionVerification`，可通过 `QISHI_MOTION_TEST_OUTPUT` 修改路径。
-- 桌宠测试覆盖静态贴边、悬停不探出、拖动与隐藏；脚本另外编译独立测试程序验证原生贴边移动中断及过期回调。
-- Claude 标志图层由 `python3 Scripts/make-claude-logo.py` 从原图拆分（固定核心一层、每道光芒外段各一层并与核心重叠），输出到 `Resources/ClaudeLogo`。
-- Clawd 新动画由 `python3 Scripts/make-clawd-animations.py` 在 Clawd 原始 15×16 像素网格上逐帧绘制（需要 Pillow），输出到 `Resources/Clawd/qishi-*.gif`。
-- 使用完整 Xcode 可打开 `Qishi.xcodeproj`。主应用使用非沙盒签名以访问用户主动接入的 Claude 设置；WidgetKit 扩展仍需自己的开发团队及 App Group。
-- 命令行交付版不嵌入系统 WidgetKit 扩展；双角色浮窗可以直接使用。
+- Windows: run `npm ci`, `npm test` and `npm run build` in `Windows/`, or run `Scripts/build-windows.ps1`.
+- Builds `../栖时·Claude.app` by default, with the build cache in `.build`. Use `QISHI_BUILD_DIR` and `QISHI_OUTPUT_DIR` to change the cache and output directories.
+- The test script needs Node.js and runs real WebKit and window checks in a logged-in macOS desktop session. Docking screenshots go to `.build/MotionVerification` by default; change this with `QISHI_MOTION_TEST_OUTPUT`.
+- The pet tests cover static docking, no peeking on hover, dragging and hiding; the script also compiles a standalone test program to check that native docking motion can be interrupted and that stale callbacks are ignored.
+- The Claude logo layers are split from the source image by `python3 Scripts/make-claude-logo.py` (one fixed core layer, plus one layer per ray's outer segment overlapping the core), into `Resources/ClaudeLogo`.
+- The new Clawd animations are drawn frame by frame on Clawd's original 15×16 pixel grid by `python3 Scripts/make-clawd-animations.py` (requires Pillow), into `Resources/Clawd/qishi-*.gif`.
+- `Qishi.xcodeproj` can be opened with full Xcode. The main app uses a non-sandboxed signature so it can access the Claude settings you choose to connect; the WidgetKit extension still needs your own development team and App Group.
+- The command-line build doesn't embed the WidgetKit extension; the two floating characters work as-is.
 
-### 验证模式（不访问真实账号设置）
+### Verification modes (never touch real account settings)
 
 ```bash
 栖时·Claude.app/Contents/MacOS/Qishi --demo
 栖时·Claude.app/Contents/MacOS/Qishi --demo --show-workbench
-栖时·Claude.app/Contents/MacOS/Qishi --render-previews /绝对路径/预览
-栖时·Claude.app/Contents/MacOS/Qishi --verify-companions /绝对路径/预览
+栖时·Claude.app/Contents/MacOS/Qishi --render-previews /absolute/path/previews
+栖时·Claude.app/Contents/MacOS/Qishi --verify-companions /absolute/path/previews
 ```
 
-界面预览会标明示例数据。正常启动不会显示示例额度。`ClaudeIntegrationTests.py` 使用隔离临时目录，不修改真实 `~/.claude`。
+UI previews are labeled as sample data. A normal launch never shows sample limits. `ClaudeIntegrationTests.py` uses an isolated temporary directory and never touches your real `~/.claude`.
 
-## 平台限制
+## Platform limitations
 
-- Windows 的托盘、通知、DPAPI、PowerShell、DPI、多屏与窗口生命周期尚未在 Windows 实机确认。
-- 未使用真实 Gmail 或 Claude 账号验收，也未进行真实账号的付费模型调用验收。
+- On Windows, the tray, notifications, DPAPI, PowerShell, DPI scaling, multiple displays and window lifecycle haven't been confirmed on real Windows machines.
+- Not verified with real Gmail or Claude accounts, and no paid model calls with a real account have been tested.
 
-## 素材与来源
+## Assets & Sources
 
-| 来源 | 链接 | 固定版本 |
+| Source | Link | Pinned version |
 | --- | --- | --- |
 | Clawd on Desk | https://github.com/rullerzhou-afk/clawd-on-desk | `834f2b83eb6c9725956c5c541b59f825b48b4b9a` |
 | CrossPet | https://github.com/lokicorvus/crosspet | `5c64326b6e7fc175eda0360c0bb5c4732541d138` |
-| 事件格式 | https://code.claude.com/docs/en/hooks | |
-| 额度格式 | https://code.claude.com/docs/en/statusline | |
+| Event format | https://code.claude.com/docs/en/hooks | |
+| Limit format | https://code.claude.com/docs/en/statusline | |
 
-- Claude 娘素材：CrossPet / lokicorvus；社区 Claude 娘设定。保留 CC BY-NC-SA 4.0 授权，不可商用。
-- 小螃蟹：动画素材来自 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)，动画作者：鹿鹿（[@rullerzhou-afk](https://github.com/rullerzhou-afk)）。素材许可见 [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE)（本仓库副本：`Resources/Clawd/LICENSE`）：保留全部权利，不可商用；clawd-on-desk 的 AGPL-3.0 是源码许可，不覆盖动画与美术素材，这些素材也不纳入本项目的 AGPL-3.0 许可。栖时新绘的 6 段小螃蟹动画与顶栏行走图标改编自上述素材，适用同一素材许可。
-- Clawd 角色本身的权利归 Anthropic；以上署名不代表 Anthropic 的官方授权或背书。
-- 本整合包按用户要求供个人本机使用；公开分发包含原版 Clawd 美术的整合应用前，须向权利人取得相应授权。
-- 完整素材许可位于 `Resources/Claude/LICENSE.md` 与 `Resources/Clawd/LICENSE`，文件指纹见同目录 `manifest.json`。新增 Claude 娘拖动差分沿用原角色设定与素材授权。
-- 非 Anthropic 官方应用。
+- Claude-chan artwork: CrossPet / lokicorvus, based on the community's Claude-chan character design. Licensed under CC BY-NC-SA 4.0; no commercial use.
+- Clawd: the animations come from [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), animated by 鹿鹿 ([@rullerzhou-afk](https://github.com/rullerzhou-afk)). See [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE) (copy in this repository: `Resources/Clawd/LICENSE`): all rights reserved, no commercial use. clawd-on-desk's AGPL-3.0 is a source code license and doesn't cover its animations and artwork, and these assets are not part of this project's AGPL-3.0 license either. The six new Clawd animations and the walking menu bar icon drawn for Qishi are adapted from these assets and fall under the same asset license.
+- The rights to the Clawd character itself belong to Anthropic; this attribution does not imply permission or endorsement from Anthropic.
+- This bundle is meant for personal use on your own machine. Before publicly distributing a bundle that includes the original Clawd artwork, permission must be obtained from the rights holder.
+- The full asset licenses are in `Resources/Claude/LICENSE.md` and `Resources/Clawd/LICENSE`, with file fingerprints in `manifest.json` in the same directories. The new Claude-chan dragging variants follow the original character design and asset license.
+- Not an official Anthropic app.
 
-## 许可
+## License
 
-本项目源码以 GNU Affero General Public License v3.0（AGPL-3.0）发布，全文见 [LICENSE](LICENSE)。
+This project's source code is released under the GNU Affero General Public License v3.0 (AGPL-3.0); see [LICENSE](LICENSE).
 
-项目内含并改编了 Clawd on Desk 的 AGPL-3.0 代码（`Resources/ClawdWeb`、`Upstream/clawd-on-desk`），整体分发只能沿用 AGPL-3.0，这也是上游授权允许范围内最开放的选择；CrossPet 的 MIT 代码与之兼容，原版权声明保留在 `Resources/CrossPet/LICENSE`。
+The project includes and adapts AGPL-3.0 code from Clawd on Desk (`Resources/ClawdWeb`, `Upstream/clawd-on-desk`), so the whole distribution must stay under AGPL-3.0, which is also the most open option the upstream license allows. CrossPet's MIT code is compatible with it, and its original copyright notice is kept in `Resources/CrossPet/LICENSE`.
 
-AGPL-3.0 只覆盖源码，不覆盖动画与美术素材：Claude 娘立绘为 CC BY-NC-SA 4.0；Clawd 动画与美术（含栖时据此改编的动画和图标）以 clawd-on-desk 的 [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE) 为准，保留全部权利、不可商用；侧栏海报由用户提供、权利归原作者。均以各自许可为准（见上文“素材与来源”）。
+AGPL-3.0 covers source code only, not animations or artwork: Claude-chan's artwork is CC BY-NC-SA 4.0; the Clawd animations and artwork (including the animations and icons adapted from them for Qishi) follow clawd-on-desk's [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE), all rights reserved and no commercial use; the sidebar poster was provided by the user and its rights belong to its original author. Each follows its own license (see "Assets & Sources" above).
 
-## 致谢
+## Acknowledgements
 
-- 感谢 [CrossPet](https://github.com/lokicorvus/crosspet)（lokicorvus 与 CrossPet 贡献者）：桌面 Claude 娘的动作逻辑、effects.js 特效与全部角色立绘都来自这个项目。
-- 感谢 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)（动画作者：鹿鹿 [@rullerzhou-afk](https://github.com/rullerzhou-afk)，以及项目贡献者）：Clawd 小螃蟹的动画素材、renderer.js、样式与交互逻辑来自这个项目，栖时新绘的小螃蟹动画也画在它的原始像素网格上。
+- Thanks to [CrossPet](https://github.com/lokicorvus/crosspet) (lokicorvus and CrossPet contributors): the desktop Claude-chan's motion logic, effects.js and all character artwork come from this project.
+- Thanks to [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) (animated by 鹿鹿 [@rullerzhou-afk](https://github.com/rullerzhou-afk), and the project's contributors): Clawd's animation assets, renderer.js, styles and interaction logic come from this project, and the new Clawd animations drawn for Qishi are drawn on its original pixel grid.
 
-## Star 趋势
+## Star History
 
 <a href="https://star-history.com/#SlxBYR/qishi-claude&Date">
   <picture>

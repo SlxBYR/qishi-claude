@@ -16,7 +16,7 @@ cp -R "$ROOT/Resources/ClaudeLogo" "$APP/Contents/Resources/"
 cp -R "$ROOT/Resources/Sidebar" "$APP/Contents/Resources/"
 cp "$ROOT/Resources/upstream-lock.json" "$APP/Contents/Resources/"
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
-cp "$ROOT/README.md" "$APP/Contents/Resources/使用说明.md"
+cp "$ROOT/README.zh-CN.md" "$APP/Contents/Resources/使用说明.md"
 if [ -f "$ROOT/Resources/AppIcon.icns" ]; then cp "$ROOT/Resources/AppIcon.icns" "$APP/Contents/Resources/"; fi
 codesign --force --sign - "$APP"
 codesign --verify --deep --strict "$APP"
