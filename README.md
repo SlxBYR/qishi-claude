@@ -184,7 +184,8 @@ bash Scripts/test.sh --motion-only
 | 额度格式 | https://code.claude.com/docs/en/statusline | |
 
 - Claude 娘素材：CrossPet / lokicorvus；社区 Claude 娘设定。保留 CC BY-NC-SA 4.0 授权，不可商用。
-- 小螃蟹：Clawd on Desk / rullerzhou-afk；Clawd 角色权利属于 Anthropic。原项目美术资源保留权利，不属于其 AGPL 代码许可。
+- 小螃蟹：动画素材来自 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)，动画作者：鹿鹿（[@rullerzhou-afk](https://github.com/rullerzhou-afk)）。素材许可见 [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE)（本仓库副本：`Resources/Clawd/LICENSE`）：保留全部权利，不可商用；clawd-on-desk 的 AGPL-3.0 是源码许可，不覆盖动画与美术素材，这些素材也不纳入本项目的 AGPL-3.0 许可。栖时新绘的 6 段小螃蟹动画与顶栏行走图标改编自上述素材，适用同一素材许可。
+- Clawd 角色本身的权利归 Anthropic；以上署名不代表 Anthropic 的官方授权或背书。
 - 本整合包按用户要求供个人本机使用；公开分发包含原版 Clawd 美术的整合应用前，须向权利人取得相应授权。
 - 完整素材许可位于 `Resources/Claude/LICENSE.md` 与 `Resources/Clawd/LICENSE`，文件指纹见同目录 `manifest.json`。新增 Claude 娘拖动差分沿用原角色设定与素材授权。
 - 非 Anthropic 官方应用。
@@ -195,12 +196,12 @@ bash Scripts/test.sh --motion-only
 
 项目内含并改编了 Clawd on Desk 的 AGPL-3.0 代码（`Resources/ClawdWeb`、`Upstream/clawd-on-desk`），整体分发只能沿用 AGPL-3.0，这也是上游授权允许范围内最开放的选择；CrossPet 的 MIT 代码与之兼容，原版权声明保留在 `Resources/CrossPet/LICENSE`。
 
-AGPL-3.0 不覆盖美术素材：Claude 娘立绘为 CC BY-NC-SA 4.0，Clawd 美术保留全部权利，侧栏海报由用户提供、权利归原作者，均以各自许可为准（见上文“素材与来源”）。
+AGPL-3.0 只覆盖源码，不覆盖动画与美术素材：Claude 娘立绘为 CC BY-NC-SA 4.0；Clawd 动画与美术（含栖时据此改编的动画和图标）以 clawd-on-desk 的 [assets/LICENSE](https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/assets/LICENSE) 为准，保留全部权利、不可商用；侧栏海报由用户提供、权利归原作者。均以各自许可为准（见上文“素材与来源”）。
 
 ## 致谢
 
 - 感谢 [CrossPet](https://github.com/lokicorvus/crosspet)（lokicorvus 与 CrossPet 贡献者）：桌面 Claude 娘的动作逻辑、effects.js 特效与全部角色立绘都来自这个项目。
-- 感谢 [Clawd on Desk](https://github.com/rullerzhou-afk/clawd-on-desk)（鹿鹿 rullerzhou-afk 与贡献者）：Clawd 小螃蟹的原始 SVG、renderer.js、样式与交互逻辑来自这个项目，栖时新绘的小螃蟹动画也画在它的原始像素网格上。
+- 感谢 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk)（动画作者：鹿鹿 [@rullerzhou-afk](https://github.com/rullerzhou-afk)，以及项目贡献者）：Clawd 小螃蟹的动画素材、renderer.js、样式与交互逻辑来自这个项目，栖时新绘的小螃蟹动画也画在它的原始像素网格上。
 
 ## Star 趋势
 
